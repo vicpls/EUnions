@@ -1,0 +1,53 @@
+<resources>
+    <string name="app_name">EUnions</string>
+
+    <string name="at">Austria</string>
+    <string name="ch">Switzerland</string>
+    <string name="be">Belgium</string>
+    <string name="bg">Bulgaria</string>
+    <string name="cy">Cyprus</string>
+    <string name="cz">Czech</string>
+    <string name="de">Germany</string>
+    <string name="dk">Denmark</string>
+    <string name="ee">Estonia</string>
+    <string name="es">Spain</string>
+    <string name="fi">Finland</string>
+    <string name="fr">France</string>
+    <string name="gb">United Kingdom of Great Britain and Northern Ireland</string>
+    <string name="gr">Greece</string>
+    <string name="hr">Croatia</string>
+    <string name="hu">Hungary</string>
+    <string name="ie">Ireland</string>
+    <string name="is">Iceland</string>
+    <string name="it">Italy</string>
+    <string name="lu">Luxembourg</string>
+    <string name="li">Liechtenstein</string>
+    <string name="lt">Lithuania</string>
+    <string name="lv">Latvia</string>
+    <string name="mt">Malta</string>
+    <string name="nl">Netherlands</string>
+    <string name="no">Norway</string>
+    <string name="pl">Poland</string>
+    <string name="pt">Portugal</string>
+    <string name="ro">Romania</string>
+    <string name="se">Sweden</string>
+    <string name="si">Slovenia</string>
+    <string name="sk">Slovakia</string>
+
+    <string name="memberships">Member of</string>
+    <string name="density">Density of population</string>
+    <string name="density_unit">pop./km2</string>
+    <string name="no_connection">No Internet connection. Functionality is limited.</string>
+
+    <string name="cc0_summary" translatable="false">The person who associated a work with this deed has dedicated the work to the public domain by waiving all of his or her rights to the work worldwide under copyright law, including all related and neighboring rights, to the extent allowed by law.\n
+        You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. See Other Information below.</string>
+    <string name="developed" translatable="false">Developed by HH Creative</string>
+    <string name="thanks">Thank you so much for downloading our application</string>
+    <string name="share">Share with</string>
+    <string name="trv_guide">Travel guide</string>
+    <string name="million">m</string>
+    <string name="thousand">ths</string>
+    <string name="billion">bn</string>
+
+
+</resources>

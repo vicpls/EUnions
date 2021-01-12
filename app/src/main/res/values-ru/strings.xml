@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">EUnions</string>
+    <string name="at">Австрия</string>
+    <string name="ee">Эстония</string>
+    <string name="es">Испания</string>
+    <string name="fi">Финляндия</string>
+    <string name="fr">Франция</string>
+    <string name="gr">Греция</string>
+    <string name="hr">Хорватия</string>
+    <string name="hu">Венгрия</string>
+    <string name="ie">Ирландия</string>
+    <string name="is">Исландия</string>
+    <string name="it">Италия</string>
+    <string name="lu">Люксембург</string>
+    <string name="lv">Латвия</string>
+    <string name="lt">Литва</string>
+    <string name="mt">Мальта</string>
+    <string name="no">Норвегия</string>
+    <string name="pl">Польша</string>
+    <string name="pt">Португалия</string>
+    <string name="ro">Румыния</string>
+    <string name="se">Швеция</string>
+    <string name="si">Словения</string>
+    <string name="sk">Словакия</string>
+    <string name="de">Германия</string>
+    <string name="cy">Кипр</string>
+    <string name="ch">Швейцария</string>
+    <string name="be">Белгия</string>
+    <string name="bg">Болгария</string>
+    <string name="cz">Чехия</string>
+    <string name="dk">Дания</string>
+    <string name="li">Лихтенштейн</string>
+    <string name="nl">Нидерланды</string>
+    <string name="gb">Великобритания</string>
+    <string name="memberships">Членство в</string>
+    <string name="density">Плотность населения</string>
+    <string name="density_unit">чел/км2</string>
+    <string name="no_connection">Интернет недоступен. Функционал ограничен.</string>
+    <string name="thanks">Спасибо за использование приложения</string>
+    <string name="share">Поделиться</string>
+    <string name="trv_guide">Путеводитель</string>
+    <string name="thousand">тыс.</string>
+    <string name="million">млн</string>
+    <string name="billion">млрд</string>
+</resources>
