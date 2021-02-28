@@ -102,6 +102,7 @@ class AboutAct {
             return "1.0";
         }
 
+      
         @Override
         public String getUrl() {
             return "https://creativecommons.org/publicdomain/zero/1.0/";

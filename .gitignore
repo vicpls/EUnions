@@ -1,0 +1,16 @@
+# Project exclude paths
+.gradle/
+.idea/
+gradle/
+/app/build/
+/app/release/
+Key_store/
+
+*.iml
+
+.hg*
+*.jks
+local.properties
+keystore.properties
+gradlew*
+/keystore_add.properties

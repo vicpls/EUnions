@@ -5,8 +5,6 @@ import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,15 +15,13 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.ListIterator;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
+import netdesigntool.com.eunions.databinding.ActCountryBinding;
 import netdesigntool.com.eunions.wiki.HumanReadableNumber;
 import netdesigntool.com.eunions.wiki.Parameter;
 import netdesigntool.com.eunions.wiki.WikiRxDataProvider;
@@ -41,64 +37,28 @@ public class CountryAct extends AppCompatActivity {
 
     public static final String COUNTRY_ISO = "ISO";
 
-    @BindView(R.id.tvCountryName)
-    TextView tvCountryName;
-
-    @BindView(R.id.ivFlag)
-    ImageView ivFlag;
-
-    @BindView(R.id.scrollBox)
-    LinearLayout scrollBox;
-
-    @BindView(R.id.tvLinkToGuide)
-    TextView tvLinkToGuide;
+    private ActCountryBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.act_country);
+
+        binding = ActCountryBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         if (getIntent().getExtras() ==null) return;
 
         String sISO = getIntent().getExtras().getString(COUNTRY_ISO);
 
         if (! isConnected(this)){
-
             Snackbar.make(findViewById(R.id.tvCountryName), R.string.no_connection, Snackbar.LENGTH_LONG).show();
 
         }else {
-
-            CountryViewModel viewModel = ViewModelProviders.of(this, new ModelFactory(sISO))
-                    .get(CountryViewModel.class);
-
-            PopOnKmObserver popPerKm = new PopOnKmObserver();
-
-            LiveData<ArrayList<Parameter>> liveData = viewModel.getCountryInfo();
-            liveData.observe(this, new myObserver());
-            liveData.observe(this, popPerKm);
-
-            LiveData<ArrayList<String>> ldMembers = viewModel.getMembership();
-            ldMembers.observe(this, new MembershipsObserver());
-
-            LiveData<ArrayList<Parameter>> ldGDP = viewModel.getLdGDP();
-            ldGDP.observe(this, new myObserver());
-
-            LiveData<ArrayList<Parameter>> ldPopulation = viewModel.getLdPopulation();
-            ldPopulation.observe(this, new myObserver());
-            ldPopulation.observe(this, popPerKm);
-
-            LiveData<ArrayList<Parameter>> ldHDI = viewModel.getLdHDI();
-            ldHDI.observe(this, new myObserver());
+            initObservers(sISO);
         }
 
-        ButterKnife.bind(this);
-
-        tvCountryName.setText( getResources().getIdentifier(sISO, "string", getPackageName()));
-        ivFlag.setImageResource( getResources().getIdentifier("flg_"+ sISO, "drawable", getPackageName()));
-
-
-        tvLinkToGuide.setText( Util.getTravelGuideUrl(this, sISO));
-        tvLinkToGuide.setMovementMethod( LinkMovementMethod.getInstance());
+        //ButterKnife.bind(this);
+        initViews(sISO);
 
         if (Parameter.getHrProvider()==null){
 
@@ -118,7 +78,37 @@ public class CountryAct extends AppCompatActivity {
         }
     }
 
+    private void initViews(String sISO) {
+        binding.tvCountryName.setText( getResources().getIdentifier(sISO, "string", getPackageName()));
+        binding.ivFlag.setImageResource( getResources().getIdentifier("flg_"+ sISO, "drawable", getPackageName()));
 
+        binding.tvLinkToGuide.setText( Util.getTravelGuideUrl(this, sISO));
+        binding.tvLinkToGuide.setMovementMethod( LinkMovementMethod.getInstance());
+    }
+
+    private void initObservers(String sISO) {
+        CountryViewModel viewModel = new ViewModelProvider(this, new ModelFactory(sISO))
+                .get(CountryViewModel.class);
+
+        PopOnKmObserver popPerKm = new PopOnKmObserver();
+
+        LiveData<ArrayList<Parameter>> liveData = viewModel.getCountryInfo();
+        liveData.observe(this, new myObserver());
+        liveData.observe(this, popPerKm);
+
+        LiveData<ArrayList<String>> ldMembers = viewModel.getMembership();
+        ldMembers.observe(this, new MembershipsObserver());
+
+        LiveData<ArrayList<Parameter>> ldGDP = viewModel.getLdGDP();
+        ldGDP.observe(this, new myObserver());
+
+        LiveData<ArrayList<Parameter>> ldPopulation = viewModel.getLdPopulation();
+        ldPopulation.observe(this, new myObserver());
+        ldPopulation.observe(this, popPerKm);
+
+        LiveData<ArrayList<Parameter>> ldHDI = viewModel.getLdHDI();
+        ldHDI.observe(this, new myObserver());
+    }
 
 
     /*  Handler of common parameters for country
@@ -252,12 +242,12 @@ public class CountryAct extends AppCompatActivity {
     }
 
     private void showInfo(Parameter parameter){
-        scrollBox.addView(getInfoLine(parameter));
+        binding.scrollBox.addView(getInfoLine(parameter));
     }
 
 
     private void showInfo(String name, Object value){
-        scrollBox.addView(getInfoLine(name, value));
+        binding.scrollBox.addView(getInfoLine(name, value));
     }
 
 
@@ -336,7 +326,7 @@ public class CountryAct extends AppCompatActivity {
             if (modelClass == CountryViewModel.class) {
                 return (T) new CountryViewModel(iso);
             }
-            return super.create(modelClass);//null;
+            return super.create(modelClass);
         }
     }
 

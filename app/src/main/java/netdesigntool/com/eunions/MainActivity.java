@@ -16,12 +16,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProvider;
 
-import com.google.android.flexbox.FlexboxLayout;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
+import netdesigntool.com.eunions.databinding.ActMainBinding;
 
 import static netdesigntool.com.eunions.DataRepository.getDataRepository;
 import static netdesigntool.com.eunions.Util.LTAG;
@@ -29,26 +26,19 @@ import static netdesigntool.com.eunions.Util.LTAG;
 public class MainActivity extends AppCompatActivity
                             implements View.OnClickListener
 {
-
-    @BindView(R.id.flexboxTop)
-    FlexboxLayout fbTop;
-
-    @BindView(R.id.flexboxMiddle)
-    FlexboxLayout fbMiddle;
-
-    @BindView(R.id.flexboxBottom)
-    FlexboxLayout fbBottom;
+    private ActMainBinding binding;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.act_main);
 
-        MainActViewModel myVModel = ViewModelProviders.of(this).get(MainActViewModel.class);
+        binding = ActMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
+        MainActViewModel myVModel = new ViewModelProvider(this).get(MainActViewModel.class);
+
         LiveData<Cursor> myData = myVModel.getData();
-
-        ButterKnife.bind(this);
 
         myData.observe(this, this::fillUpFlexBox);
 
@@ -62,8 +52,10 @@ public class MainActivity extends AppCompatActivity
 
         if (qty > 0) {
 
-            int euni, schen;
-            String sISO;
+            Integer euni =0, schen =0;
+            String sISO = null;
+            TextView tvCountry = null;
+            ImageView ivFlag = null;
 
             String pacName = getPackageName();
 
@@ -71,30 +63,51 @@ public class MainActivity extends AppCompatActivity
 
             for (int i = 0; i < qty; i++) {
 
-                View vFlexBoxItem = this.getLayoutInflater().inflate(R.layout.item, null);
-                vFlexBoxItem.setOnClickListener(this);
+                View vFlexBoxItem = createFlexBoxItem (tvCountry, ivFlag);
 
-                TextView tvCountry = vFlexBoxItem.findViewById(R.id.tvCountry);
-                ImageView ivFlag = vFlexBoxItem.findViewById(R.id.ivFlag);
+                getFieldsFromCursor(cursor, sISO, euni, schen);
 
-                sISO = cursor.getString(cursor.getColumnIndex(DataRepository.COL_NAME));
                 vFlexBoxItem.setTag(sISO);
 
                 tvCountry.setText(getResources().getIdentifier(sISO, "string", pacName));
                 ivFlag.setImageResource( getResources().getIdentifier("flg_"+ sISO, "drawable", pacName));
 
-                euni = cursor.getInt(cursor.getColumnIndex(DataRepository.COL_EU));
-                schen = cursor.getInt(cursor.getColumnIndex(DataRepository.COL_SHE));
-
-                if (euni <=1 & schen <=1) fbMiddle.addView(vFlexBoxItem);
-                else
-                if (euni <=1 & schen >1) fbTop.addView(vFlexBoxItem);
-                else
-                if (schen <=1) fbBottom.addView(vFlexBoxItem);
+                addView2Box(euni, schen, vFlexBoxItem);
 
                 cursor.moveToNext();
             }
         }
+    }
+
+    // This method change input parameters!
+    private View createFlexBoxItem (TextView tvCountry, ImageView ivFlag){
+
+        View vFlexBoxItem = this.getLayoutInflater().inflate(R.layout.item, null);
+        vFlexBoxItem.setOnClickListener(this);
+
+        tvCountry = vFlexBoxItem.findViewById(R.id.tvCountry);
+        ivFlag = vFlexBoxItem.findViewById(R.id.ivFlag);
+
+        return vFlexBoxItem;
+    }
+
+    // This method change input parameters!
+    private void getFieldsFromCursor(Cursor cursor, String sISO, Integer euni, Integer schen){
+
+        sISO = cursor.getString(cursor.getColumnIndex(DataRepository.COL_NAME));
+        euni = cursor.getInt(cursor.getColumnIndex(DataRepository.COL_EU));
+        schen = cursor.getInt(cursor.getColumnIndex(DataRepository.COL_SHE));
+    }
+
+
+
+    private void addView2Box(int euni, int schen, View vFlexBoxItem) {
+
+        if (euni <=1 & schen <=1) binding.flexboxMiddle.addView(vFlexBoxItem); // Shengen + EU
+        else
+        if (euni <=1 & schen >1) binding.flexboxTop.addView(vFlexBoxItem);     // EU only
+        else
+        if (schen <=1) binding.flexboxBottom.addView(vFlexBoxItem);            // Shengen only
     }
 
 

@@ -1,7 +1,7 @@
 package netdesigntool.com.eunions.wiki;
 
 
-/** This container for data got from DataProvider
+/** This is container for data got from DataProvider
  * e.g. Wiki.
  *
  */
@@ -27,7 +27,7 @@ public class Parameter {
     public String pValue;
 
     /** Can pValue transform to human readable form */
-    private boolean isSuitableHRTransform;
+    private final boolean isSuitableHRTransform;
 
     /** Unit of Value, e.g. 'million' */
     String pUnit;
