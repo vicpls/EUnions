@@ -91,7 +91,7 @@ public class InstrumentedTest {
 
         Espresso.onView(ViewMatchers.withTagValue(Matchers.is("at"))).perform(click());
 
-        Intents.intended(hasComponent(hasShortClassName("netdesigntool.com.eunions.CountryAct")));
+        Intents.intended(hasComponent(hasShortClassName("netdesigntool.com.eunions.country.CountryAct")));
 
         try {
             Thread.sleep(3000);

@@ -1,8 +1,6 @@
 package netdesigntool.com.eunions;
 
-import android.app.Application;
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -11,16 +9,15 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.android.flexbox.FlexboxLayout;
+
+import netdesigntool.com.eunions.country.CountryAct;
 import netdesigntool.com.eunions.databinding.ActMainBinding;
 
-import static netdesigntool.com.eunions.DataRepository.getDataRepository;
 import static netdesigntool.com.eunions.Util.LTAG;
 
 public class MainActivity extends AppCompatActivity
@@ -38,76 +35,51 @@ public class MainActivity extends AppCompatActivity
 
         MainActViewModel myVModel = new ViewModelProvider(this).get(MainActViewModel.class);
 
-        LiveData<Cursor> myData = myVModel.getData();
+        attachViewModel(myVModel);
+    }
 
-        myData.observe(this, this::fillUpFlexBox);
+    private void attachViewModel(MainActViewModel vm){
+        LiveData<Country[]> countryEU = vm.getEu();
+        LiveData<Country[]> countrySchEu = vm.getSchAndEu();
+        LiveData<Country[]> countrySch = vm.getSchen();
 
+        countryEU.observe(this, this::fillUpFbTop);
+        countrySchEu.observe(this, this::fillUpFbMiddle);
+        countrySch.observe(this, this::fillUpFbBottom);
     }
 
 
+    private void fillUpFbTop(Country[] countries) {
+        fillUpFlexBox(countries, binding.flexboxTop);
+    }
 
-    private void fillUpFlexBox(Cursor cursor) {
+    private void fillUpFbMiddle(Country[] countries) {
+        fillUpFlexBox(countries, binding.flexboxMiddle);
+    }
 
-        int qty = cursor.getCount();
+    private void fillUpFbBottom(Country[] countries) {
+        fillUpFlexBox(countries, binding.flexboxBottom);
+    }
 
-        if (qty > 0) {
-
-            Integer euni =0, schen =0;
-            String sISO = null;
-            TextView tvCountry = null;
-            ImageView ivFlag = null;
-
-            String pacName = getPackageName();
-
-            cursor.moveToFirst();
-
-            for (int i = 0; i < qty; i++) {
-
-                View vFlexBoxItem = createFlexBoxItem (tvCountry, ivFlag);
-
-                getFieldsFromCursor(cursor, sISO, euni, schen);
-
-                vFlexBoxItem.setTag(sISO);
-
-                tvCountry.setText(getResources().getIdentifier(sISO, "string", pacName));
-                ivFlag.setImageResource( getResources().getIdentifier("flg_"+ sISO, "drawable", pacName));
-
-                addView2Box(euni, schen, vFlexBoxItem);
-
-                cursor.moveToNext();
-            }
+    private void fillUpFlexBox(Country[] countries, FlexboxLayout flexbox){
+        for (Country country : countries){
+            flexbox.addView(createViewForCountry(country));
         }
     }
 
-    // This method change input parameters!
-    private View createFlexBoxItem (TextView tvCountry, ImageView ivFlag){
+
+    private View createViewForCountry(Country country){
 
         View vFlexBoxItem = this.getLayoutInflater().inflate(R.layout.item, null);
         vFlexBoxItem.setOnClickListener(this);
 
-        tvCountry = vFlexBoxItem.findViewById(R.id.tvCountry);
-        ivFlag = vFlexBoxItem.findViewById(R.id.ivFlag);
+        TextView tvCountry = vFlexBoxItem.findViewById(R.id.tvCountry);
+        ImageView ivFlag = vFlexBoxItem.findViewById(R.id.ivFlag);
+
+        tvCountry.setText(getResources().getIdentifier(country.getISO(), "string", getPackageName()));
+        ivFlag.setImageResource( getResources().getIdentifier("flg_"+ country.getISO(), "drawable", getPackageName()));
 
         return vFlexBoxItem;
-    }
-
-    // This method change input parameters!
-    private void getFieldsFromCursor(Cursor cursor, String sISO, Integer euni, Integer schen){
-
-        sISO = cursor.getString(cursor.getColumnIndex(DataRepository.COL_NAME));
-        euni = cursor.getInt(cursor.getColumnIndex(DataRepository.COL_EU));
-        schen = cursor.getInt(cursor.getColumnIndex(DataRepository.COL_SHE));
-    }
-
-
-
-    private void addView2Box(int euni, int schen, View vFlexBoxItem) {
-
-        if (euni <=1 & schen <=1) binding.flexboxMiddle.addView(vFlexBoxItem); // Shengen + EU
-        else
-        if (euni <=1 & schen >1) binding.flexboxTop.addView(vFlexBoxItem);     // EU only
-        else
-        if (schen <=1) binding.flexboxBottom.addView(vFlexBoxItem);            // Shengen only
     }
 
 
@@ -147,25 +119,4 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-
-    //----------------------------------------------------------
-    //  ViewModel
-    //----------------------------------------------------------
-    protected static class MainActViewModel extends AndroidViewModel {
-
-        MutableLiveData<Cursor> cData;
-
-        public MainActViewModel(@NonNull Application application) {
-            super(application);
-        }
-
-
-        public LiveData<Cursor> getData(){
-            if (cData ==null){
-                cData = new MutableLiveData<>();
-                cData.setValue(getDataRepository().loadData(getApplication().getApplicationContext()));
-            }
-            return cData;
-        }
-    }
 }

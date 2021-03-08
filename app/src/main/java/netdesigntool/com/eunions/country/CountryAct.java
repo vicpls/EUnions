@@ -1,4 +1,4 @@
-package netdesigntool.com.eunions;
+package netdesigntool.com.eunions.country;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -7,13 +7,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -21,10 +19,10 @@ import com.google.android.material.snackbar.Snackbar;
 import java.util.ArrayList;
 import java.util.ListIterator;
 
+import netdesigntool.com.eunions.R;
+import netdesigntool.com.eunions.Util;
 import netdesigntool.com.eunions.databinding.ActCountryBinding;
-import netdesigntool.com.eunions.wiki.HumanReadableNumber;
 import netdesigntool.com.eunions.wiki.Parameter;
-import netdesigntool.com.eunions.wiki.WikiRxDataProvider;
 
 import static netdesigntool.com.eunions.Util.LTAG;
 import static netdesigntool.com.eunions.Util.getIntegerPart;
@@ -46,36 +44,25 @@ public class CountryAct extends AppCompatActivity {
         binding = ActCountryBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        if (getIntent().getExtras() ==null) return;
+        if (getIntent().getExtras() ==null) {
+            Log.w(LTAG, "Act closed. No ISO of country was provided for: " + this.getClass().getSimpleName());
+            return;
+        }
 
         String sISO = getIntent().getExtras().getString(COUNTRY_ISO);
 
         if (! isConnected(this)){
-            Snackbar.make(findViewById(R.id.tvCountryName), R.string.no_connection, Snackbar.LENGTH_LONG).show();
-
+            Snackbar.make( findViewById(R.id.tvCountryName)
+                    , R.string.no_connection
+                    , Snackbar.LENGTH_LONG)
+                    .show();
         }else {
             initObservers(sISO);
         }
 
-        //ButterKnife.bind(this);
         initViews(sISO);
 
-        if (Parameter.getHrProvider()==null){
 
-            Log.d(LTAG, "Create HR Provider");
-
-            Parameter.setHrProvider(new HumanReadableNumber() {
-                @Override
-                public String roundNumber(String value, int accuracy) {
-                    return Util.roundNumber(value, accuracy);
-                }
-
-                @Override
-                public String getPrefixForNumber(String value) {
-                    return Util.getPrefixForNumber(value, getApplicationContext());
-                }
-            });
-        }
     }
 
     private void initViews(String sISO) {
@@ -87,8 +74,9 @@ public class CountryAct extends AppCompatActivity {
     }
 
     private void initObservers(String sISO) {
-        CountryViewModel viewModel = new ViewModelProvider(this, new ModelFactory(sISO))
-                .get(CountryViewModel.class);
+        CountryActViewModel viewModel = new ViewModelProvider(this
+                , new CountryActViewModel.ModelFactory(sISO, getApplication()))
+                .get(CountryActViewModel.class);
 
         PopOnKmObserver popPerKm = new PopOnKmObserver();
 
@@ -255,79 +243,5 @@ public class CountryAct extends AppCompatActivity {
         showInfo(getResources().getString(name), value);
     }
 
-
-
-    /* ======================================================================================
-                                            ViewModel                                      */
-
-    static class CountryViewModel extends ViewModel {
-
-        private final String iso;
-        private final WikiRxDataProvider prov;
-
-        private LiveData<ArrayList<Parameter>> wikiData;
-        private LiveData<ArrayList<String>> ldMemberships;
-        private LiveData<ArrayList<Parameter>> ldGDP;
-        private LiveData<ArrayList<Parameter>> ldHDI;
-        private LiveData<ArrayList<Parameter>> ldPopulation;
-
-        public CountryViewModel(String iso) {
-            this.iso = iso;
-            prov = new WikiRxDataProvider();
-        }
-
-        LiveData<ArrayList<Parameter>> getCountryInfo() {
-
-            if (wikiData == null) {
-                prov.makeWDRequests(iso);
-                wikiData = prov.getMainInfo();
-            }
-
-            return wikiData;
-        }
-
-        LiveData<ArrayList<String>> getMembership(){
-
-            if (ldMemberships == null) {
-                        ldMemberships = prov.getMemberships();
-            }
-            return ldMemberships;
-        }
-
-        LiveData<ArrayList<Parameter>>  getLdGDP(){
-            if (ldGDP ==null) ldGDP = prov.getLdGDPperCapita();
-            return ldGDP;
-        }
-
-        LiveData<ArrayList<Parameter>>  getLdHDI(){
-            if (ldHDI ==null) ldHDI = prov.getLdHDI();
-            return ldHDI;
-        }
-
-        LiveData<ArrayList<Parameter>> getLdPopulation(){
-            if (ldPopulation ==null) ldPopulation = prov.getLdPop();
-            return ldPopulation;
-        }
-    }
-
-
-    static class ModelFactory extends ViewModelProvider.NewInstanceFactory{
-
-        private final String iso;
-
-        public ModelFactory(String iso) {
-            super();
-            this.iso = iso;
-        }
-
-        @NonNull
-        @Override
-        public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-            if (modelClass == CountryViewModel.class) {
-                return (T) new CountryViewModel(iso);
-            }
-            return super.create(modelClass);
-        }
-    }
 
 }
