@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     // This method change input parameters!
-    private void getFieldsFromCursor(Cursor cursor, String sISO, Integer euni, Integer schen){
+    private void getFieldsFromCursor(final Cursor cursor, String sISO, Integer euni, Integer schen){
 
         sISO = cursor.getString(cursor.getColumnIndex(DataRepository.COL_NAME));
         euni = cursor.getInt(cursor.getColumnIndex(DataRepository.COL_EU));
