@@ -25,10 +25,7 @@ import netdesigntool.com.eunions.databinding.ActCountryBinding;
 import netdesigntool.com.eunions.wiki.Parameter;
 
 import static netdesigntool.com.eunions.Util.LTAG;
-import static netdesigntool.com.eunions.Util.getIntegerPart;
 import static netdesigntool.com.eunions.Util.isConnected;
-import static netdesigntool.com.eunions.wiki.SPARQLquery.AREA_ID;
-import static netdesigntool.com.eunions.wiki.SPARQLquery.POP_ID;
 
 
 public class CountryAct extends AppCompatActivity {
@@ -57,7 +54,7 @@ public class CountryAct extends AppCompatActivity {
                     , Snackbar.LENGTH_LONG)
                     .show();
         }else {
-            initObservers(sISO);
+            subscribeObservers(sISO);
         }
 
         initViews(sISO);
@@ -73,29 +70,18 @@ public class CountryAct extends AppCompatActivity {
         binding.tvLinkToGuide.setMovementMethod( LinkMovementMethod.getInstance());
     }
 
-    private void initObservers(String sISO) {
+    private void subscribeObservers(String sISO) {
+
         CountryActViewModel viewModel = new ViewModelProvider(this
                 , new CountryActViewModel.ModelFactory(sISO, getApplication()))
                 .get(CountryActViewModel.class);
 
-        PopOnKmObserver popPerKm = new PopOnKmObserver();
 
-        LiveData<ArrayList<Parameter>> liveData = viewModel.getCountryInfo();
+        LiveData<ArrayList<Parameter>> liveData = viewModel.getResultStr();
         liveData.observe(this, new myObserver());
-        liveData.observe(this, popPerKm);
 
         LiveData<ArrayList<String>> ldMembers = viewModel.getMembership();
         ldMembers.observe(this, new MembershipsObserver());
-
-        LiveData<ArrayList<Parameter>> ldGDP = viewModel.getLdGDP();
-        ldGDP.observe(this, new myObserver());
-
-        LiveData<ArrayList<Parameter>> ldPopulation = viewModel.getLdPopulation();
-        ldPopulation.observe(this, new myObserver());
-        ldPopulation.observe(this, popPerKm);
-
-        LiveData<ArrayList<Parameter>> ldHDI = viewModel.getLdHDI();
-        ldHDI.observe(this, new myObserver());
     }
 
 
@@ -134,70 +120,6 @@ public class CountryAct extends AppCompatActivity {
             showInfo(R.string.memberships, membr.substring(0,membr.length()-2));
         }
     }
-
-
-
-
-    /*  Handler of Density of Population for a country.
-        Density calculation from quantity of pop and area.
-     */
-    class PopOnKmObserver implements Observer<ArrayList<Parameter>> {
-
-        String pop, area, year;
-
-        @Override
-        public void onChanged(@Nullable ArrayList<Parameter> paramList) {
-
-            Log.d(LTAG, "PopOnKmObserver.onChanged("+ paramList +")");
-
-            if (paramList ==null) return;
-
-            ListIterator<Parameter> liParams = paramList.listIterator();
-
-            Parameter param;
-            while (liParams.hasNext()) {
-
-                param = liParams.next();
-                if (POP_ID.equals(param.pId)) {
-                    pop = param.pValue;
-                    year = param.pDate;
-                }
-
-                if (AREA_ID.equals(param.pId)) area = param.pValue;
-            }
-
-            param = getDensity();
-            if (param !=null) showInfo(param);
-        }
-
-
-        // Calculate density
-        private Parameter getDensity(){
-
-            if (pop ==null || pop.isEmpty() || area ==null || area.isEmpty()) return null;
-
-            int iPop, iArea;
-            try {
-                iPop = Integer.parseInt(pop);
-                iArea = Integer.parseInt(getIntegerPart(area));
-            } catch (NumberFormatException e) {
-                return null;
-            }
-
-            return new Parameter(""
-                    , getResources().getString(R.string.density)
-                    , ""
-                    , year
-                    , String.valueOf(iPop / iArea)
-                    , false
-                    , getResources().getString(R.string.density_unit));
-
-
-        }
-    }
-
-
-
 
 
     @SuppressLint("SetTextI18n")

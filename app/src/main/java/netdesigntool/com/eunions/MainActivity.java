@@ -18,6 +18,7 @@ import com.google.android.flexbox.FlexboxLayout;
 import netdesigntool.com.eunions.country.CountryAct;
 import netdesigntool.com.eunions.databinding.ActMainBinding;
 
+import static netdesigntool.com.eunions.Util.IS_DEB;
 import static netdesigntool.com.eunions.Util.LTAG;
 
 public class MainActivity extends AppCompatActivity
@@ -73,6 +74,8 @@ public class MainActivity extends AppCompatActivity
         View vFlexBoxItem = this.getLayoutInflater().inflate(R.layout.item, null);
         vFlexBoxItem.setOnClickListener(this);
 
+        vFlexBoxItem.setTag(country.getISO());
+
         TextView tvCountry = vFlexBoxItem.findViewById(R.id.tvCountry);
         ImageView ivFlag = vFlexBoxItem.findViewById(R.id.ivFlag);
 
@@ -86,7 +89,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onClick(View view) {
         String country = view.getTag().toString();
-        Log.d(LTAG,"Click on Country="+ country +";");
+        if (IS_DEB) Log.d(LTAG,"Click on Country="+ country +";");
 
         // Start Activity with detail about selected country
         Intent intent = new Intent(this, CountryAct.class);

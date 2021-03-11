@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 import static netdesigntool.com.eunions.DataRepository.getDataRepository;
 
-class MainActViewModel extends AndroidViewModel {
+public class MainActViewModel extends AndroidViewModel {
 
     MutableLiveData<Country[]> ldSchAndEu;
     MutableLiveData<Country[]> ldSchen;
@@ -22,7 +22,11 @@ class MainActViewModel extends AndroidViewModel {
 
     private void fetchLdCountriesByType(){
 
-        Country[] countries = getDataRepository().loadCountries(getApplication().getApplicationContext());
+        Country[] countries = getDataRepository().loadCountries(getApplication().getApplicationContext());   // todo: делать Асинхронно!!
+
+        ldSchAndEu = new MutableLiveData<>();
+        ldSchen = new MutableLiveData<>();
+        ldEu = new MutableLiveData<>();
 
         ArrayList<Country> eu = new ArrayList<>(10);
         ArrayList<Country> schen = new ArrayList<>(10);
@@ -36,9 +40,9 @@ class MainActViewModel extends AndroidViewModel {
             if (c.isSchen()) schen.add(c);            // Shengen only
         }
 
-        ldSchAndEu.setValue(schAndEu.toArray(new Country[schAndEu.size()]));
-        ldSchen.setValue(schen.toArray(new Country[schen.size()]));
-        ldEu.setValue(eu.toArray(new Country[eu.size()]));
+        ldSchAndEu.setValue(schAndEu.toArray(new Country[0]));
+        ldSchen.setValue(schen.toArray(new Country[0]));
+        ldEu.setValue(eu.toArray(new Country[0]));
     }
 
 
@@ -51,15 +55,16 @@ class MainActViewModel extends AndroidViewModel {
     }
 
     public MutableLiveData<Country[]> getSchen(){
+
         if (ldSchen ==null) fetchLdCountriesByType();
 
-        return ldSchAndEu;
+        return ldSchen;
     }
 
     public MutableLiveData<Country[]> getEu(){
 
         if (ldEu ==null) fetchLdCountriesByType();
 
-        return ldSchAndEu;
+        return ldEu;
     }
 }
