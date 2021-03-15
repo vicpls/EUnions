@@ -3,14 +3,11 @@ package netdesigntool.com.eunions.country;
 import android.app.Application;
 import android.util.Log;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModel;
-import androidx.lifecycle.ViewModelProvider;
 
 import java.util.ArrayList;
 import java.util.ListIterator;
@@ -41,24 +38,6 @@ public class CountryActViewModel extends AndroidViewModel {
     private MediatorLiveData<ArrayList<Parameter>> resultStr;
 
 
-    MediatorLiveData<ArrayList<Parameter>> getResultStr(){
-
-        if (resultStr ==null) {
-            resultStr = new MediatorLiveData<>();
-            addSourceToCountryInfoLD(resultStr);
-        }
-        return resultStr;
-    }
-
-    void addSourceToCountryInfoLD(MediatorLiveData<ArrayList<Parameter>> cInfo){
-
-        cInfo.addSource(getCountryInfo(), PopOnKmObserver.getInstance(getApplication(), cInfo));
-        cInfo.addSource(getLdGDP(), PopOnKmObserver.getInstance(getApplication(), cInfo));
-        cInfo.addSource(getLdHDI(), PopOnKmObserver.getInstance(getApplication(), cInfo));
-        cInfo.addSource(getLdPopulation(), PopOnKmObserver.getInstance(getApplication(), cInfo));
-    }
-
-
     public CountryActViewModel(String iso, Application app) {
         super(app);
 
@@ -81,6 +60,24 @@ public class CountryActViewModel extends AndroidViewModel {
                 }
             });
         }
+    }
+
+
+    MediatorLiveData<ArrayList<Parameter>> getResultStr(){
+
+        if (resultStr ==null) {
+            resultStr = new MediatorLiveData<>();
+            addSourceToCountryInfoLD(resultStr);
+        }
+        return resultStr;
+    }
+
+    void addSourceToCountryInfoLD(MediatorLiveData<ArrayList<Parameter>> cInfo){
+
+        cInfo.addSource(getCountryInfo(), PopOnKmObserver.getInstance(getApplication(), cInfo));
+        cInfo.addSource(getLdGDP(), PopOnKmObserver.getInstance(getApplication(), cInfo));
+        cInfo.addSource(getLdHDI(), PopOnKmObserver.getInstance(getApplication(), cInfo));
+        cInfo.addSource(getLdPopulation(), PopOnKmObserver.getInstance(getApplication(), cInfo));
     }
 
     LiveData<ArrayList<Parameter>> getCountryInfo() {
@@ -194,26 +191,4 @@ public class CountryActViewModel extends AndroidViewModel {
     }
 
 
-
-
-    static class ModelFactory extends ViewModelProvider.AndroidViewModelFactory{
-
-        private final String iso;
-        private final Application app;
-
-        public ModelFactory(String iso, Application app) {
-            super(app);
-            this.iso = iso;
-            this.app = app;
-        }
-
-        @NonNull
-        @Override
-        public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-            if (modelClass == CountryActViewModel.class) {
-                return (T) new CountryActViewModel(iso, app);
-            }
-            return super.create(modelClass);
-        }
-    }
 }

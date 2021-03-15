@@ -21,6 +21,7 @@ import netdesigntool.com.eunions.databinding.ActMainBinding;
 import static netdesigntool.com.eunions.Util.IS_DEB;
 import static netdesigntool.com.eunions.Util.LTAG;
 
+//@AndroidEntryPoint
 public class MainActivity extends AppCompatActivity
                             implements View.OnClickListener
 {

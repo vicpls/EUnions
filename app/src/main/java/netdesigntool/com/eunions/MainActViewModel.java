@@ -10,12 +10,14 @@ import java.util.ArrayList;
 
 import static netdesigntool.com.eunions.DataRepository.getDataRepository;
 
+//@HiltViewModel
 public class MainActViewModel extends AndroidViewModel {
 
     MutableLiveData<Country[]> ldSchAndEu;
     MutableLiveData<Country[]> ldSchen;
     MutableLiveData<Country[]> ldEu;
 
+    //@Inject
     public MainActViewModel(@NonNull Application application) {
         super(application);
     }

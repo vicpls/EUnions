@@ -73,7 +73,7 @@ public class CountryAct extends AppCompatActivity {
     private void subscribeObservers(String sISO) {
 
         CountryActViewModel viewModel = new ViewModelProvider(this
-                , new CountryActViewModel.ModelFactory(sISO, getApplication()))
+                , new ModelFactory(sISO, getApplication()))
                 .get(CountryActViewModel.class);
 
 
