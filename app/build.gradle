@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'dagger.hilt.android.plugin'
 
 android {
     compileSdkVersion 30
@@ -105,7 +106,7 @@ dependencies {
 
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'androidx.appcompat:appcompat:1.3.0-beta01'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.0-alpha2'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.0-beta01'
     //Test
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test:runner:1.3.0'
@@ -122,22 +123,19 @@ dependencies {
     implementation 'com.google.android.material:material:1.3.0'
     //
     def lifeCycleVer = '2.3.0'
-    //implementation "androidx.lifecycle:lifecycle-extensions:${lifeCycleVer}"
-    //annotationProcessor "androidx.lifecycle:lifecycle-compiler:${lifeCycleVer}"
     implementation "androidx.lifecycle:lifecycle-viewmodel:${lifeCycleVer}"
     implementation "androidx.lifecycle:lifecycle-common-java8:${lifeCycleVer}"
 
     implementation 'com.google.android:flexbox:1.1.0'
     //
-    /*def butKnVer = '10.2.3'
-    implementation "com.jakewharton:butterknife:${butKnVer}"
-    annotationProcessor "com.jakewharton:butterknife-compiler:${butKnVer}"*/
+
     // wiki data
     def wiki = 'org.wikidata.wdtk'
     def wikiVer = '0.11.1'
     implementation "${wiki}:wdtk-wikibaseapi:${wikiVer}"
     implementation "${wiki}:wdtk-datamodel:${wikiVer}"
     implementation 'org.slf4j:slf4j-log4j12:1.8.0-beta4'
+
     // Retrofit
     def retrofitVer = '2.5.0'
     implementation "com.squareup.retrofit2:retrofit:${retrofitVer}"
@@ -145,13 +143,25 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-moshi:${retrofitVer}"
     implementation "com.squareup.retrofit2:adapter-rxjava2:${retrofitVer}"
     implementation 'com.squareup.okhttp3:logging-interceptor:3.14.1'
+
     // RxJava
     implementation 'io.reactivex.rxjava2:rxjava:2.2.8'
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
+
     // AboutActivity
     implementation 'com.github.biagiopietro:AboutActivity:1.4'
-    //implementation "com.android.support:support-annotations:${support_lib_ver}"
-    /*implementation "androidx.media:media:${support_lib_ver}"
-    implementation "androidx.core:core:${support_lib_ver}"
-    implementation "androidx.legacy:legacy-support-v4:${support_lib_ver}"*/
+
+    // *** Hilt ***
+    def hilt_ver = '2.33-beta'
+    implementation "com.google.dagger:hilt-android:${hilt_ver}"
+    annotationProcessor "com.google.dagger:hilt-compiler:${hilt_ver}"
+
+    // For instrumentation tests
+    androidTestImplementation  "com.google.dagger:hilt-android-testing:${hilt_ver}"
+    androidTestAnnotationProcessor "com.google.dagger:hilt-compiler:${hilt_ver}"
+
+    // For local unit tests
+    testImplementation "com.google.dagger:hilt-android-testing:${hilt_ver}"
+    testAnnotationProcessor "com.google.dagger:hilt-compiler:${hilt_ver}"
+
 }

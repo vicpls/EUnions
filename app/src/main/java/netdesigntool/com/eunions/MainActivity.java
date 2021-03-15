@@ -15,12 +15,14 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.flexbox.FlexboxLayout;
 
+import dagger.hilt.android.AndroidEntryPoint;
 import netdesigntool.com.eunions.country.CountryAct;
 import netdesigntool.com.eunions.databinding.ActMainBinding;
 
 import static netdesigntool.com.eunions.Util.IS_DEB;
 import static netdesigntool.com.eunions.Util.LTAG;
 
+@AndroidEntryPoint
 public class MainActivity extends AppCompatActivity
                             implements View.OnClickListener
 {

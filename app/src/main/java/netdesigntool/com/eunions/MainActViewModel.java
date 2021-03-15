@@ -8,14 +8,20 @@ import androidx.lifecycle.MutableLiveData;
 
 import java.util.ArrayList;
 
+import javax.inject.Inject;
+
+import dagger.hilt.android.lifecycle.HiltViewModel;
+
 import static netdesigntool.com.eunions.DataRepository.getDataRepository;
 
+@HiltViewModel
 public class MainActViewModel extends AndroidViewModel {
 
     MutableLiveData<Country[]> ldSchAndEu;
     MutableLiveData<Country[]> ldSchen;
     MutableLiveData<Country[]> ldEu;
 
+    @Inject
     public MainActViewModel(@NonNull Application application) {
         super(application);
     }
