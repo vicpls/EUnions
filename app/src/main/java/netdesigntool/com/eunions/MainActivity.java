@@ -18,7 +18,6 @@ import com.google.android.flexbox.FlexboxLayout;
 import netdesigntool.com.eunions.country.CountryAct;
 import netdesigntool.com.eunions.databinding.ActMainBinding;
 
-import static netdesigntool.com.eunions.Util.IS_DEB;
 import static netdesigntool.com.eunions.Util.LTAG;
 
 public class MainActivity extends AppCompatActivity
@@ -89,7 +88,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onClick(View view) {
         String country = view.getTag().toString();
-        if (IS_DEB) Log.d(LTAG,"Click on Country="+ country +";");
+        Log.d(LTAG,"Click on Country="+ country +";");
 
         // Start Activity with detail about selected country
         Intent intent = new Intent(this, CountryAct.class);

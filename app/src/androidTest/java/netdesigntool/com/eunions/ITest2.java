@@ -25,14 +25,6 @@ public class ITest2 {
         intContAct.putExtra(COUNTRY_ISO, "ee");
     }
 
-//    @BeforeClass
-//    public void befor(){
-//
-//        intContAct.putExtra(COUNTRY_ISO, "ee");
-//
-//
-//    }
-
 
     @Rule
     public ActivityScenarioRule<CountryAct> actRule = new ActivityScenarioRule<CountryAct>(intContAct);

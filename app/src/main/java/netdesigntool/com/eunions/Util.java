@@ -14,7 +14,6 @@ import java.util.Locale;
 public final class Util {
 
     final public static String LTAG = "EUnions";
-    final public static boolean IS_DEB = BuildConfig.DEBUG;
 
     /** Get only integer part of number in String.
      *

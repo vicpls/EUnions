@@ -18,7 +18,6 @@ import netdesigntool.com.eunions.wiki.HumanReadableNumber;
 import netdesigntool.com.eunions.wiki.Parameter;
 import netdesigntool.com.eunions.wiki.WikiRxDataProvider;
 
-import static netdesigntool.com.eunions.Util.IS_DEB;
 import static netdesigntool.com.eunions.Util.LTAG;
 import static netdesigntool.com.eunions.Util.getIntegerPart;
 import static netdesigntool.com.eunions.wiki.SPARQLquery.AREA_ID;
@@ -45,8 +44,6 @@ public class CountryActViewModel extends AndroidViewModel {
         prov = new WikiRxDataProvider();
 
         if (Parameter.getHrProvider()==null){
-
-            if (IS_DEB) Log.d(LTAG, "Create HR Provider");
 
             Parameter.setHrProvider(new HumanReadableNumber() {
                 @Override
@@ -141,7 +138,7 @@ public class CountryActViewModel extends AndroidViewModel {
         @Override
         public void onChanged(@Nullable ArrayList<Parameter> paramList) {
 
-            if (IS_DEB) Log.d(LTAG, "PopOnKmObserver.onChanged("+ paramList +")");
+            Log.d(LTAG, "PopOnKmObserver.onChanged("+ paramList +")");
 
             if (paramList ==null) return;
 
