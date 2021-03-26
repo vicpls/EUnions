@@ -48,14 +48,6 @@ public class InstrumentedTest {
 
 
 
-    /*@Test
-    public void useAppContext() {
-        // Context of the app under test.
-        Context appContext = InstrumentationRegistry.getTargetContext();
-        assertEquals("netdesigntool.com.eunions", appContext.getPackageName());
-    }*/
-
-
     //Is Flag icon viewed?
     @Test
     public void isFlagViewed(){
@@ -82,10 +74,10 @@ public class InstrumentedTest {
 
         Espresso.onView(ViewMatchers.withTagValue(Matchers.is("at"))).perform(click());
 
-        Intents.intended(hasComponent(hasShortClassName("netdesigntool.com.eunions.CountryAct")));
+        Intents.intended(hasComponent(hasShortClassName("netdesigntool.com.eunions.country.CountryAct")));
 
         try {
-            Thread.sleep(3000);
+            Thread.sleep(5000);
         }catch (InterruptedException ignored){}
 
         //await().atMost(Duration.TWO_SECONDS).until();

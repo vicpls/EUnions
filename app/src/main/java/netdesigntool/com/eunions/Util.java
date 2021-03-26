@@ -15,7 +15,6 @@ public final class Util {
 
     final public static String LTAG = "EUnions";
 
-
     /** Get only integer part of number in String.
      *
      * @param value String that can parsing to floating

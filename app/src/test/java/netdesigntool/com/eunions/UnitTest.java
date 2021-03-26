@@ -1,21 +1,32 @@
 package netdesigntool.com.eunions;
 
+import android.content.Context;
+import android.content.res.Resources;
+
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import java.text.DecimalFormatSymbols;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * Example local unit test, which will execute on the development machine (host).
  *
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
+
+@RunWith(MockitoJUnitRunner.class)
 public class UnitTest {
 
     // Test of Util.getIntegerPart
     @Test
-    public void partingNumberString(){
+    public void test_getIntegerPart(){
         assertEquals("123", Util.getIntegerPart("123.456"));
         assertEquals("", Util.getIntegerPart(".123456"));
         assertEquals("123", Util.getIntegerPart("123"));
@@ -46,7 +57,7 @@ public class UnitTest {
     }*/
 
     @Test
-    public void round_number_value_inString(){
+    public void test_roundNumber(){
 
         char delim = DecimalFormatSymbols.getInstance().getDecimalSeparator();
 
@@ -58,5 +69,37 @@ public class UnitTest {
         assertEquals("123"+delim+"4", Util.roundNumber("123400", 2));
         assertEquals("12"+delim+"34", Util.roundNumber("12345",2));
     }
+
+
+    @Mock
+    Context mContext;
+    @Mock
+    Resources mRes;
+
+    @Before
+    public void init_tests(){
+        mContext = mock(Context.class);
+        mRes = mock(Resources.class);
+
+        when(mContext.getResources()).thenReturn(mRes);
+    }
+
+    @Test
+    public void test_getPrefixForNumber(){
+
+        String ths = "ths";
+        String m = "m";
+        String b = "b";
+
+        when(mRes.getString(R.string.thousand)).thenReturn(ths);
+        when(mRes.getString(R.string.million)).thenReturn(m);
+        when(mRes.getString(R.string.billion)).thenReturn(b);
+
+        assertEquals("", Util.getPrefixForNumber("123", mContext));
+        assertEquals(ths, Util.getPrefixForNumber("123000", mContext));
+        assertEquals(m, Util.getPrefixForNumber("123000000", mContext));
+        assertEquals(b, Util.getPrefixForNumber("123000000000", mContext));
+    }
+
 
 }
