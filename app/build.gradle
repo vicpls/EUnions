@@ -121,13 +121,13 @@ allprojects {
 dependencies {
 
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'androidx.appcompat:appcompat:1.3.0-beta01'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.0-beta01'
+    implementation 'androidx.appcompat:appcompat:1.4.0-rc01'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.1'
     //
-    implementation "androidx.recyclerview:recyclerview:1.1.0"
-    implementation 'com.google.android.material:material:1.3.0'
+    implementation 'androidx.recyclerview:recyclerview:1.2.1'
+    implementation 'com.google.android.material:material:1.4.0'
     //
-    def lifeCycleVer = '2.3.0'
+    def lifeCycleVer = '2.4.0'
     implementation "androidx.lifecycle:lifecycle-viewmodel:${lifeCycleVer}"
     implementation "androidx.lifecycle:lifecycle-common-java8:${lifeCycleVer}"
 
@@ -139,11 +139,11 @@ dependencies {
     testImplementation 'org.mockito:mockito-core:2.27.0'
     //
     // AndroidTest
-    androidTestImplementation 'androidx.test:runner:1.3.0'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
-    androidTestImplementation 'androidx.test:rules:1.3.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-intents:3.3.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    androidTestImplementation 'androidx.test:runner:1.4.0'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation 'androidx.test:rules:1.4.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-intents:3.4.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
     //androidTestImplementation 'org.hamcrest:hamcrest:2.1'
     //androidTestImplementation 'org.awaitility:awaitility:4.0.3'
 
@@ -157,7 +157,7 @@ dependencies {
     implementation 'org.slf4j:slf4j-log4j12:1.8.0-beta4'
 
     // Retrofit
-    def retrofitVer = '2.5.0'
+    def retrofitVer = '2.9.0'
     implementation "com.squareup.retrofit2:retrofit:${retrofitVer}"
     //implementation "com.squareup.retrofit2:converter-gson:${retrofitVer}"
     implementation "com.squareup.retrofit2:converter-moshi:${retrofitVer}"
@@ -170,6 +170,17 @@ dependencies {
 
     // AboutActivity
     implementation 'com.github.biagiopietro:AboutActivity:1.4'
+
+
+    // =================== Firebase ======================================
+    // Import the BoM for the Firebase platform
+    implementation platform('com.google.firebase:firebase-bom:29.0.0')
+
+    // Declare the dependencies for the desired Firebase products without specifying versions
+    // For example, declare the dependencies for Firebase Authentication
+    implementation 'com.google.firebase:firebase-auth'
+    // ==================================================================
+
 
     // *** Hilt ***
     /*def hilt_ver = '2.33-beta'
