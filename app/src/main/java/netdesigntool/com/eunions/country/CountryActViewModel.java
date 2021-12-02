@@ -15,7 +15,7 @@ import java.util.ListIterator;
 import netdesigntool.com.eunions.R;
 import netdesigntool.com.eunions.Util;
 import netdesigntool.com.eunions.wiki.HumanReadableNumber;
-import netdesigntool.com.eunions.wiki.Parameter;
+import netdesigntool.com.eunions.Parameter;
 import netdesigntool.com.eunions.wiki.WikiRxDataProvider;
 
 import static netdesigntool.com.eunions.Util.LTAG;
