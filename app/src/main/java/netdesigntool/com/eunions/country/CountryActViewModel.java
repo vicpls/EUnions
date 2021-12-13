@@ -1,6 +1,12 @@
 package netdesigntool.com.eunions.country;
 
+import static netdesigntool.com.eunions.Util.LTAG;
+import static netdesigntool.com.eunions.Util.getIntegerPart;
+import static netdesigntool.com.eunions.wiki.SPARQLquery.AREA_ID;
+import static netdesigntool.com.eunions.wiki.SPARQLquery.POP_ID;
+
 import android.app.Application;
+import android.content.res.Resources;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
@@ -12,16 +18,11 @@ import androidx.lifecycle.Observer;
 import java.util.ArrayList;
 import java.util.ListIterator;
 
+import netdesigntool.com.eunions.Parameter;
 import netdesigntool.com.eunions.R;
 import netdesigntool.com.eunions.Util;
 import netdesigntool.com.eunions.wiki.HumanReadableNumber;
-import netdesigntool.com.eunions.Parameter;
 import netdesigntool.com.eunions.wiki.WikiRxDataProvider;
-
-import static netdesigntool.com.eunions.Util.LTAG;
-import static netdesigntool.com.eunions.Util.getIntegerPart;
-import static netdesigntool.com.eunions.wiki.SPARQLquery.AREA_ID;
-import static netdesigntool.com.eunions.wiki.SPARQLquery.POP_ID;
 
 public class CountryActViewModel extends AndroidViewModel {
 
@@ -33,6 +34,7 @@ public class CountryActViewModel extends AndroidViewModel {
     private LiveData<ArrayList<Parameter>> ldGDP;
     private LiveData<ArrayList<Parameter>> ldHDI;
     private LiveData<ArrayList<Parameter>> ldPopulation;
+    private PopOnKmObserver popOnKmObserver;
 
     private MediatorLiveData<ArrayList<Parameter>> resultStr;
 
@@ -64,17 +66,21 @@ public class CountryActViewModel extends AndroidViewModel {
 
         if (resultStr ==null) {
             resultStr = new MediatorLiveData<>();
+
+            if (popOnKmObserver ==null) popOnKmObserver= new PopOnKmObserver();
+
             addSourceToCountryInfoLD(resultStr);
         }
+
         return resultStr;
     }
 
     void addSourceToCountryInfoLD(MediatorLiveData<ArrayList<Parameter>> cInfo){
 
-        cInfo.addSource(getCountryInfo(), PopOnKmObserver.getInstance(getApplication(), cInfo));
-        cInfo.addSource(getLdGDP(), PopOnKmObserver.getInstance(getApplication(), cInfo));
-        cInfo.addSource(getLdHDI(), PopOnKmObserver.getInstance(getApplication(), cInfo));
-        cInfo.addSource(getLdPopulation(), PopOnKmObserver.getInstance(getApplication(), cInfo));
+        cInfo.addSource(getCountryInfo(), popOnKmObserver);
+        cInfo.addSource(getLdGDP(), popOnKmObserver);
+        cInfo.addSource(getLdHDI(), popOnKmObserver);
+        cInfo.addSource(getLdPopulation(), popOnKmObserver);
     }
 
     LiveData<ArrayList<Parameter>> getCountryInfo() {
@@ -111,29 +117,18 @@ public class CountryActViewModel extends AndroidViewModel {
     }
 
 
-
-    /* Singleton.
-    Handler of Density of Population for a country.
+    /*
+        Handler of Density of Population for a country.
         Density calculation from quantity of pop and area.
      */
-    private static class PopOnKmObserver implements Observer<ArrayList<Parameter>> {
+    private class PopOnKmObserver implements Observer<ArrayList<Parameter>> {
 
-        static private PopOnKmObserver iam;
-        static private Application app;
-        static MediatorLiveData<ArrayList<Parameter>> source;
+        private String pop, area, year;
+        private boolean calculated = false;
 
-        String pop, area, year;
 
         private PopOnKmObserver(){}
 
-        synchronized static PopOnKmObserver getInstance(Application application, MediatorLiveData<ArrayList<Parameter>> source){
-
-            app = application;
-
-            if (iam ==null) iam = new PopOnKmObserver();
-            PopOnKmObserver.source = source;
-            return iam;
-        }
 
         @Override
         public void onChanged(@Nullable ArrayList<Parameter> paramList) {
@@ -159,14 +154,14 @@ public class CountryActViewModel extends AndroidViewModel {
             param = getDensity();
             if (param !=null) paramList.add(param);
 
-            source.setValue(paramList);
+            resultStr.setValue(paramList);
         }
 
 
         // Calculate density
         private Parameter getDensity(){
 
-            if (pop ==null || pop.isEmpty() || area ==null || area.isEmpty()) return null;
+            if (pop ==null || area ==null || calculated || pop.isEmpty() || area.isEmpty()) return null;
 
             int iPop, iArea;
             try {
@@ -176,13 +171,17 @@ public class CountryActViewModel extends AndroidViewModel {
                 return null;
             }
 
+            calculated = true;
+
+            Resources res = getApplication().getResources();
+
             return new Parameter(""
-                    , app.getResources().getString(R.string.density)
+                    , res.getString(R.string.density)
                     , ""
                     , year
                     , String.valueOf(iPop / iArea)
                     , false
-                    , app.getResources().getString(R.string.density_unit)
+                    , res.getString(R.string.density_unit)
             );
         }
     }

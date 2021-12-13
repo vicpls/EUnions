@@ -1,5 +1,17 @@
 package netdesigntool.com.eunions.wiki;
 
+import static netdesigntool.com.eunions.Util.LTAG;
+import static netdesigntool.com.eunions.Util.getIntegerPart;
+import static netdesigntool.com.eunions.wiki.SPARQLquery.AREA_ID;
+import static netdesigntool.com.eunions.wiki.SPARQLquery.BASE_URL;
+import static netdesigntool.com.eunions.wiki.SPARQLquery.CAP_CUR_AREA;
+import static netdesigntool.com.eunions.wiki.SPARQLquery.GDP_PER_CAPITA;
+import static netdesigntool.com.eunions.wiki.SPARQLquery.HUM_DEV_IND;
+import static netdesigntool.com.eunions.wiki.SPARQLquery.ISO_LANG;
+import static netdesigntool.com.eunions.wiki.SPARQLquery.MEMBER;
+import static netdesigntool.com.eunions.wiki.SPARQLquery.POPULATION;
+import static netdesigntool.com.eunions.wiki.SPARQLquery.POP_ID;
+
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
@@ -20,18 +32,6 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.moshi.MoshiConverterFactory;
-
-import static netdesigntool.com.eunions.Util.LTAG;
-import static netdesigntool.com.eunions.Util.getIntegerPart;
-import static netdesigntool.com.eunions.wiki.SPARQLquery.AREA_ID;
-import static netdesigntool.com.eunions.wiki.SPARQLquery.BASE_URL;
-import static netdesigntool.com.eunions.wiki.SPARQLquery.CAP_CUR_AREA;
-import static netdesigntool.com.eunions.wiki.SPARQLquery.GDP_PER_CAPITA;
-import static netdesigntool.com.eunions.wiki.SPARQLquery.HUM_DEV_IND;
-import static netdesigntool.com.eunions.wiki.SPARQLquery.ISO_LANG;
-import static netdesigntool.com.eunions.wiki.SPARQLquery.MEMBER;
-import static netdesigntool.com.eunions.wiki.SPARQLquery.POPULATION;
-import static netdesigntool.com.eunions.wiki.SPARQLquery.POP_ID;
 
 public class WikiRxDataProvider {
 
@@ -70,7 +70,7 @@ public class WikiRxDataProvider {
 
     public void makeWDRequests(String isoCountryCode){
 
-        if (BuildConfig.DEBUG) Log.d(LTAG, "WikiRxDataProvider.mekeWDRequests("+ isoCountryCode +")");
+        if (BuildConfig.DEBUG) Log.d(LTAG, "WikiRxDataProvider.makeWDRequests("+ isoCountryCode +")");
 
         requestCountryMainInfo(isoCountryCode);
         requestMemberships(isoCountryCode);

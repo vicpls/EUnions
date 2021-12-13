@@ -43,4 +43,6 @@
     <string name="thousand">тыс.</string>
     <string name="million">млн</string>
     <string name="billion">млрд</string>
+    <string name="title_rank_whi">Место в рейтинге по индексу счастья</string>
+    <string name="whi">Индекс счастья</string>
 </resources>

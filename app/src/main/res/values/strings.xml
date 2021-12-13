@@ -41,13 +41,15 @@
 
     <string name="cc0_summary" translatable="false">The person who associated a work with this deed has dedicated the work to the public domain by waiving all of his or her rights to the work worldwide under copyright law, including all related and neighboring rights, to the extent allowed by law.\n
         You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. See Other Information below.</string>
-    <string name="developed" translatable="false">Developed by HH Creative</string>
-    <string name="thanks">Thank you so much for downloading our application</string>
+    <string name="developed" translatable="false">Developed by Victor Efimov</string>
+    <string name="thanks">Thank you so much for downloading my application</string>
     <string name="share">Share with</string>
     <string name="trv_guide">Travel guide</string>
     <string name="million">m</string>
     <string name="thousand">ths</string>
     <string name="billion">bn</string>
 
+    <string name="title_rank_whi">Rank in the World Happiness Index</string>
+    <string name="whi">Happiness Index</string>
 
 </resources>

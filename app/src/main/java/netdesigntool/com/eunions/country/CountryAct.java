@@ -1,5 +1,8 @@
 package netdesigntool.com.eunions.country;
 
+import static netdesigntool.com.eunions.Util.LTAG;
+import static netdesigntool.com.eunions.Util.isConnected;
+
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
@@ -10,6 +13,7 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -18,14 +22,14 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.ListIterator;
+import java.util.Map;
 
+import netdesigntool.com.eunions.Parameter;
 import netdesigntool.com.eunions.R;
 import netdesigntool.com.eunions.Util;
+import netdesigntool.com.eunions.chart.ChartFragment;
+import netdesigntool.com.eunions.chart.FirebaseViewModel;
 import netdesigntool.com.eunions.databinding.ActCountryBinding;
-import netdesigntool.com.eunions.Parameter;
-
-import static netdesigntool.com.eunions.Util.LTAG;
-import static netdesigntool.com.eunions.Util.isConnected;
 
 
 public class CountryAct extends AppCompatActivity {
@@ -82,6 +86,12 @@ public class CountryAct extends AppCompatActivity {
 
         LiveData<ArrayList<String>> ldMembers = viewModel.getMembership();
         ldMembers.observe(this, new MembershipsObserver());
+
+        FirebaseViewModel fbVModel = new ViewModelProvider(this).get(FirebaseViewModel.class);
+        fbVModel.requestWHI(sISO, "whi");
+        fbVModel.requestRankWHI(sISO, getResources().getString(R.string.title_rank_whi));
+        fbVModel.getLdRankWHI().observe(this, new FbParameterObserver());
+        fbVModel.getLdWHI().observe(this, new FbChartObserver());
     }
 
 
@@ -118,6 +128,60 @@ public class CountryAct extends AppCompatActivity {
             }
 
             showInfo(R.string.memberships, membr.substring(0,membr.length()-2));
+        }
+    }
+
+
+    class FbParameterObserver implements Observer<Map<String, Float>>{
+        @Override
+        public void onChanged(Map<String, Float> fbParam) {
+
+            if (fbParam ==null || fbParam.isEmpty()) {
+                Log.d(LTAG, this.getClass().getSimpleName() + ": Null or empty answer from Firebase.");
+                return;
+            }
+
+            // Only first element of fbParam shows
+            for (String k : fbParam.keySet()) {
+                showInfo(k, formatValue(fbParam.get(k)));
+                break;
+            }
+        }
+
+        String formatValue(Float f) {
+            String formatedValue;
+            if (f-f.intValue() < 0.001 ) {
+                formatedValue = Util.getIntegerPart(f.toString());
+            }else{
+                formatedValue = f.toString();
+            }
+            return formatedValue;
+        }
+    }
+
+
+
+    class FbChartObserver implements Observer<Map<String, Float>>{
+        final String tag = "chartWHI";
+
+        @Override
+        public void onChanged(Map<String, Float> fbChartData) {
+
+            if (fbChartData ==null || fbChartData.isEmpty()) {
+                Log.d(LTAG, this.getClass().getSimpleName() + ": Null or empty answer from Firebase.");
+                return;
+            }
+
+            // Create place for fragment
+            View chartItem = CountryAct.this.getLayoutInflater().inflate(R.layout.act_country_chart, null, false);
+            binding.scrollBox.addView(chartItem);
+
+            FragmentManager frm = CountryAct.this.getSupportFragmentManager();
+            frm.beginTransaction()
+                    .setReorderingAllowed(true)
+                    .replace(R.id.frContainerView , ChartFragment.class, null, tag)
+                    .commit();
+
         }
     }
 
@@ -164,6 +228,5 @@ public class CountryAct extends AppCompatActivity {
     private void showInfo(@StringRes int name, Object value){
         showInfo(getResources().getString(name), value);
     }
-
 
 }
