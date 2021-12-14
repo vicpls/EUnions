@@ -89,7 +89,7 @@ public class CountryAct extends AppCompatActivity {
 
         FirebaseViewModel fbVModel = new ViewModelProvider(this).get(FirebaseViewModel.class);
         fbVModel.requestWHI(sISO, "whi");
-        fbVModel.requestRankWHI(sISO, getResources().getString(R.string.title_rank_whi));
+        fbVModel.requestRankWHI(sISO, "rank");
         fbVModel.getLdRankWHI().observe(this, new FbParameterObserver());
         fbVModel.getLdWHI().observe(this, new FbChartObserver());
     }
@@ -132,9 +132,9 @@ public class CountryAct extends AppCompatActivity {
     }
 
 
-    class FbParameterObserver implements Observer<Map<String, Float>>{
+    class FbParameterObserver implements Observer<Map<String, Number>>{
         @Override
-        public void onChanged(Map<String, Float> fbParam) {
+        public void onChanged(Map<String, Number> fbParam) {
 
             if (fbParam ==null || fbParam.isEmpty()) {
                 Log.d(LTAG, this.getClass().getSimpleName() + ": Null or empty answer from Firebase.");
@@ -142,20 +142,50 @@ public class CountryAct extends AppCompatActivity {
             }
 
             // Only first element of fbParam shows
-            for (String k : fbParam.keySet()) {
-                showInfo(k, formatValue(fbParam.get(k)));
-                break;
-            }
+            String year = getOne(fbParam);
+
+            showInfo(
+                    new Parameter(""
+                            , getResources().getString(R.string.title_rank_whi)
+                            , ""
+                            , year
+                            , formatValue( fbParam.get(year))
+                            , false
+                            , ""
+                    )
+            );
         }
 
-        String formatValue(Float f) {
-            String formatedValue;
-            if (f-f.intValue() < 0.001 ) {
-                formatedValue = Util.getIntegerPart(f.toString());
-            }else{
-                formatedValue = f.toString();
+
+        // TODO: return the last value!
+        private <T> String getOne(Map<String, T> mMap){
+
+            String result="";
+
+            for (String k : mMap.keySet()) {
+                result = k;
             }
-            return formatedValue;
+            return result;
+        }
+
+
+        String formatValue(Number num) {
+            String result;
+
+            if (num instanceof Float) {
+                Float f = num.floatValue();
+
+                if (f - f.intValue() < 0.001) {
+                    result = Util.getIntegerPart(f.toString());
+                } else {
+                    result = f.toString();
+                }
+
+            } else {
+                result = num.toString();
+            }
+
+            return result;
         }
     }
 

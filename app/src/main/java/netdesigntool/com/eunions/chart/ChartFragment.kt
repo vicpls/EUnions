@@ -30,6 +30,7 @@ class ChartFragment : Fragment() {
         return inflater.inflate(R.layout.fr_chart, container, false)
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -41,23 +42,11 @@ class ChartFragment : Fragment() {
     }
 
 
-
-
     class MyXAxisFormatter : ValueFormatter() {
         override fun getAxisLabel(value: Float, axis: AxisBase?): String {
             return value.toUInt().toString()
         }
 
-    }
-
-    private fun mapToEntryConverter(m: Map<String, Float>): List<Entry> {
-
-        val result = mutableListOf<Entry>()
-
-        for ((x, y) in m)
-            result.add(Entry(x.toFloat(), y.toFloat()))
-
-        return result.sortedBy { it.x }
     }
 
     private fun drawLine(rMap: Map<String, Float>) {
@@ -125,4 +114,15 @@ class ChartFragment : Fragment() {
         }
         return dataset
     }
+
+    private fun mapToEntryConverter(m: Map<String, Float>): List<Entry> {
+
+        val result = mutableListOf<Entry>()
+
+        for ((x, y) in m)
+            result.add(Entry(x.toFloat(), y.toFloat()))
+
+        return result.sortedBy { it.x }
+    }
+
 }

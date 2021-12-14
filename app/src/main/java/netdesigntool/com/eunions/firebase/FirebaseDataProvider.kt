@@ -29,7 +29,7 @@ class FirebaseDataProvider(cont :Context) {
      * Rank of country in the list of World Happiness Index.
      * Map of <year, value> where year as String
      */
-    var ldRankWHI : LiveData<Map<String, Float>> = MutableLiveData(HashMap())       // The rank of country in the WHI listing. <year, rank>
+    var ldRankWHI : LiveData<Map<String, Number>> = MutableLiveData(HashMap())       // The rank of country in the WHI listing. <year, rank>
 
     /**
      * Values of World Happiness Index
@@ -41,12 +41,9 @@ class FirebaseDataProvider(cont :Context) {
      */
     fun requestWHI(isoCountryCode :String, title: String) {
 
-        val request =  baseRef
-                .child(baseName)
-                .child(isoCountryCode.uppercase())
-                .child("whi")
+        val request = createRequest(isoCountryCode, "whi")
 
-        requestBaseWHI(request, ldWHI as MutableLiveData<Map<String, Float>>, title)
+        launchRequest(request, ldWHI as MutableLiveData<Map<String, Float>>, title)
     }
 
 
@@ -55,22 +52,30 @@ class FirebaseDataProvider(cont :Context) {
      */
     fun requestRankWHI(isoCountryCode :String, title: String) {
 
-        val request =  baseRef
+        val request =  createRequest(isoCountryCode,"whiRank")
+
+        launchRequest(request, ldRankWHI as MutableLiveData<Map<String, Float>>, title)
+    }
+
+
+    private fun createRequest(isoCountryCode: String, part: String): DatabaseReference{
+        return baseRef
             .child(baseName)
             .child(isoCountryCode.uppercase())
-            .child("Rank2020")
-
-        requestBaseWHI(request, ldRankWHI as MutableLiveData<Map<String, Float>>, title)
+            .child(part)
     }
 
 
     // Start the parametrised request to Firebase. Fetch result.
-    private fun requestBaseWHI(dbRef :DatabaseReference, result : MutableLiveData<Map<String, Float>>, title: String) {
+    private fun launchRequest(
+        dbRef: DatabaseReference,
+        result: MutableLiveData<Map<String, Float>>,
+        title: String
+    ) {
 
         thread.run {
 
-            dbRef
-                .get()
+            dbRef.get()
                 .addOnSuccessListener {
 
                     if (it?.value != null) {

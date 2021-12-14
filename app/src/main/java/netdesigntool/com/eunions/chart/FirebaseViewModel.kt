@@ -9,7 +9,7 @@ class FirebaseViewModel(app :Application) : AndroidViewModel(app) {
 
     private val fbProv: FirebaseDataProvider = FirebaseDataProvider(app)
     var ldWHI: LiveData<Map<String, Float>> = fbProv.ldWHI
-    var ldRankWHI: LiveData<Map<String, Float>> = fbProv.ldRankWHI
+    var ldRankWHI: LiveData<Map<String, Number>> = fbProv.ldRankWHI
 
     fun requestWHI(isoCountryCode: String, title: String ="WHI"){
         fbProv.requestWHI(isoCountryCode, title)
