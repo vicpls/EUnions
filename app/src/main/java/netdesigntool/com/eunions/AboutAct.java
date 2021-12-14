@@ -17,30 +17,40 @@ class AboutAct {
 
         final NoticesParcelable notices = new NoticesParcelable();
 
-        notices.addNotice(new Notice("Wikidata"
-                , "www.wikidata.org"
-                , "No Copyright"
-                , new CC0()));
+        License apacheLic2 = new ApacheSoftwareLicense20();
 
         notices.addNotice(
                 new Notice("AboutActivity"
                         , "https://github.com/biagiopietro/AboutActivity"
                         , "Copyright 2018 biagiopietro"
-                        , new ApacheSoftwareLicense20())
+                        , apacheLic2)
         );
 
-        notices.addNotice(new Notice("Flag Icon"
+        notices.addNotice(
+                new Notice("MPAndroidChart"
+                , "https://github.com/PhilJay/MPAndroidChart"
+                , "Copyright 2020 Philipp Jahoda"
+                , apacheLic2));
+
+        notices.addNotice(
+                new Notice("Flag Icon"
                 , "http://freeflagicons.com"
                 , "Copyright © 2012—2019 Redpixart LLC"
                 , new Redpixart())
         );
+
+        notices.addNotice(
+                new Notice("Wikidata"
+                , "www.wikidata.org"
+                , "No Copyright"
+                , new CC0()));
 
 
         new AboutActivityBuilder.Builder(act)
                 .showAppVersion(true, "Version: ", BuildConfig.VERSION_NAME)
                 .setAppLogo(R.mipmap.eur_union_192)
                 .setCompanyLogo(R.drawable.logo_mc_soft)
-                .showRateApp(true, act.getPackageName(), "Rate my app")
+                .showRateApp(true, act.getPackageName(), "Please, rate my app")
                 .showLicense(true, notices, "Credit", "Credit", "Close")
                 //.showLicense(true, credit, "Credit", "Credit", "Close")
                 .showGeneral(true
