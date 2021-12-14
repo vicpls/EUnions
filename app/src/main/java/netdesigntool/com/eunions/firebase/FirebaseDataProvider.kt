@@ -14,8 +14,12 @@ private const val ref ="https://fir-a0980.firebaseio.com/"  // URL of firebase
 
 class FirebaseDataProvider(cont :Context) {
 
+    private var thread = Thread()
+
     init {
-        FirebaseApp.initializeApp(cont)
+        thread.run {
+            FirebaseApp.initializeApp(cont)
+        }
     }
 
     private val baseRef = Firebase.database.getReferenceFromUrl(ref)
@@ -63,18 +67,21 @@ class FirebaseDataProvider(cont :Context) {
     // Start the parametrised request to Firebase. Fetch result.
     private fun requestBaseWHI(dbRef :DatabaseReference, result : MutableLiveData<Map<String, Float>>, title: String) {
 
-        dbRef
-            .get()
-            .addOnSuccessListener {
+        thread.run {
 
-                if (it?.value != null) {
-                    Log.d(LTAG, "Return=${it.value}")
-                    result.value = fbAnswerAdapter(it.value, title)
-                } else {
-                    Log.d(LTAG, "No WHI data for isoCountryCode=${dbRef}")
+            dbRef
+                .get()
+                .addOnSuccessListener {
+
+                    if (it?.value != null) {
+                        Log.d(LTAG, "Return=${it.value}")
+                        result.value = fbAnswerAdapter(it.value, title)
+                    } else {
+                        Log.d(LTAG, "No WHI data for isoCountryCode=${dbRef}")
+                    }
                 }
-            }
-            .addOnFailureListener { Log.e(LTAG, "Error getting data from firebase", it)}
+                .addOnFailureListener { Log.e(LTAG, "Error getting data from firebase", it) }
+        }
     }
 
     // Process of the subset, valued for this app only of the all possible answers
