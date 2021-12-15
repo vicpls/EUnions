@@ -58,13 +58,14 @@ public class CountryAct extends AppCompatActivity {
                     , Snackbar.LENGTH_LONG)
                     .show();
         }else {
-            subscribeObservers(sISO);
+            //subscribeFireBaseObservers(sISO);
+            subscribeWikiObservers(sISO);
         }
+        subscribeFireBaseObservers(sISO);
 
         initViews(sISO);
-
-
     }
+    
 
     private void initViews(String sISO) {
         binding.tvCountryName.setText( getResources().getIdentifier(sISO, "string", getPackageName()));
@@ -74,7 +75,7 @@ public class CountryAct extends AppCompatActivity {
         binding.tvLinkToGuide.setMovementMethod( LinkMovementMethod.getInstance());
     }
 
-    private void subscribeObservers(String sISO) {
+    private void subscribeWikiObservers(String sISO) {
 
         CountryActViewModel viewModel = new ViewModelProvider(this
                 , new ModelFactory(sISO, getApplication()))
@@ -86,7 +87,9 @@ public class CountryAct extends AppCompatActivity {
 
         LiveData<ArrayList<String>> ldMembers = viewModel.getMembership();
         ldMembers.observe(this, new MembershipsObserver());
+    }
 
+    private void subscribeFireBaseObservers(String sISO) {
         FirebaseViewModel fbVModel = new ViewModelProvider(this).get(FirebaseViewModel.class);
         fbVModel.requestWHI(sISO, "whi");
         fbVModel.requestRankWHI(sISO, "rank");
