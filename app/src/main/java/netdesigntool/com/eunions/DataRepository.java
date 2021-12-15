@@ -1,11 +1,11 @@
 package netdesigntool.com.eunions;
 
+import static netdesigntool.com.eunions.Util.LTAG;
+
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
-
-import static netdesigntool.com.eunions.Util.LTAG;
 
 
 class DataRepository {
@@ -20,6 +20,8 @@ class DataRepository {
 
     private static DataRepository me;
 
+    SQLiteDatabase dbase;
+
     private DataRepository() {}
 
     static DataRepository getDataRepository(){
@@ -29,7 +31,7 @@ class DataRepository {
 
     Cursor loadData(Context context){
 
-        SQLiteDatabase dbase = new Db(dbFileName).openBase(context);
+        dbase = new Db(dbFileName).openBase(context);
         if (dbase != null) return dbase.rawQuery(SQL_ALL_COUNTRY, null);
         else
             return null;
@@ -66,6 +68,7 @@ class DataRepository {
             cursor.moveToNext();
         }
         cursor.close();
+        if (dbase !=null) dbase.close();
 
         return result;
     }
