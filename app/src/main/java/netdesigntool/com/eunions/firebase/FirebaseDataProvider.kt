@@ -5,7 +5,10 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.FirebaseApp
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import netdesigntool.com.eunions.Util.LTAG
@@ -43,7 +46,8 @@ class FirebaseDataProvider(cont :Context) {
 
         val request = createRequest(isoCountryCode, "whi")
 
-        launchRequest(request, ldWHI as MutableLiveData<Map<String, Float>>, title)
+        //launchRequest(request, ldWHI as MutableLiveData<Map<String, Float>>, title)
+        listenSingleEvent(request, ldWHI as MutableLiveData<Map<String, Float>>, title)
     }
 
 
@@ -54,7 +58,8 @@ class FirebaseDataProvider(cont :Context) {
 
         val request =  createRequest(isoCountryCode,"whiRank")
 
-        launchRequest(request, ldRankWHI as MutableLiveData<Map<String, Float>>, title)
+        //launchRequest(request, ldRankWHI as MutableLiveData<Map<String, Float>>, title)
+        listenSingleEvent(request, ldRankWHI as MutableLiveData<Map<String, Float>>, title)
     }
 
 
@@ -65,6 +70,24 @@ class FirebaseDataProvider(cont :Context) {
             .child(part)
     }
 
+    // The same like launchRequest but with caching and offline possibilities.
+    private fun listenSingleEvent(
+        dbRef: DatabaseReference,
+        result: MutableLiveData<Map<String, Float>>,
+        title: String
+    ) {
+        dbRef.addListenerForSingleValueEvent(object : ValueEventListener {
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+                responseProcessing(snapshot, result, title, dbRef)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e(LTAG, "Error getting data from firebase. $error")
+            }
+        })
+    }
+
 
     // Start the parametrised request to Firebase. Fetch result.
     private fun launchRequest(
@@ -72,22 +95,30 @@ class FirebaseDataProvider(cont :Context) {
         result: MutableLiveData<Map<String, Float>>,
         title: String
     ) {
-
         thread.run {
 
             dbRef.get()
                 .addOnSuccessListener {
-
-                    if (it?.value != null) {
-                        Log.d(LTAG, "Return=${it.value}")
-                        result.value = fbAnswerAdapter(it.value, title)
-                    } else {
-                        Log.d(LTAG, "No WHI data for isoCountryCode=${dbRef}")
-                    }
+                    responseProcessing(it, result, title, dbRef)
                 }
-                .addOnFailureListener { Log.e(LTAG, "Error getting data from firebase", it) }
+                .addOnFailureListener { Log.e(LTAG, "Error getting data from firebase.", it) }
         }
     }
+
+    private fun responseProcessing(
+        ds: DataSnapshot,
+        result: MutableLiveData<Map<String, Float>>,
+        title: String,
+        dbRef: DatabaseReference
+    ) {
+        if (ds.value != null) {
+            Log.d(LTAG, "Return=${ds.value}")
+            result.value = fbAnswerAdapter(ds.value, title)
+        } else {
+            Log.d(LTAG, "No WHI data for request=${dbRef}")
+        }
+    }
+
 
     // Process of the subset, valued for this app only of the all possible answers
     private fun fbAnswerAdapter(answer: Any?, title: String) : Map<String, Float> {
