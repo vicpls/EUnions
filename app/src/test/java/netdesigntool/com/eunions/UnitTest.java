@@ -1,5 +1,9 @@
 package netdesigntool.com.eunions;
 
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 import android.content.Context;
 import android.content.res.Resources;
 
@@ -11,18 +15,27 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import java.text.DecimalFormatSymbols;
 
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
 /**
- * Example local unit test, which will execute on the development machine (host).
  *
- * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
 
 @RunWith(MockitoJUnitRunner.class)
 public class UnitTest {
+
+
+    @Mock
+    Context mContext;
+    @Mock
+    Resources mRes;
+
+    @Before
+    public void init_tests(){
+        mContext = mock(Context.class);
+        mRes = mock(Resources.class);
+
+        when(mContext.getResources()).thenReturn(mRes);
+    }
+
 
     // Test of Util.getIntegerPart
     @Test
@@ -41,19 +54,16 @@ public class UnitTest {
         String sCountry = "russia";
         final int id = 111;
 
-        Context context = Mockito.mock(Context.class);
-        Resources res = Mockito.mock(Resources.class);
 
-        when(context.getPackageName()).thenReturn(pac);
-        when(context.getResources()).thenReturn(res);
-        when(res.getIdentifier(cISO,"string",pac)).thenReturn(id);
-        when(res.getString(id)).thenReturn(sCountry);
+        when(mContext.getPackageName()).thenReturn(pac);
+        when(mContext.getResources()).thenReturn(res);
+        when(mRes.getIdentifier(cISO,"string",pac)).thenReturn(id);
+        when(mRes.getString(id)).thenReturn(sCountry);
 
-        Html html = Mockito.mock(Html.class);
-        when(html.fromHtml(Mockito.anyString())).thenReturn();
+        Html html = mock(Html.class);
+        when(html.fromHtml(anyString())).thenReturn("");
 
-        Util.getTravelGuideUrl(context, cISO);
-
+        Util.getTravelGuideUrl(mContext, cISO);
     }*/
 
     @Test
@@ -71,18 +81,7 @@ public class UnitTest {
     }
 
 
-    @Mock
-    Context mContext;
-    @Mock
-    Resources mRes;
 
-    @Before
-    public void init_tests(){
-        mContext = mock(Context.class);
-        mRes = mock(Resources.class);
-
-        when(mContext.getResources()).thenReturn(mRes);
-    }
 
     @Test
     public void test_getPrefixForNumber(){
