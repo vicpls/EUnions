@@ -1,5 +1,10 @@
 package netdesigntool.com.eunions;
 
+import static androidx.test.core.app.ApplicationProvider.getApplicationContext;
+import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static netdesigntool.com.eunions.country.CountryAct.COUNTRY_ISO;
+
 import android.content.Intent;
 
 import androidx.test.espresso.Espresso;
@@ -10,11 +15,6 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import netdesigntool.com.eunions.country.CountryAct;
-
-import static androidx.test.core.app.ApplicationProvider.getApplicationContext;
-import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static androidx.test.espresso.matcher.ViewMatchers.withText;
-import static netdesigntool.com.eunions.country.CountryAct.COUNTRY_ISO;
 
 //@RunWith(AndroidJUnit4.class)
 public class ITest2 {
@@ -36,6 +36,6 @@ public class ITest2 {
             Thread.sleep(3000);
         }catch (InterruptedException ignored){}
 
-        Espresso.onView(withText(R.string.density)).check(ViewAssertions.matches(isDisplayed()));
+        Espresso.onView(withId(R.id.ivFlag)).check(ViewAssertions.matches(isDisplayed()));
     }
 }
