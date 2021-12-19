@@ -1,6 +1,7 @@
 package netdesigntool.com.eunions;
 
 import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withParent;
@@ -12,7 +13,6 @@ import static org.hamcrest.Matchers.is;
 import android.view.View;
 
 import androidx.test.espresso.Espresso;
-import androidx.test.espresso.assertion.ViewAssertions;
 import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -43,7 +43,7 @@ public class InstrumentedTest {
 
         Matcher<View> m = allOf(withId(R.id.ivFlag), withParent(withTagValue(is("at"))));
 
-        Espresso.onView(m).check(ViewAssertions.matches(isDisplayed()));
+        Espresso.onView(m).check(matches(isDisplayed()));
 
     }
 
@@ -53,9 +53,7 @@ public class InstrumentedTest {
 
         Espresso.onView(withId(R.id.about)).perform(click());
 
-        //Intents.intended(hasComponent(hasShortClassName("com.mcsoft.aboutactivity.AboutActivity")));
-
-        Espresso.onView(withText("Credit")).check(ViewAssertions.matches(isDisplayed()));
+        Espresso.onView(withText("Credit")).check(matches(isDisplayed()));
     }
 
     // Calling CountryActivity and getting Info from I
@@ -64,20 +62,25 @@ public class InstrumentedTest {
 
         Espresso.onView(ViewMatchers.withTagValue(Matchers.is("at"))).perform(click());
 
-        //Intents.intended(hasComponent(hasShortClassName("netdesigntool.com.eunions.country.CountryAct")));
-
         try {
             Thread.sleep(5000);
         }catch (InterruptedException ignored){}
 
-        Espresso.onView(withId(R.id.tvCountryName)).check(ViewAssertions.matches(isDisplayed()));
+
+        //wait for Activity started. Работает не устойчиво.
+        /*await().atMost(5, SECONDS)
+                .ignoreExceptions()
+                .untilAsserted(() ->
+                                Espresso.onView(ViewMatchers.withText(R.string.density))
+                                        .check(matches(isDisplayed())));*/
+
+        Espresso.onView(withId(R.id.tvCountryName)).check(matches(isDisplayed()));
 
         // Did info get from Wiki about area and population?
-        Espresso.onView(withText(R.string.density)).check(ViewAssertions.matches(isDisplayed()));
+        Espresso.onView(withText(R.string.density)).check(matches(isDisplayed()));
 
         // Chart is Displayed?
-        //Espresso.onView(withClassName(ChartFragment)
-        Espresso.onView(withId(R.id.lChart)).check(ViewAssertions.matches(isDisplayed()));
+        Espresso.onView(withId(R.id.lChart)).check(matches(isDisplayed()));
     }
 
 

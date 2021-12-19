@@ -17,7 +17,7 @@ import org.junit.Test;
 import netdesigntool.com.eunions.country.CountryAct;
 
 //@RunWith(AndroidJUnit4.class)
-public class ITest2 {
+public class CountryActTest {
 
     static Intent intContAct;
 
@@ -35,6 +35,8 @@ public class ITest2 {
         try {
             Thread.sleep(3000);
         }catch (InterruptedException ignored){}
+
+
 
         Espresso.onView(withId(R.id.ivFlag)).check(ViewAssertions.matches(isDisplayed()));
     }

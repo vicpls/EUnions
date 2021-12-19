@@ -3,7 +3,6 @@ package netdesigntool.com.eunions;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import netdesigntool.com.eunions.wiki.HumanReadableNumber;
@@ -12,7 +11,7 @@ public class ParameterTest {
 
     Parameter parameter;
 
-    private final String
+    private static final String
             WIKI_ID ="wikiId"
             , PARAMETER_NAME ="ParameterName"
             , QUALIFIER ="Qualifier"
@@ -21,8 +20,7 @@ public class ParameterTest {
             , UNIT ="Unit"
             , PREFIX ="prefix";
 
-    @Before
-    public void create_Parameter() {
+    {
         parameter = new Parameter(
                 WIKI_ID
                 , PARAMETER_NAME

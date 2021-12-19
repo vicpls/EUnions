@@ -1,7 +1,6 @@
 package netdesigntool.com.eunions;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import android.content.Context;
@@ -22,7 +21,6 @@ import java.text.DecimalFormatSymbols;
 @RunWith(MockitoJUnitRunner.class)
 public class UnitTest {
 
-
     @Mock
     Context mContext;
     @Mock
@@ -30,9 +28,6 @@ public class UnitTest {
 
     @Before
     public void init_tests(){
-        mContext = mock(Context.class);
-        mRes = mock(Resources.class);
-
         when(mContext.getResources()).thenReturn(mRes);
     }
 
