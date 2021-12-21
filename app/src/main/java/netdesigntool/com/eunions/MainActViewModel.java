@@ -1,5 +1,7 @@
 package netdesigntool.com.eunions;
 
+import static netdesigntool.com.eunions.Util.LTAG;
+
 import android.app.Application;
 import android.util.Log;
 
@@ -10,10 +12,10 @@ import androidx.lifecycle.MutableLiveData;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import static netdesigntool.com.eunions.DataRepository.getDataRepository;
-import static netdesigntool.com.eunions.Util.LTAG;
 
 public class MainActViewModel extends AndroidViewModel {
+
+    private DataRepository dataRepository;
 
     MutableLiveData<Country[]> ldSchAndEu = new MutableLiveData<>();
     MutableLiveData<Country[]> ldSchen = new MutableLiveData<>();
@@ -21,8 +23,9 @@ public class MainActViewModel extends AndroidViewModel {
 
     private final AtomicBoolean isFetched = new AtomicBoolean(false);
 
-    public MainActViewModel(@NonNull Application application) {
+    public MainActViewModel(@NonNull Application application, DataRepository dataRepository) {
         super(application);
+        this.dataRepository = dataRepository;
     }
 
     private void startFetchLdCountries(){
@@ -36,9 +39,7 @@ public class MainActViewModel extends AndroidViewModel {
 
     private void fetchLdCountriesByType(){
 
-        Log.d(LTAG, "Start fetchLdCountriesByType()");
-
-        Country[] countries = getDataRepository().loadCountries(getApplication().getApplicationContext());
+        Country[] countries = dataRepository.loadCountries(getApplication().getApplicationContext());
 
         ArrayList<Country> eu = new ArrayList<>(10);
         ArrayList<Country> schen = new ArrayList<>(10);
@@ -56,7 +57,6 @@ public class MainActViewModel extends AndroidViewModel {
         ldSchen.postValue(schen.toArray(new Country[0]));
         ldEu.postValue(eu.toArray(new Country[0]));
 
-        Log.d(LTAG, "Finish fetchLdCountriesByType()");
     }
 
 

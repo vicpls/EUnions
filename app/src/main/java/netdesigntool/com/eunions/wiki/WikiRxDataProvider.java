@@ -23,6 +23,7 @@ import java.util.Map;
 
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 import netdesigntool.com.eunions.BuildConfig;
@@ -236,7 +237,7 @@ public class WikiRxDataProvider {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new DisposableSingleObserver<WikiResponse>() {
                     @Override
-                    public void onSuccess(WikiResponse wikiResponses) {
+                    public void onSuccess(@NonNull WikiResponse wikiResponses) {
 
                         List<Map> resp =  null;
                         int qty=0;
@@ -247,7 +248,7 @@ public class WikiRxDataProvider {
                             Log.e(LTAG, "WikiData response is empty or incorrect. \n"+ e.getMessage());
                         }
 
-                        if (BuildConfig.DEBUG) Log.i(LTAG, "WikiData response was received. Qty= "+ qty);
+                        Log.i(LTAG, "WikiData response was received. Qty= "+ qty);
 
                         if (parser !=null) parser.onReceive(resp);
                     }

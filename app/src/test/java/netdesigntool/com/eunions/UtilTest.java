@@ -19,7 +19,7 @@ import java.text.DecimalFormatSymbols;
  */
 
 @RunWith(MockitoJUnitRunner.class)
-public class UnitTest {
+public class UtilTest {
 
     @Mock
     Context mContext;

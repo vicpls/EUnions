@@ -1,5 +1,8 @@
 package netdesigntool.com.eunions;
 
+import static netdesigntool.com.eunions.DataRepository.getDataRepository;
+import static netdesigntool.com.eunions.Util.LTAG;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,16 +12,16 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.flexbox.FlexboxLayout;
 
 import netdesigntool.com.eunions.country.CountryAct;
 import netdesigntool.com.eunions.databinding.ActMainBinding;
-
-import static netdesigntool.com.eunions.Util.LTAG;
 
 public class MainActivity extends AppCompatActivity
                             implements View.OnClickListener
@@ -33,12 +36,15 @@ public class MainActivity extends AppCompatActivity
         binding = ActMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        MainActViewModel myVModel = new ViewModelProvider(this).get(MainActViewModel.class);
+        ViewModelProvider.Factory vmFactory = new VmFactory(getDataRepository());
 
-        attachViewModel(myVModel);
+        MainActViewModel myVModel = new ViewModelProvider(this, vmFactory)
+                .get(MainActViewModel.class);
+
+        observeViewModel(myVModel);
     }
 
-    private void attachViewModel(MainActViewModel vm){
+    private void observeViewModel(MainActViewModel vm){
         LiveData<Country[]> countryEU = vm.getEu();
         LiveData<Country[]> countrySchEu = vm.getSchAndEu();
         LiveData<Country[]> countrySch = vm.getSchen();
@@ -120,5 +126,22 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+    private class VmFactory extends ViewModelProvider.NewInstanceFactory{
+
+        private final DataRepository dataRepository;
+
+        VmFactory(DataRepository dataRepository){
+            this.dataRepository = dataRepository;
+        }
+
+        @NonNull
+        @Override
+        public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
+            if (modelClass == MainActViewModel.class) {
+                return (T) new MainActViewModel(getApplication(), dataRepository);
+            }
+            return super.create(modelClass);
+        }
+    }
 
 }
