@@ -77,7 +77,6 @@ public class UtilTest {
 
 
 
-
     @Test
     public void test_getPrefixForNumber(){
 
@@ -94,6 +93,44 @@ public class UtilTest {
         assertEquals(m, Util.getPrefixForNumber("123000000", mContext));
         assertEquals(b, Util.getPrefixForNumber("123000000000", mContext));
     }
+
+
+    /*@Test
+    public void test_getTravelGuideUrl(){
+
+        String countryISO ="ee";
+
+        Locale locale = mock(Locale.class);
+
+        MockedStatic<Locale> mocked = mockStatic(Locale.class);
+        mocked.when(Locale::getDefault).thenReturn(locale);
+
+
+        when(locale.getLanguage()).thenReturn("ru");
+
+        when(mContext.getPackageName()).thenReturn("package");
+
+        when(mRes.getIdentifier(
+                countryISO
+                , "string"
+                , "package")).thenReturn(101);
+
+        when(mRes.getString(101)).thenReturn(countryISO);
+
+        SpannableString mockSpannable = mock(SpannableString.class);
+
+        when(Html.fromHtml(anyString(),anyInt())).thenReturn(mockSpannable);
+
+        String expected = " <a href=\""
+                +"\"http://wikitravel.org/\""
+                +"ru"
+                +"/"
+                +countryISO
+                +"\">"
+                + "Travel guide";
+
+        assertEquals(expected, Util.getTravelGuideUrl(mContext,countryISO));
+    }*/
 
 
 }

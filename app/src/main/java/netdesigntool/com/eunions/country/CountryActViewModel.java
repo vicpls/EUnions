@@ -86,7 +86,7 @@ public class CountryActViewModel extends AndroidViewModel {
     LiveData<ArrayList<Parameter>> getCountryInfo() {
 
         if (wikiData == null) {
-            prov.makeWDRequests(iso);
+            prov.startWdRequests(iso);
             wikiData = prov.getMainInfo();
         }
 

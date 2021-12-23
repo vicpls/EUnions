@@ -69,7 +69,7 @@ public class WikiRxDataProvider {
         wikiRxService = retrofitBuilder.build().create(WikiRxService.class);
     }
 
-    public void makeWDRequests(String isoCountryCode){
+    public void startWdRequests(String isoCountryCode){
 
         if (BuildConfig.DEBUG) Log.d(LTAG, "WikiRxDataProvider.makeWDRequests("+ isoCountryCode +")");
 
@@ -84,7 +84,7 @@ public class WikiRxDataProvider {
 
         ldPopulation = new MutableLiveData<>();
 
-        getWD(String.format(POPULATION, isoCountryCode, ISO_LANG), resp -> {
+        startWdRequest(String.format(POPULATION, isoCountryCode, ISO_LANG), resp -> {
 
             if ( resp.isEmpty()) {
                 Log.e(LTAG, POP_ID +" answer is empty");
@@ -113,7 +113,7 @@ public class WikiRxDataProvider {
 
         ldConMainInfo = new MutableLiveData<>();
 
-        getWD(String.format(CAP_CUR_AREA, isoCountryCode, ISO_LANG), resp -> {
+        startWdRequest(String.format(CAP_CUR_AREA, isoCountryCode, ISO_LANG), resp -> {
 
             if ( resp.isEmpty()){
                 Log.e(LTAG, "CAP_CUR_AREA answer is empty");
@@ -155,7 +155,7 @@ public class WikiRxDataProvider {
 
         ldGDPperCapita = new MutableLiveData<>();
 
-        getWD(String.format(GDP_PER_CAPITA, isoCountryCode, ISO_LANG), resp -> {
+        startWdRequest(String.format(GDP_PER_CAPITA, isoCountryCode, ISO_LANG), resp -> {
 
             if ( resp.isEmpty()) {
                 Log.e(LTAG, "GDP_PER_CAPITA answer is empty");
@@ -183,7 +183,7 @@ public class WikiRxDataProvider {
 
         ldMemberships = new MutableLiveData<>();
 
-        getWD(String.format( MEMBER, isoCountryCode, ISO_LANG), response -> {
+        startWdRequest(String.format( MEMBER, isoCountryCode, ISO_LANG), response -> {
 
             ArrayList<String> result = new ArrayList<>(response.size());
             for (Map i: response){
@@ -200,7 +200,7 @@ public class WikiRxDataProvider {
 
         ldHumDevInd = new MutableLiveData<>();
 
-        getWD(String.format( HUM_DEV_IND, isoCountryCode, ISO_LANG), resp -> {
+        startWdRequest(String.format( HUM_DEV_IND, isoCountryCode, ISO_LANG), resp -> {
 
             if ( resp.isEmpty()) {
                 Log.e(LTAG, "HUM_DEV_IND answer is empty");
@@ -227,9 +227,8 @@ public class WikiRxDataProvider {
 
 
 
-
     // Запрос с вариантами.
-    void getWD(String sparqlRequest, WikiParser parser){
+    void startWdRequest(String sparqlRequest, WikiParser parser){
         Single<WikiResponse> wikiResp = wikiRxService.wikiRxQuery(sparqlRequest);
 
         wikiResp
@@ -262,14 +261,12 @@ public class WikiRxDataProvider {
 
 
 
-
     public interface WikiParser {
         void onReceive (List<Map> response);
     }
     
-    
-    
-    
+
+
 
     // Logger for HTTP requests and responds
     OkHttpClient getHttpClient(){
@@ -284,15 +281,15 @@ public class WikiRxDataProvider {
 
     /**
      * Extract value for given parameter.
-     * @param param name
+     * @param key name of parameter
      * @return value for given name
      */
-    String getRespValue(Map arMap, String param){
+    static String getRespValue(Map arMap, String key){
         try {
             //(LinkedHashTreeMap)
-            return (((Map)(arMap.get(param))) .get("value")).toString();
+            return (((Map)(arMap.get(key))) .get("value")).toString();
         }catch(Exception e){
-            Log.e(LTAG, "Cannot parse the value for param="+ param);
+            Log.e(LTAG, "Cannot parse the value for param="+ key);
             return "";
         }
     }
