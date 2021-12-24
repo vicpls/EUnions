@@ -18,6 +18,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -238,13 +239,15 @@ public class WikiRxDataProvider {
                     @Override
                     public void onSuccess(@NonNull WikiResponse wikiResponses) {
 
-                        List<Map> resp =  null;
+                        List<Map> resp;
+
                         int qty=0;
                         try {
                             resp = wikiResponses.results.bindings;
                             qty = resp.size();
                         }catch (Exception e){
                             Log.e(LTAG, "WikiData response is empty or incorrect. \n"+ e.getMessage());
+                            resp = Collections.EMPTY_LIST;
                         }
 
                         Log.i(LTAG, "WikiData response was received. Qty= "+ qty);
