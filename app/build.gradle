@@ -189,6 +189,8 @@ dependencies {
     // Declare the dependencies for the desired Firebase products without specifying versions
     // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation 'com.google.firebase:firebase-database-ktx'
+    implementation 'com.google.firebase:firebase-appcheck-safetynet:16.0.0-beta04'
+
     // ===================================================================
 
 

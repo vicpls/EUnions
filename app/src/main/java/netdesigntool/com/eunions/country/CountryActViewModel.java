@@ -86,7 +86,7 @@ public class CountryActViewModel extends AndroidViewModel {
     LiveData<ArrayList<Parameter>> getCountryInfo() {
 
         if (wikiData == null) {
-            prov.startWdRequests(iso);
+            prov.startWdBundleRequests(iso);
             wikiData = prov.getMainInfo();
         }
 

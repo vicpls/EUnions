@@ -69,7 +69,7 @@ public class WikiRxDataProvider {
         wikiRxService = retrofitBuilder.build().create(WikiRxService.class);
     }
 
-    public void startWdRequests(String isoCountryCode){
+    public void startWdBundleRequests(String isoCountryCode){
 
         if (BuildConfig.DEBUG) Log.d(LTAG, "WikiRxDataProvider.makeWDRequests("+ isoCountryCode +")");
 
