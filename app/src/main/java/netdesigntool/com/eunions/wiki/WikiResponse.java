@@ -1,11 +1,15 @@
 package netdesigntool.com.eunions.wiki;
 
+import androidx.annotation.Keep;
+
 import com.squareup.moshi.Json;
 import java.util.List;
 
 /*
     POJO for parsing Wiki JSON response by Moshi.
  */
+
+@Keep
 public class WikiResponse {
 
     @Json(name = "head")
@@ -13,12 +17,13 @@ public class WikiResponse {
     @Json(name = "results")
     public Results results;
 
-
+    @Keep
     public static class Head {
         @Json(name = "vars")
         public List<String> vars = null;
     }
 
+    @Keep
     public static class Results {
         @Json(name = "bindings")
         public List bindings = null;
@@ -29,6 +34,7 @@ public class WikiResponse {
             The Underneath is custom part of response.
      */
 
+    @Keep
     public static class Binding {
         @Json(name = "iso")
         public TxtField iso;
@@ -39,8 +45,8 @@ public class WikiResponse {
     }
 
 
-
-     public  static class TxtLangField {
+    @Keep
+    public  static class TxtLangField {
 
             @Json(name = "xml:lang")
             public String xmlLang;
@@ -50,7 +56,7 @@ public class WikiResponse {
             public String value;
         }
 
-
+    @Keep
     public static class TxtField {
 
             @Json(name = "type")
