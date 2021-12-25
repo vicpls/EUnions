@@ -130,7 +130,9 @@ public class CountryAct extends AppCompatActivity {
                 membr.append(memb).append(", ");
             }
 
-            showInfo(R.string.memberships, membr.substring(0,membr.length()-2));
+            if (membr.length()-2 >0) {
+                showInfo(R.string.memberships, membr.substring(0, membr.length() - 2));
+            }
         }
     }
 
