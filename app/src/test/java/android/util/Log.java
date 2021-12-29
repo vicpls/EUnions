@@ -1,4 +1,9 @@
-package android.util; 
+package android.util;
+
+/**
+ *   Mock Log.? class for unit tests.
+ */
+
 
 public class Log {
     public static int d(String tag, String msg) {
