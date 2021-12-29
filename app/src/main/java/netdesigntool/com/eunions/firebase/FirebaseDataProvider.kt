@@ -7,15 +7,13 @@ import androidx.lifecycle.MutableLiveData
 import com.google.firebase.FirebaseApp
 import com.google.firebase.appcheck.FirebaseAppCheck
 import com.google.firebase.appcheck.safetynet.SafetyNetAppCheckProviderFactory
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import netdesigntool.com.eunions.Util.LTAG
 
-private const val ref ="https://fir-a0980.firebaseio.com/"  // URL of firebase
+private const val URL_REF ="https://fir-a0980.firebaseio.com/"  // URL of firebase
+private const val BASE_NAME = "Country"
 
 class FirebaseDataProvider(cont :Context) {
 
@@ -25,14 +23,22 @@ class FirebaseDataProvider(cont :Context) {
         thread.run {
             FirebaseApp.initializeApp(cont)
 
+            try {
+                Firebase.database.setPersistenceCacheSizeBytes(1024 * 1024 * 1)     //1Mb for FireBase cache.
+                Firebase.database.setPersistenceEnabled(true)
+            }catch(dbE: DatabaseException){
+                Log.d(LTAG, dbE.message!!)
+            }
+
+
             val firebaseAppCheck = FirebaseAppCheck.getInstance()
             firebaseAppCheck.installAppCheckProviderFactory(
                 SafetyNetAppCheckProviderFactory.getInstance())
         }
     }
 
-    private val baseRef = Firebase.database.getReferenceFromUrl(ref)
-    private val baseName = "Country"
+    private val baseRef = Firebase.database.getReferenceFromUrl(URL_REF)
+
 
     /**
      * Rank of country in the list of World Happiness Index.
@@ -52,8 +58,8 @@ class FirebaseDataProvider(cont :Context) {
 
         val request = createRequest(isoCountryCode, "whi")
 
-        //launchRequest(request, ldWHI as MutableLiveData<Map<String, Float>>, title)
-        listenSingleEvent(request, ldWHI as MutableLiveData<Map<String, Float>>, title)
+        launchRequest(request, ldWHI as MutableLiveData<Map<String, Float>>, title)
+        //listenSingleEvent(request, ldWHI as MutableLiveData<Map<String, Float>>, title)
     }
 
 
@@ -64,14 +70,14 @@ class FirebaseDataProvider(cont :Context) {
 
         val request =  createRequest(isoCountryCode,"whiRank")
 
-        //launchRequest(request, ldRankWHI as MutableLiveData<Map<String, Float>>, title)
-        listenSingleEvent(request, ldRankWHI as MutableLiveData<Map<String, Float>>, title)
+        launchRequest(request, ldRankWHI as MutableLiveData<Map<String, Float>>, title)
+        //listenSingleEvent(request, ldRankWHI as MutableLiveData<Map<String, Float>>, title)
     }
 
 
     private fun createRequest(isoCountryCode: String, part: String): DatabaseReference{
         return baseRef
-            .child(baseName)
+            .child(BASE_NAME)
             .child(isoCountryCode.uppercase())
             .child(part)
     }
