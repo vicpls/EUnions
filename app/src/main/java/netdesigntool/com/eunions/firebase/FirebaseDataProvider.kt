@@ -44,12 +44,12 @@ class FirebaseDataProvider(cont :Context) {
      * Rank of country in the list of World Happiness Index.
      * Map of <year, value> where year as String
      */
-    var ldRankWHI : LiveData<Map<String, Number>> = MutableLiveData(HashMap())       // The rank of country in the WHI listing. <year, rank>
+    val ldRankWHI : LiveData<Map<String, Number>> = MutableLiveData(HashMap())       // The rank of country in the WHI listing. <year, rank>
 
     /**
      * Values of World Happiness Index
      */
-    var ldWHI : LiveData<Map<String, Float>> = MutableLiveData(HashMap())         // The value of WHI. <year, value>
+    val ldWHI : LiveData<Map<String, Float>> = MutableLiveData(HashMap())         // The value of WHI. <year, value>
 
     /**
      * Launch request to the country base for WHI values.
