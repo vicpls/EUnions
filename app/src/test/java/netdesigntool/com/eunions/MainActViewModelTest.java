@@ -37,7 +37,9 @@ public class MainActViewModelTest {
     @Mock
     Context context;
 
-    private MainActViewModel _model = new MainActViewModel(app, dataRep);
+    @Mock
+    MainActViewModel _model;
+
 
     Country nothing = new Country("nothing", 0,0);
     Country both = new Country("both", 1,1);
@@ -50,6 +52,7 @@ public class MainActViewModelTest {
     public void init(){
 
         when(_model.getApplication()).thenReturn(app);
+        
         when(app.getApplicationContext()).thenReturn(context);
 
         when(dataRep.loadCountries(context)).thenReturn(
@@ -67,6 +70,7 @@ public class MainActViewModelTest {
 
         when(ldEu.getValue()).thenReturn(country);
 
+        _model = new MainActViewModel(app, dataRep);
 
     }
 

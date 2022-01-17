@@ -57,7 +57,7 @@ public class MainActViewModelRoboElTest {
         _model = new MainActViewModel(app, dataRep);
 
         //when(_model.getApplication()).thenReturn(app);
-        when(app.getBaseContext()).thenReturn(context);
+        when(app.getApplicationContext()).thenReturn(context);
 
         when(dataRep.loadCountries(any())).thenReturn(
                 new Country[]{ nothing, both, she, eu});
@@ -85,7 +85,7 @@ public class MainActViewModelRoboElTest {
 
 
     @Test
-    public void getEu() {
+    public void getEu_Test() {
 
         Country result = _model
                 .getEu()
