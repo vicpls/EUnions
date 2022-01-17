@@ -7,24 +7,35 @@ import androidx.lifecycle.MutableLiveData
 import com.google.firebase.FirebaseApp
 import com.google.firebase.appcheck.FirebaseAppCheck
 import com.google.firebase.appcheck.safetynet.SafetyNetAppCheckProviderFactory
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseException
-import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import netdesigntool.com.eunions.Util.LTAG
-
 
 private const val URL_REF ="https://fir-a0980.firebaseio.com/"  // URL of firebase
 private const val BASE_NAME = "Country"
 
-class FirebaseDataProvider(cont :Context) {
+class FirebaseDataProvider_old(cont :Context) {
 
-    private val providerScope = CoroutineScope(Dispatchers.IO)      //Dispatchers.Main)
-    private var providerJob = providerScope.launch { fbAppInit(cont) }
+    private var thread = Thread()
+
+    init {
+        thread.run {
+            FirebaseApp.initializeApp(cont)
+
+            try {
+                Firebase.database.setPersistenceCacheSizeBytes(1024 * 1024 * 1)     //1Mb for FireBase cache.
+                Firebase.database.setPersistenceEnabled(true)
+            }catch(dbE: DatabaseException){
+                Log.d(LTAG, dbE.message!!)
+            }
+
+
+            val firebaseAppCheck = FirebaseAppCheck.getInstance()
+            firebaseAppCheck.installAppCheckProviderFactory(
+                SafetyNetAppCheckProviderFactory.getInstance())
+        }
+    }
 
     private val baseRef = Firebase.database.getReferenceFromUrl(URL_REF)
 
@@ -48,6 +59,7 @@ class FirebaseDataProvider(cont :Context) {
         val request = createRequest(isoCountryCode, "whi")
 
         launchRequest(request, ldWHI as MutableLiveData<Map<String, Float>>, title)
+        //listenSingleEvent(request, ldWHI as MutableLiveData<Map<String, Float>>, title)
     }
 
 
@@ -59,26 +71,7 @@ class FirebaseDataProvider(cont :Context) {
         val request =  createRequest(isoCountryCode,"whiRank")
 
         launchRequest(request, ldRankWHI as MutableLiveData<Map<String, Float>>, title)
-    }
-
-
-    //----------------------------------------------------------------------------------------------------------
-
-    private fun fbAppInit(cont: Context) {
-        FirebaseApp.initializeApp(cont)
-
-        try {
-            Firebase.database.setPersistenceCacheSizeBytes(1024 * 1024 * 1)     //1Mb for FireBase cache.
-            Firebase.database.setPersistenceEnabled(true)
-        } catch (dbE: DatabaseException) {
-            Log.d(LTAG, dbE.message!!)
-        }
-
-
-        val firebaseAppCheck = FirebaseAppCheck.getInstance()
-        firebaseAppCheck.installAppCheckProviderFactory(
-            SafetyNetAppCheckProviderFactory.getInstance()
-        )
+        //listenSingleEvent(request, ldRankWHI as MutableLiveData<Map<String, Float>>, title)
     }
 
 
@@ -89,6 +82,24 @@ class FirebaseDataProvider(cont :Context) {
             .child(part)
     }
 
+    // The same like launchRequest but with caching and offline possibilities.
+    private fun listenSingleEvent(
+        dbRef: DatabaseReference,
+        result: MutableLiveData<Map<String, Float>>,
+        title: String
+    ) {
+        dbRef.addListenerForSingleValueEvent(object : ValueEventListener {
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+                responseProcessing(snapshot, result, title, dbRef)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e(LTAG, "Error getting data from firebase. $error")
+            }
+        })
+    }
+
 
     // Start the parametrised request to Firebase. Fetch result.
     private fun launchRequest(
@@ -96,12 +107,7 @@ class FirebaseDataProvider(cont :Context) {
         result: MutableLiveData<Map<String, Float>>,
         title: String
     ) {
-
-        val previousJob = providerJob
-
-        providerJob = providerScope.launch {
-
-            previousJob.join()          // Previous job must be done.
+        thread.run {
 
             dbRef.get()
                 .addOnSuccessListener {
@@ -110,7 +116,6 @@ class FirebaseDataProvider(cont :Context) {
                 .addOnFailureListener { Log.e(LTAG, "Error getting data from firebase.", it) }
         }
     }
-
 
     private fun responseProcessing(
         ds: DataSnapshot,
