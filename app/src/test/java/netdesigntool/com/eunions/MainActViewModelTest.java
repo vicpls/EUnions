@@ -8,13 +8,18 @@ import static org.mockito.Mockito.when;
 import android.app.Application;
 import android.content.Context;
 
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.mockito.stubbing.Answer;
@@ -27,8 +32,8 @@ import org.mockito.stubbing.Answer;
 @RunWith(MockitoJUnitRunner.class)
 public class MainActViewModelTest {
 
-    @Mock
-    MutableLiveData<Country[]> ldSchAndEu, ldSchen, ldEu;
+    /*@Mock
+    MutableLiveData<Country[]> ldSchAndEu, ldSchen, ldEu;*/
 
     @Mock
     DataRepository dataRep;
@@ -49,7 +54,7 @@ public class MainActViewModelTest {
     private Country[] country;
 
     @Before
-    public void init(){
+    public void testInit(){
 
         when(_model.getApplication()).thenReturn(app);
         
@@ -58,6 +63,15 @@ public class MainActViewModelTest {
         when(dataRep.loadCountries(context)).thenReturn(
                 new Country[]{ nothing, both, she, eu});
 
+        /*doAnswer(new Answer() {
+                     @Override
+                     public Object answer(InvocationOnMock invocation) throws Throwable {
+                         country = invocation.getArgument(0, Country[].class);
+                         return null;
+                     }
+                 }
+        ).when(ldEu).postValue(any(Country[].class));
+
         doAnswer(new Answer() {
                      @Override
                      public Object answer(InvocationOnMock invocation) throws Throwable {
@@ -65,13 +79,47 @@ public class MainActViewModelTest {
                          return null;
                      }
                  }
-        ).
-        when(ldEu).postValue(any(Country[].class));
+        ).when(ldSchAndEu).postValue(any(Country[].class));
 
-        when(ldEu.getValue()).thenReturn(country);
+        doAnswer(new Answer() {
+                     @Override
+                     public Object answer(InvocationOnMock invocation) throws Throwable {
+                         country = invocation.getArgument(0, Country[].class);
+                         return null;
+                     }
+                 }
+        ).when(ldSchen).postValue(any(Country[].class));*/
+
+
+        // when(ldEu.getValue()).thenReturn(country);
 
         _model = new MainActViewModel(app, dataRep);
+    }
 
+
+    @Rule
+    public InstantTaskExecutorRule instantTaskExecutorRule =
+            new InstantTaskExecutorRule();
+
+    @FunctionalInterface
+    interface myLambda {
+        void myRun();
+    }
+
+    // helper method to allow us to get the value from a LiveData
+    // LiveData won't publish a result until there is at least one observer
+    private void observeForTesting (MutableLiveData<Country[]> testLD, myLambda block) {
+
+        Observer <Country[]> observer = (Observer) o -> { /* At this place maybe test assumptions... */
+            System.out.println(o.toString());
+        };
+
+
+            testLD.observeForever(observer);
+            block.myRun();
+        /*finally {
+            testLD.removeObserver(observer);
+        }*/
     }
 
     @After
@@ -83,9 +131,16 @@ public class MainActViewModelTest {
     @Test
     public void getEu_Test() {
 
-        Country result = _model
-                .getEu()
-                .getValue()[0];
+        MutableLiveData<Country[]> ld = _model.getEu();
+        observeForTesting(ld, ()->{});
+
+        Country[] arrCountry;
+
+        do {
+            arrCountry = ld.getValue();
+        }while (arrCountry == null);
+
+        Country result = arrCountry[0];
 
         assertEquals(eu, result);
     }
