@@ -194,6 +194,7 @@ dependencies {
     //testImplementation 'org.mockito:mockito-core:4.2.0'
     testImplementation 'org.mockito:mockito-inline:+'
     testImplementation 'org.robolectric:robolectric:4.7.+'
+    testImplementation 'org.awaitility:awaitility:4.1.1'
 
     
     //    AndroidTest

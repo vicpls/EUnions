@@ -1,17 +1,15 @@
 package netdesigntool.com.eunions;
 
+import static org.awaitility.Awaitility.await;
 import static org.junit.Assert.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.when;
+import static java.util.concurrent.TimeUnit.SECONDS;
 
 import android.app.Application;
 import android.content.Context;
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
 
 import org.junit.After;
 import org.junit.Before;
@@ -19,21 +17,11 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.invocation.InvocationOnMock;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.mockito.stubbing.Answer;
-
-/**     Тест не работает !!!
- *          Не мокаются методы внутри ViewModel.
- */
 
 
 @RunWith(MockitoJUnitRunner.class)
 public class MainActViewModelTest {
-
-    /*@Mock
-    MutableLiveData<Country[]> ldSchAndEu, ldSchen, ldEu;*/
 
     @Mock
     DataRepository dataRep;
@@ -46,102 +34,94 @@ public class MainActViewModelTest {
     MainActViewModel _model;
 
 
-    Country nothing = new Country("nothing", 0,0);
-    Country both = new Country("both", 1,1);
-    Country she = new Country("she", 0, 1);
-    Country eu = new Country("eu", 1, 0);
+    Country nothing = new Country("nothing", 1,1);
+    Country both = new Country("both", 0,0);
+    Country shen = new Country("shen", 1, 0);
+    Country eu = new Country("eu", 0, 1);
 
-    private Country[] country;
+    private MutableLiveData<Country[]> ld;
+    private Country[] arrCountry;
 
     @Before
     public void testInit(){
-
-        when(_model.getApplication()).thenReturn(app);
         
         when(app.getApplicationContext()).thenReturn(context);
 
         when(dataRep.loadCountries(context)).thenReturn(
-                new Country[]{ nothing, both, she, eu});
-
-        /*doAnswer(new Answer() {
-                     @Override
-                     public Object answer(InvocationOnMock invocation) throws Throwable {
-                         country = invocation.getArgument(0, Country[].class);
-                         return null;
-                     }
-                 }
-        ).when(ldEu).postValue(any(Country[].class));
-
-        doAnswer(new Answer() {
-                     @Override
-                     public Object answer(InvocationOnMock invocation) throws Throwable {
-                         country = invocation.getArgument(0, Country[].class);
-                         return null;
-                     }
-                 }
-        ).when(ldSchAndEu).postValue(any(Country[].class));
-
-        doAnswer(new Answer() {
-                     @Override
-                     public Object answer(InvocationOnMock invocation) throws Throwable {
-                         country = invocation.getArgument(0, Country[].class);
-                         return null;
-                     }
-                 }
-        ).when(ldSchen).postValue(any(Country[].class));*/
-
-
-        // when(ldEu.getValue()).thenReturn(country);
+                new Country[]{ nothing, both, shen, eu});
 
         _model = new MainActViewModel(app, dataRep);
     }
 
+    @After
+    public void endTest(){
+        ld=null;
+    }
 
     @Rule
     public InstantTaskExecutorRule instantTaskExecutorRule =
             new InstantTaskExecutorRule();
 
-    @FunctionalInterface
-    interface myLambda {
-        void myRun();
-    }
 
     // helper method to allow us to get the value from a LiveData
     // LiveData won't publish a result until there is at least one observer
-    private void observeForTesting (MutableLiveData<Country[]> testLD, myLambda block) {
+    private void observeForTesting() {
 
-        Observer <Country[]> observer = (Observer) o -> { /* At this place maybe test assumptions... */
-            System.out.println(o.toString());
-        };
-
-
-            testLD.observeForever(observer);
-            block.myRun();
-        /*finally {
-            testLD.removeObserver(observer);
-        }*/
+        ld.observeForever(o->{
+            // At this place maybe test assumptions...
+            //System.out.println(o.toString());
+        });
     }
 
-    @After
-    public void clear(){
-        country = null;
+
+    // Subscribe and put value of LiveData 'ld' to arrCountry.
+    private void ldSubscribeAndFetch() {
+
+        observeForTesting();
+
+        await().atMost(3, SECONDS).until(() -> ld.getValue() != null);
+
+        arrCountry = ld.getValue();
+    }
+
+    // Assert LD value for only one, expected value.
+    private void assertLdValue(String assertMessage, Country expected){
+
+        assertEquals(assertMessage, arrCountry.length, 1);
+
+        Country result = arrCountry[0];
+        assertEquals(expected.getISO(), result.getISO());
     }
 
 
     @Test
+    public void getShen_Test() {
+
+        ld = _model.getSchen();
+
+        ldSubscribeAndFetch();
+
+        assertLdValue("Only one Shengen-member must be in array.", shen);
+    }
+
+    @Test
     public void getEu_Test() {
 
-        MutableLiveData<Country[]> ld = _model.getEu();
-        observeForTesting(ld, ()->{});
+        ld = _model.getEu();
 
-        Country[] arrCountry;
+        ldSubscribeAndFetch();
 
-        do {
-            arrCountry = ld.getValue();
-        }while (arrCountry == null);
-
-        Country result = arrCountry[0];
-
-        assertEquals(eu, result);
+        assertLdValue("Only one EU-member must be in array.", eu);
     }
+
+    @Test
+    public void getBoth_Test() {
+
+        ld = _model.getSchAndEu();
+
+        ldSubscribeAndFetch();
+
+        assertLdValue("Only one EU and Shengen-member must be in array.", both);
+    }
+
 }
