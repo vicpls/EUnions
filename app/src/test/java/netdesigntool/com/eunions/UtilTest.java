@@ -32,7 +32,6 @@ public class UtilTest {
     }
 
 
-    // Test of Util.getIntegerPart
     @Test
     public void test_getIntegerPart(){
         assertEquals("123", Util.getIntegerPart("123.456"));
@@ -40,26 +39,6 @@ public class UtilTest {
         assertEquals("123", Util.getIntegerPart("123"));
     }
 
-
-    /*@Test
-    public void createTravelGuideURL(){
-
-        String pac = "netdesigntool.com.eunions";
-        String cISO = "ru";
-        String sCountry = "russia";
-        final int id = 111;
-
-
-        when(mContext.getPackageName()).thenReturn(pac);
-        when(mContext.getResources()).thenReturn(res);
-        when(mRes.getIdentifier(cISO,"string",pac)).thenReturn(id);
-        when(mRes.getString(id)).thenReturn(sCountry);
-
-        Html html = mock(Html.class);
-        when(html.fromHtml(anyString())).thenReturn("");
-
-        Util.getTravelGuideUrl(mContext, cISO);
-    }*/
 
     @Test
     public void test_roundNumber(){
@@ -132,5 +111,23 @@ public class UtilTest {
         assertEquals(expected, Util.getTravelGuideUrl(mContext,countryISO));
     }*/
 
+    /*@Test
+    public void createTravelGuideURL(){
 
+        String pac = "netdesigntool.com.eunions";
+        String cISO = "ru";
+        String sCountry = "russia";
+        final int id = 111;
+
+
+        when(mContext.getPackageName()).thenReturn(pac);
+        when(mContext.getResources()).thenReturn(res);
+        when(mRes.getIdentifier(cISO,"string",pac)).thenReturn(id);
+        when(mRes.getString(id)).thenReturn(sCountry);
+
+        Html html = mock(Html.class);
+        when(html.fromHtml(anyString())).thenReturn("");
+
+        Util.getTravelGuideUrl(mContext, cISO);
+    }*/
 }

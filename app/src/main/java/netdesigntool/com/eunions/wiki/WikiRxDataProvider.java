@@ -228,7 +228,7 @@ public class WikiRxDataProvider {
 
 
 
-    // Запрос с вариантами.
+    // Common parametrized request.
     void startWdRequest(String sparqlRequest, WikiParser parser){
         Single<WikiResponse> wikiResp = wikiRxService.wikiRxQuery(sparqlRequest);
 

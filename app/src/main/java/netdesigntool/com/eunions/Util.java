@@ -36,7 +36,7 @@ public final class Util {
      */
     public static boolean isConnected(Context context){
 
-        ConnectivityManager cm = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 
         if (android.os.Build.VERSION.SDK_INT >= 23) {
             NetworkCapabilities netCap = cm.getNetworkCapabilities(cm.getActiveNetwork());

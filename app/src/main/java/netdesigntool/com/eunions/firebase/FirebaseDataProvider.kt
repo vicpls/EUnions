@@ -23,7 +23,7 @@ private const val BASE_NAME = "Country"
 
 class FirebaseDataProvider(cont :Context) {
 
-    private val providerScope = CoroutineScope(Dispatchers.IO)      //Dispatchers.Main)
+    private val providerScope = CoroutineScope(Dispatchers.IO)
     private var providerJob = providerScope.launch { fbAppInit(cont) }
 
     private val baseRef = Firebase.database.getReferenceFromUrl(URL_REF)
@@ -41,7 +41,7 @@ class FirebaseDataProvider(cont :Context) {
     val ldWHI : LiveData<Map<String, Float>> = MutableLiveData(HashMap())         // The value of WHI. <year, value>
 
     /**
-     * Launch request to the country base for WHI values.
+     * Launch request to the countries' base for WHI values.
      */
     fun requestWHI(isoCountryCode :String, title: String) {
 
@@ -68,8 +68,8 @@ class FirebaseDataProvider(cont :Context) {
         FirebaseApp.initializeApp(cont)
 
         try {
-            Firebase.database.setPersistenceCacheSizeBytes(1024 * 1024 * 1)     //1Mb for FireBase cache.
-            Firebase.database.setPersistenceEnabled(true)
+            Firebase.database.setPersistenceCacheSizeBytes(1024 * 1024 * 1)     // 1Mb for FireBase cache.
+            Firebase.database.setPersistenceEnabled(true)                       // Cashing enable.
         } catch (dbE: DatabaseException) {
             Log.d(LTAG, dbE.message!!)
         }

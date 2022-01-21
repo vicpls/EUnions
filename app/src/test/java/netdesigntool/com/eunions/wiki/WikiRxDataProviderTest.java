@@ -23,8 +23,6 @@ public class WikiRxDataProviderTest {
         
 
 
-
-
         assertEquals(
                 "val1"
                 ,WikiRxDataProvider.getRespValue(otterMap,"p1"));

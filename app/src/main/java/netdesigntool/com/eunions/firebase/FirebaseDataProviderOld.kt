@@ -15,7 +15,8 @@ import netdesigntool.com.eunions.Util.LTAG
 private const val URL_REF ="https://fir-a0980.firebaseio.com/"  // URL of firebase
 private const val BASE_NAME = "Country"
 
-class FirebaseDataProvider_old(cont :Context) {
+@Deprecated("Based on the Thread Adapter deprecated.")
+class FirebaseDataProviderOld(cont :Context) {
 
     private var thread = Thread()
 

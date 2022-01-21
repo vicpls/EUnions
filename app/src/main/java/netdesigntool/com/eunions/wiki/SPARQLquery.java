@@ -5,7 +5,7 @@ import android.annotation.SuppressLint;
 import java.util.Locale;
 
 /*
-    The stattic string of SPARQL Queries to Wiki.
+    The static string of SPARQL Queries to Wiki.
  */
 public final class SPARQLquery {
 
@@ -66,10 +66,6 @@ public final class SPARQLquery {
 
                     "  SERVICE wikibase:label { bd:serviceParam wikibase:language \"%s\". }}";
 
-
-
-    final static String NAME_OF_MEMBER_PREDICATE =
-            "";
 
     /*
         Return: Country's total GDP per capita
