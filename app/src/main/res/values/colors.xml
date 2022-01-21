@@ -6,6 +6,7 @@
 
     <color name="euroUnion">#780d05fa</color>
     <color name="schengen">#78faf605</color>
+    <color name="others">#78BD3DF4</color>
 
     <color name="text">@android:color/tertiary_text_dark</color>
 

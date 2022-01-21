@@ -102,9 +102,8 @@
             app:layout_constraintEnd_toStartOf="@+id/glRight70"
             app:layout_constraintStart_toStartOf="@+id/glLeft30"
             app:layout_constraintTop_toTopOf="parent"
-            tools:layout_height="50dp">
+            tools:layout_height="50dp"/>
 
-        </com.google.android.flexbox.FlexboxLayout>
 
         <com.google.android.flexbox.FlexboxLayout
             android:id="@+id/flexboxMiddle"
@@ -120,9 +119,9 @@
             app:layout_constraintEnd_toStartOf="@+id/glRight70"
             app:layout_constraintStart_toStartOf="@+id/glLeft30"
             app:layout_constraintTop_toBottomOf="@+id/flexboxTop"
-            tools:layout_height="75dp">
+            tools:layout_height="75dp"/>
 
-        </com.google.android.flexbox.FlexboxLayout>
+
 
         <com.google.android.flexbox.FlexboxLayout
             android:id="@+id/flexboxBottom"
@@ -138,11 +137,31 @@
             app:layout_constraintEnd_toStartOf="@+id/glRight70"
             app:layout_constraintStart_toStartOf="@+id/glLeft30"
             app:layout_constraintTop_toBottomOf="@+id/flexboxMiddle"
-            tools:layout_height="50dp">
-
-        </com.google.android.flexbox.FlexboxLayout>
+            tools:layout_height="50dp"/>
 
 
+
+
+        <LinearLayout
+            android:id="@+id/flOthers"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/rounded_oth"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintStart_toStartOf="@id/flRight"
+            app:layout_constraintEnd_toEndOf="@id/flLeft"
+            app:layout_constraintTop_toBottomOf="@+id/flexboxBottom">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Other countries"
+                />
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
