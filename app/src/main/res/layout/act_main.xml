@@ -36,12 +36,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="12dp"
                 android:layout_marginTop="12dp"
-                android:drawableBottom="@drawable/flg_eu"
                 android:text="EU"
                 android:textColor="@android:color/black"
                 android:textSize="18sp"
                 android:textStyle="bold|italic"
-                tools:text="EU"/>
+                tools:text="EU"
+                app:drawableBottomCompat="@drawable/flg_eu" />
 
         </LinearLayout>
 
@@ -64,12 +64,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="12dp"
                 android:layout_marginTop="12dp"
-                android:drawableBottom="@drawable/flg_eu"
                 android:drawablePadding="10dp"
                 android:text="Schengen"
                 android:textColor="@android:color/black"
                 android:textStyle="bold|italic"
-                tools:text="Schengen"/>
+                tools:text="Schengen"
+                app:drawableBottomCompat="@drawable/flg_eu" />
 
         </LinearLayout>
 

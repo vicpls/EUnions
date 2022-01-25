@@ -4,7 +4,7 @@ buildscript {
     
     repositories {
         google()
-        jcenter()
+        mavenCentral()
     }
 
     dependencies {
@@ -23,16 +23,16 @@ buildscript {
 allprojects {
     repositories {
         google()
-        jcenter()
+        mavenCentral()
         maven { url 'https://jitpack.io' }  // for About Activity library
     }
 
-    // for View deprecation warnings:
-    gradle.projectsEvaluated{
+    // To showing deprecation warnings:
+    /*gradle.projectsEvaluated{
         tasks.withType(JavaCompile){
             options.compilerArgs << "-Xlint:deprecation"
         }
-    }
+    }*/
 }
 
 task clean(type: Delete) {
