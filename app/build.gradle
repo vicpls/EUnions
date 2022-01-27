@@ -1,7 +1,8 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
-apply plugin: 'kotlin-android'// Google Services plugin
-//apply plugin: 'dagger.hilt.android.plugin'
+apply plugin: 'kotlin-android'
+apply plugin: 'dagger.hilt.android.plugin'
+
 
 android {
     compileSdkVersion 31
@@ -16,7 +17,6 @@ android {
         resConfigs 'en', 'ru'
 
     }
-
 
     signingConfigs {
         release
@@ -122,7 +122,6 @@ configurations.all {
 //    useJUnitPlatform()
 //}
 
-
 dependencies {
 
     implementation fileTree(include: ['*.jar'], dir: 'libs')
@@ -185,6 +184,12 @@ dependencies {
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 
 
+    def hilt_ver = '2.40.5'
+    implementation "com.google.dagger:hilt-android:${hilt_ver}"
+    //kapt "com.google.dagger:hilt-compiler:${hilt_ver}"
+    annotationProcessor "com.google.dagger:hilt-compiler:${hilt_ver}"
+
+
     //   Test
     testImplementation 'junit:junit:4.13.2'
     testImplementation "android.arch.core:core-testing:1.1.1"
@@ -221,3 +226,8 @@ dependencies {
     testAnnotationProcessor "com.google.dagger:hilt-compiler:${hilt_ver}"*/
 
 }
+
+//  For using Hilt with Kotlin
+/*kapt {
+    correctErrorTypes true
+}*/

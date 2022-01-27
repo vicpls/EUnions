@@ -17,10 +17,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import netdesigntool.com.eunions.Util.LTAG
 
-
-private const val URL_REF ="https://fir-a0980.firebaseio.com/"  // URL of firebase
-private const val BASE_NAME = "Country"
-
+/**
+ *  Initialise and provide access to Firebase.
+ */
 class FirebaseDataProvider(cont :Context) {
 
     private val providerScope = CoroutineScope(Dispatchers.IO)

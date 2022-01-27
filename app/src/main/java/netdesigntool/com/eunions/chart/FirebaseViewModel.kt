@@ -3,9 +3,12 @@ package netdesigntool.com.eunions.chart
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import dagger.hilt.android.lifecycle.HiltViewModel
 import netdesigntool.com.eunions.firebase.FirebaseDataProvider
+import javax.inject.Inject
 
-class FirebaseViewModel(app :Application) : AndroidViewModel(app) {
+@HiltViewModel
+class FirebaseViewModel @Inject constructor(app :Application) : AndroidViewModel(app) {
 
     private val fbProv: FirebaseDataProvider = FirebaseDataProvider(app)
     var ldWHI: LiveData<Map<String, Float>> = fbProv.ldWHI
