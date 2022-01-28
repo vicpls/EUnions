@@ -12,6 +12,7 @@ import com.google.firebase.database.DatabaseException
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import dagger.hilt.EntryPoints
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -20,12 +21,16 @@ import netdesigntool.com.eunions.Util.LTAG
 /**
  *  Initialise and provide access to Firebase.
  */
-class FirebaseDataProvider(cont :Context) {
+
+class FirebaseDataProvider (cont :Context) {
+
+    var fbAttrib: FirebaseAttribute.FbAttributeInterface = EntryPoints.get(cont.applicationContext, FirebaseAttribute.FbAttributeInterface::class.java)
 
     private val providerScope = CoroutineScope(Dispatchers.IO)
     private var providerJob = providerScope.launch { fbAppInit(cont) }
 
-    private val baseRef = Firebase.database.getReferenceFromUrl(URL_REF)
+    //private val baseRef = Firebase.database.getReferenceFromUrl(URL_REF)
+    private val baseRef = Firebase.database.getReferenceFromUrl(fbAttrib.URL_REF)
 
 
     /**
@@ -83,7 +88,8 @@ class FirebaseDataProvider(cont :Context) {
 
     private fun createRequest(isoCountryCode: String, part: String): DatabaseReference{
         return baseRef
-            .child(BASE_NAME)
+            //.child(BASE_NAME)
+            .child(fbAttrib.BASE_NAME)
             .child(isoCountryCode.uppercase())
             .child(part)
     }
