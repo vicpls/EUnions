@@ -12,7 +12,11 @@ import com.google.firebase.database.DatabaseException
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import dagger.hilt.EntryPoint
 import dagger.hilt.EntryPoints
+import dagger.hilt.InstallIn
+import dagger.hilt.android.EntryPointAccessors
+import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -24,13 +28,19 @@ import netdesigntool.com.eunions.Util.LTAG
 
 class FirebaseDataProvider (cont :Context) {
 
-    var fbAttrib: FirebaseAttribute.FbAttributeInterface = EntryPoints.get(cont.applicationContext, FirebaseAttribute.FbAttributeInterface::class.java)
+    @EntryPoint
+    @InstallIn(SingletonComponent::class)
+    interface FbAttributeInterface {
+        fun getAtt(): FirebaseAttribute
+    }
+
+    val fbAttrib: FirebaseAttribute = EntryPoints.get(cont.applicationContext, FbAttributeInterface::class.java).getAtt()
 
     private val providerScope = CoroutineScope(Dispatchers.IO)
     private var providerJob = providerScope.launch { fbAppInit(cont) }
 
-    //private val baseRef = Firebase.database.getReferenceFromUrl(URL_REF)
     private val baseRef = Firebase.database.getReferenceFromUrl(fbAttrib.URL_REF)
+
 
 
     /**
