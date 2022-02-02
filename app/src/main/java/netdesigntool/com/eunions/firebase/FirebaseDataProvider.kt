@@ -1,5 +1,6 @@
 package netdesigntool.com.eunions.firebase
 
+import android.app.Application
 import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -15,30 +16,28 @@ import com.google.firebase.ktx.Firebase
 import dagger.hilt.EntryPoint
 import dagger.hilt.EntryPoints
 import dagger.hilt.InstallIn
-import dagger.hilt.android.EntryPointAccessors
+import dagger.hilt.android.scopes.ActivityScoped
+import dagger.hilt.android.scopes.ViewModelScoped
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import netdesigntool.com.eunions.Util.LTAG
+import javax.inject.Inject
+import javax.inject.Singleton
 
 /**
  *  Initialise and provide access to Firebase.
  */
 
-class FirebaseDataProvider (cont :Context) {
-
-    @EntryPoint
-    @InstallIn(SingletonComponent::class)
-    interface FbAttributeInterface {
-        fun getAtt(): FirebaseAttribute
-    }
-
-    // DI
-    val fbAttrib: FirebaseAttribute = EntryPoints.get(cont.applicationContext, FbAttributeInterface::class.java).getAtt()
+@ViewModelScoped
+class FirebaseDataProvider @Inject constructor (
+    app :Application,
+    private val fbAttrib: FirebaseAttribute)
+{
 
     private val providerScope = CoroutineScope(Dispatchers.IO)
-    private var providerJob = providerScope.launch { fbAppInit(cont) }
+    private var providerJob = providerScope.launch { fbAppInit(app) }
 
     private val baseRef = Firebase.database.getReferenceFromUrl(fbAttrib.URL_REF)
 
@@ -52,6 +51,7 @@ class FirebaseDataProvider (cont :Context) {
 
     /**
      * Values of World Happiness Index
+     * Map of <year, value> where year as String
      */
     val ldWHI : LiveData<Map<String, Float>> = MutableLiveData(HashMap())         // The value of WHI. <year, value>
 
@@ -97,13 +97,11 @@ class FirebaseDataProvider (cont :Context) {
     }
 
 
-    private fun createRequest(isoCountryCode: String, part: String): DatabaseReference{
-        return baseRef
-            //.child(BASE_NAME)
+    private fun createRequest(isoCountryCode: String, part: String): DatabaseReference =
+        baseRef
             .child(fbAttrib.BASE_NAME)
             .child(isoCountryCode.uppercase())
             .child(part)
-    }
 
 
     // Start the parametrised request to Firebase. Fetch result.
@@ -151,10 +149,10 @@ class FirebaseDataProvider (cont :Context) {
         if (answer !=null) {
 
             when (answer) {
-                is Long -> result[title] = answer.toFloat()
+                is Long   -> result[title] = answer.toFloat()
                 is Double -> result[title] = answer.toFloat()
 
-                is Map<*, *> -> result = answer as HashMap<String, Float>
+                is Map<*,*> -> result = answer as HashMap<String, Float>
             }
         }
 

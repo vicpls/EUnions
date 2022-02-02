@@ -36,7 +36,7 @@ class ChartFragment : Fragment() {
 
         lChart = view.findViewById(R.id.lChart)
 
-        val vModel = ViewModelProvider(requireActivity()).get(FirebaseViewModel::class.java)
+        val vModel = ViewModelProvider(requireActivity()).get(ChartViewModel::class.java)
 
         vModel.ldWHI.observe(viewLifecycleOwner, { drawLine(it as Map<String, Float>) })
     }

@@ -83,7 +83,7 @@ configurations {
 }
 
 
-allprojects {
+/*allprojects {
     afterEvaluate { project ->
         def propsFile = rootProject.file('keystore_add.properties')
         def configName = 'release'
@@ -108,7 +108,7 @@ allprojects {
             }
         }
     }
-}
+}*/
 
 
 
@@ -131,7 +131,7 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
     //
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
-    implementation 'com.google.android.material:material:1.4.0'
+    implementation 'com.google.android.material:material:1.5.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     //
     def lifeCycleVer = '2.4.0'
@@ -139,7 +139,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel:${lifeCycleVer}"
     implementation "androidx.lifecycle:lifecycle-common-java8:${lifeCycleVer}"
 
-    implementation 'com.google.android:flexbox:1.1.0'
+    implementation 'com.google.android.flexbox:flexbox:3.0.0'
 
     // wiki data
     def wiki = 'org.wikidata.wdtk'
@@ -215,10 +215,7 @@ dependencies {
 
 
     // *** Hilt ***
-    /*def hilt_ver = '2.33-beta'
-    implementation "com.google.dagger:hilt-android:${hilt_ver}"
-    annotationProcessor "com.google.dagger:hilt-compiler:${hilt_ver}"
-
+    /*
     // For instrumentation tests
     androidTestImplementation  "com.google.dagger:hilt-android-testing:${hilt_ver}"
     androidTestAnnotationProcessor "com.google.dagger:hilt-compiler:${hilt_ver}"
@@ -230,6 +227,6 @@ dependencies {
 }
 
 //  For using Hilt with Kotlin
-/*kapt {
+kapt {
     correctErrorTypes true
-}*/
+}

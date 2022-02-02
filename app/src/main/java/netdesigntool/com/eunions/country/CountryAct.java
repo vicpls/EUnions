@@ -24,14 +24,15 @@ import java.util.ArrayList;
 import java.util.ListIterator;
 import java.util.Map;
 
+import dagger.hilt.android.AndroidEntryPoint;
 import netdesigntool.com.eunions.Parameter;
 import netdesigntool.com.eunions.R;
 import netdesigntool.com.eunions.Util;
 import netdesigntool.com.eunions.chart.ChartFragment;
-import netdesigntool.com.eunions.chart.FirebaseViewModel;
+import netdesigntool.com.eunions.chart.ChartViewModel;
 import netdesigntool.com.eunions.databinding.ActCountryBinding;
 
-
+@AndroidEntryPoint
 public class CountryAct extends AppCompatActivity {
 
     public static final String COUNTRY_ISO = "ISO";
@@ -52,20 +53,25 @@ public class CountryAct extends AppCompatActivity {
 
         String sISO = getIntent().getExtras().getString(COUNTRY_ISO);
 
-        if (! isConnected(this)){
-            Snackbar.make( findViewById(R.id.tvCountryName)
-                    , R.string.no_connection
-                    , Snackbar.LENGTH_LONG)
-                    .show();
-        }else {
-            //subscribeFireBaseObservers(sISO);
+        if ( isConnected(this)){
             subscribeWikiObservers(sISO);
+        } else {
+            userNotify(R.string.no_connection);
         }
+
         subscribeFireBaseObservers(sISO);
 
         initViews(sISO);
     }
-    
+
+
+    private void userNotify(@StringRes int messageId) {
+        Snackbar.make( findViewById(R.id.tvCountryName)
+                , messageId
+                , Snackbar.LENGTH_LONG)
+                .show();
+    }
+
 
     private void initViews(String sISO) {
         binding.tvCountryName.setText( getResources().getIdentifier(sISO, "string", getPackageName()));
@@ -91,7 +97,8 @@ public class CountryAct extends AppCompatActivity {
     }
 
     private void subscribeFireBaseObservers(String sISO) {
-        FirebaseViewModel fbVModel = new ViewModelProvider(this).get(FirebaseViewModel.class);
+
+        ChartViewModel fbVModel = new ViewModelProvider(this).get(ChartViewModel.class);
         fbVModel.requestWHI(sISO, "whi");
         fbVModel.requestRankWHI(sISO, "rank");
         fbVModel.getLdRankWHI().observe(this, new FbParameterObserver());
@@ -163,7 +170,7 @@ public class CountryAct extends AppCompatActivity {
         }
 
 
-        // TODO: return the last value!
+        // return the last key in Map
         private <T> String getOne(Map<String, T> mMap){
 
             String result="";
@@ -179,12 +186,12 @@ public class CountryAct extends AppCompatActivity {
             String result;
 
             if (num instanceof Float) {
-                Float f = num.floatValue();
+                float f = num.floatValue();
 
-                if (f - f.intValue() < 0.001) {
-                    result = Util.getIntegerPart(f.toString());
+                if (f - (int) f < 0.001) {
+                    result = Integer.toString((int)f);
                 } else {
-                    result = f.toString();
+                    result = Float.toString(f);
                 }
 
             } else {
