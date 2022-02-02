@@ -34,6 +34,7 @@ class FirebaseDataProvider (cont :Context) {
         fun getAtt(): FirebaseAttribute
     }
 
+    // DI
     val fbAttrib: FirebaseAttribute = EntryPoints.get(cont.applicationContext, FbAttributeInterface::class.java).getAtt()
 
     private val providerScope = CoroutineScope(Dispatchers.IO)
