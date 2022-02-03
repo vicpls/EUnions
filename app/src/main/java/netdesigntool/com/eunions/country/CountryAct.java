@@ -83,7 +83,7 @@ public class CountryAct extends AppCompatActivity {
 
     private void subscribeWikiObservers(String sISO) {
 
-        ViewModelProvider.AndroidViewModelFactory vmFactory = new ModelFactory(sISO, getApplication());
+        ViewModelProvider.AndroidViewModelFactory vmFactory = new VModelFactory(sISO, getApplication());
 
         CountryActViewModel viewModel = new ViewModelProvider(this, (ViewModelProvider.Factory) vmFactory)
                 .get(CountryActViewModel.class);

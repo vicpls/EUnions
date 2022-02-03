@@ -6,12 +6,12 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-class ModelFactory extends ViewModelProvider.AndroidViewModelFactory{
+class VModelFactory extends ViewModelProvider.AndroidViewModelFactory{
 
     private final String iso;
     private final Application app;
 
-    public ModelFactory(String iso, Application app) {
+    public VModelFactory(String iso, Application app) {
         super(app);
         this.iso = iso;
         this.app = app;

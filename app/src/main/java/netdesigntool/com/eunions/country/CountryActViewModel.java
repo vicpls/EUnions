@@ -24,6 +24,7 @@ import netdesigntool.com.eunions.Util;
 import netdesigntool.com.eunions.wiki.HumanReadableNumber;
 import netdesigntool.com.eunions.wiki.WikiRxDataProvider;
 
+
 public class CountryActViewModel extends AndroidViewModel {
 
     private final String iso;
@@ -185,6 +186,5 @@ public class CountryActViewModel extends AndroidViewModel {
             );
         }
     }
-
 
 }
