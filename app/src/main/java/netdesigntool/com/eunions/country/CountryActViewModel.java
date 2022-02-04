@@ -18,6 +18,10 @@ import androidx.lifecycle.Observer;
 import java.util.ArrayList;
 import java.util.ListIterator;
 
+import dagger.hilt.EntryPoint;
+import dagger.hilt.EntryPoints;
+import dagger.hilt.InstallIn;
+import dagger.hilt.components.SingletonComponent;
 import netdesigntool.com.eunions.Parameter;
 import netdesigntool.com.eunions.R;
 import netdesigntool.com.eunions.Util;
@@ -44,7 +48,8 @@ public class CountryActViewModel extends AndroidViewModel {
         super(app);
 
         this.iso = iso;
-        prov = new WikiRxDataProvider();
+
+        prov = EntryPoints.get(getApplication(), WiKiProviderEntPoint.class).getWiKiProvider();
 
         if (Parameter.getHrProvider()==null){
 
@@ -60,6 +65,12 @@ public class CountryActViewModel extends AndroidViewModel {
                 }
             });
         }
+    }
+
+    @EntryPoint
+    @InstallIn(SingletonComponent.class)
+    interface WiKiProviderEntPoint{
+        WikiRxDataProvider getWiKiProvider();
     }
 
 

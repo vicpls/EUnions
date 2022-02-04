@@ -22,6 +22,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Inject;
+
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
@@ -58,6 +60,7 @@ public class WikiRxDataProvider {
     LiveData<ArrayList<Parameter>> ldPopulation;    // Численность населения
 
 
+    @Inject
     public WikiRxDataProvider() {
 
         Retrofit.Builder retrofitBuilder = new Retrofit.Builder()
