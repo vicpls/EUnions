@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/flRoot"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="8dp">
+    android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:paddingBottom="8dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="8dp">
 
 
         <LinearLayout
@@ -140,27 +142,28 @@
             tools:layout_height="50dp"/>
 
 
-
-
         <LinearLayout
             android:id="@+id/flOthers"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:background="@drawable/rounded_oth"
+            android:clickable="true"
             android:gravity="center"
+            android:minHeight="32dp"
             android:orientation="vertical"
-            app:layout_constraintStart_toStartOf="@id/flRight"
-            app:layout_constraintEnd_toEndOf="@id/flLeft"
-            app:layout_constraintTop_toBottomOf="@+id/flexboxBottom">
+            app:layout_constraintEnd_toEndOf="@id/flRight"
+            app:layout_constraintStart_toStartOf="@id/flLeft"
+            app:layout_constraintTop_toBottomOf="@+id/flexboxBottom"
+            android:focusable="true">
 
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Other countries"
-                />
+                android:text="@string/other_countries" />
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
+</FrameLayout>

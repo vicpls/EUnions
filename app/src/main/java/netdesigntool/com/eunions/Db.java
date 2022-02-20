@@ -16,7 +16,8 @@ class Db {
     private File DbFile;
     private final String dbFileName;
 
-    private final int DB_VERSION = 2;   // The Actual version of DB for this App.
+    @SuppressWarnings("FieldCanBeLocal")
+    private final int DB_VERSION = 3;   // The Actual version of DB for this App.
 
     /**
      * Create new.

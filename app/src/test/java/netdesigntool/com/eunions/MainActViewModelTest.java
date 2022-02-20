@@ -34,10 +34,10 @@ public class MainActViewModelTest {
     MainActViewModel _model;
 
 
-    Country nothing = new Country("nothing", 1,1);
-    Country both = new Country("both", 0,0);
-    Country shen = new Country("shen", 1, 0);
-    Country eu = new Country("eu", 0, 1);
+    Country nothing = new Country("nothing", 1,1, "nothing");
+    Country both = new Country("both", 0,0, "both");
+    Country shen = new Country("shen", 1, 0, "shen");
+    Country eu = new Country("eu", 0, 1, "eu");
 
     private MutableLiveData<Country[]> ld;
     private Country[] arrCountry;

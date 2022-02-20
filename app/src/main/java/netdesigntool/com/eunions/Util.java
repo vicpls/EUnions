@@ -52,11 +52,16 @@ public final class Util {
     /** Create url to a travel guide for the country.
       *   Assumed that name of country in particular language included in url. It may be not true.
       */
-    public static Spanned getTravelGuideUrl(Context context, String countryISO){
+    public static Spanned getTravelGuideUrl(Context context, String countryISO, String cName){
 
         int idForCountryName = context.getResources().getIdentifier(countryISO, "string", context.getPackageName());
 
-        String url = "http://wikitravel.org/"+ Locale.getDefault().getLanguage() +"/"+ context.getResources().getString(idForCountryName);
+        String countryName = (idForCountryName >0) ?
+                context.getResources().getString(idForCountryName)
+                : cName;
+
+        String url = "http://wikitravel.org/"+ Locale.getDefault().getLanguage() +"/"+ countryName;
+
         String html = " <a href=\""+ url +"\">" + context.getResources().getString(R.string.trv_guide);
 
         if (Build.VERSION.SDK_INT >= 24)

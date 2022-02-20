@@ -1,13 +1,13 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
-apply plugin: 'kotlin-android'// Google Services plugin
+apply plugin: 'kotlin-android'      // Google Services plugin
 //apply plugin: 'dagger.hilt.android.plugin'
 
 android {
     compileSdkVersion 31
     defaultConfig {
         applicationId "netdesigntool.com.eunions"
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 31
         versionCode 8
         versionName '1.3'
@@ -48,6 +48,9 @@ android {
 
         buildFeatures {
             viewBinding true
+
+            // Enables Jetpack Compose
+            compose true
         }
 
     }
@@ -56,6 +59,23 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
         sourceCompatibility JavaVersion.VERSION_1_8
     }
+    kotlinOptions {
+        jvmTarget = "1.8"
+
+        // Suppress Compose Kotlin compiler compatibility warning
+        /*freeCompilerArgs += [
+                "-P",
+                "plugin:androidx.compose.compiler.plugins.kotlin:suppressKotlinVersionCompatibilityCheck=true"
+        ]*/
+    }
+
+    composeOptions {
+        //kotlinCompilerExtensionVersion '1.0.5'
+        kotlinCompilerExtensionVersion="1.2.0-alpha02"
+        
+    }
+
+
     packagingOptions {
         resources {
             excludes += ['META-INF/DEPENDENCIES']
@@ -71,6 +91,9 @@ android {
     lint {
         abortOnError false
     }
+    buildFeatures {
+        compose true
+    }
 }
 
 //Prevent Error: DuplicatePlatformClasses
@@ -79,34 +102,6 @@ configurations {
         exclude module: 'httpclient'
     }
 }
-
-
-/*allprojects {
-    afterEvaluate { project ->
-        def propsFile = rootProject.file('keystore_add.properties')
-        def configName = 'release'
-
-
-        if (android.signingConfigs.hasProperty(configName)) {
-            println "Need Key info"
-
-            if (propsFile.exists()) {
-                def props = new Properties()
-                props.load(new FileInputStream(propsFile))
-                android.signingConfigs[configName].storeFile = rootProject.file(props['storeFile'])
-                android.signingConfigs[configName].storePassword = props['storePassword']
-                android.signingConfigs[configName].keyAlias = props['keyAlias']
-                android.signingConfigs[configName].keyPassword = props['keyPassword']
-                println "Key info was read."
-            } else {
-                println "Key info cannot be read."
-                if (!propsFile.exists()) {
-                    println "File cannot be find:  " + propsFile.absolutePath
-                }
-            }
-        }
-    }
-}*/
 
 
 
@@ -132,6 +127,10 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
     implementation 'com.google.android.material:material:1.5.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation "androidx.compose.ui:ui:$compose_version"
+    implementation "androidx.compose.ui:ui-tooling-preview:$compose_version"
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.4.1'
+
     //
     def lifeCycleVer = '2.4.0'
     //noinspection KtxExtensionAvailable
@@ -185,6 +184,27 @@ dependencies {
     // MPAndroid charts
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 
+    //   =============== Jetpack Compose ====================
+    implementation "androidx.compose.compiler:compiler:1.2.0-alpha03"
+    // Integration with activities
+    implementation 'androidx.activity:activity-compose:1.4.0'
+    // Compose Material Design
+    implementation 'androidx.compose.material:material:1.1.0'
+    // Animations
+    //implementation 'androidx.compose.animation:animation:1.0.5'
+    // Tooling support (Previews, etc.)
+    implementation 'androidx.compose.ui:ui-tooling:1.1.0'
+    // Integration with ViewModels
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.5.0-alpha02'
+    implementation "com.google.accompanist:accompanist-appcompat-theme:0.16.0"
+    // UI Tests
+    //androidTestImplementation 'androidx.compose.ui:ui-test-junit4:1.0.5'
+
+
+    //          Paging
+    implementation("androidx.paging:paging-runtime-ktx:3.1.0")
+    implementation("androidx.paging:paging-compose:1.0.0-alpha14")
+
 
     //   Test
     testImplementation 'junit:junit:4.13.2'
@@ -206,7 +226,7 @@ dependencies {
     //androidTestImplementation 'org.hamcrest:hamcrest:2.1'
     androidTestImplementation 'org.awaitility:awaitility:4.1.1'
     //
-
+    androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
 
     // *** Hilt ***
     /*def hilt_ver = '2.33-beta'
