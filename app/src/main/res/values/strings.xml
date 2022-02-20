@@ -51,5 +51,7 @@
 
     <string name="title_rank_whi">Rank in the World Happiness Index</string>
     <string name="whi">Happiness Index</string>
+    <string name="other_countries">Other countries</string>
+    <string name="title_activity_other_countries">OtherCountries</string>
 
 </resources>

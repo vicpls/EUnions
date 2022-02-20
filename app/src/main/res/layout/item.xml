@@ -17,8 +17,8 @@
 
         tools:layout_height="22dp"
         tools:layout_width="15dp"
-        tools:src="@drawable/at"
-        tools:srcCompat="@drawable/at"
+        tools:src="@drawable/flg_at"
+        tools:srcCompat="@drawable/flg_at"
         />
 
     <TextView

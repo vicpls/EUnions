@@ -18,8 +18,8 @@
         android:layout_weight="20"
         tools:layout_height="22dp"
         tools:layout_width="15dp"
-        tools:src="@mipmap/at"
-        tools:srcCompat="@mipmap/at" />
+        tools:src="@drawable/flg_at"
+        tools:srcCompat="@drawable/flg_at" />
 
     <TextView
         android:id="@+id/tvCountry"

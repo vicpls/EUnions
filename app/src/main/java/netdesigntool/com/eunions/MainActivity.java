@@ -22,6 +22,7 @@ import com.google.android.flexbox.FlexboxLayout;
 
 import netdesigntool.com.eunions.country.CountryAct;
 import netdesigntool.com.eunions.databinding.ActMainBinding;
+import netdesigntool.com.eunions.othcountries.ActOtherCountries;
 
 public class MainActivity extends AppCompatActivity
                             implements View.OnClickListener
@@ -36,12 +37,14 @@ public class MainActivity extends AppCompatActivity
         binding = ActMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        ViewModelProvider.Factory vmFactory = new VmFactory(getDataRepository());
+        ViewModelProvider.Factory vmFactory = (ViewModelProvider.Factory) new VmFactory(getDataRepository());
 
         MainActViewModel myVModel = new ViewModelProvider(this, vmFactory)
                 .get(MainActViewModel.class);
 
         observeViewModel(myVModel);
+
+        binding.flOthers.setOnClickListener(new OnOtherCountryClick());
     }
 
     private void observeViewModel(MainActViewModel vm){
@@ -104,6 +107,20 @@ public class MainActivity extends AppCompatActivity
     }
 
 
+    class OnOtherCountryClick implements View.OnClickListener{
+        @Override
+        public void onClick(View v) {
+
+            Intent intent = new Intent(getApplicationContext(), ActOtherCountries.class);
+            startActivity(intent);
+
+            /*FragmentManager fm = MainActivity.this.getSupportFragmentManager();
+            fm.beginTransaction()
+                    .add(binding.flLeft.getId(), OtherCountryList.class, null)
+                    .commit();*/
+        }
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         //return super.onCreateOptionsMenu(menu);
@@ -125,6 +142,7 @@ public class MainActivity extends AppCompatActivity
 
         return super.onOptionsItemSelected(item);
     }
+
 
     private class VmFactory extends ViewModelProvider.NewInstanceFactory{
 
