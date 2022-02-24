@@ -1,6 +1,8 @@
-apply plugin: 'com.android.application'
-apply plugin: 'com.google.gms.google-services'
-apply plugin: 'kotlin-android'      // Google Services plugin
+plugins {
+    id 'com.android.application'
+    id 'com.google.gms.google-services'
+    id 'kotlin-android'
+}
 //apply plugin: 'dagger.hilt.android.plugin'
 
 android {
@@ -185,7 +187,7 @@ dependencies {
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 
     //   =============== Jetpack Compose ====================
-    implementation "androidx.compose.compiler:compiler:1.2.0-alpha03"
+    implementation "androidx.compose.compiler:compiler:1.2.0-alpha04"
     // Integration with activities
     implementation 'androidx.activity:activity-compose:1.4.0'
     // Compose Material Design
