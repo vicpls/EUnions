@@ -125,6 +125,7 @@ public class MainActivity extends AppCompatActivity
         FragmentManager fm = MainActivity.this.getSupportFragmentManager();
             fm.beginTransaction()
                 .add(binding.flRoot.getId(), FrOtherCountryList.class, null)
+                .addToBackStack(null)
                 .commit();
         }
     }

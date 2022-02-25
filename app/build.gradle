@@ -16,7 +16,6 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
         resConfigs 'en', 'ru'
-
     }
 
 
@@ -31,7 +30,6 @@ android {
             debuggable false
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-
             signingConfig signingConfigs.release
         }
 
@@ -44,23 +42,20 @@ android {
                 suffix= ".debug"
             }
             applicationIdSuffix suffix
-
             println("added sufix: "+ suffix)
         }
 
         buildFeatures {
             viewBinding true
-
-            // Enables Jetpack Compose
             compose true
         }
-
     }
 
     compileOptions {
         targetCompatibility JavaVersion.VERSION_1_8
         sourceCompatibility JavaVersion.VERSION_1_8
     }
+
     kotlinOptions {
         jvmTarget = "1.8"
 
@@ -90,11 +85,9 @@ android {
             includeAndroidResources = true
         }
     }
+
     lint {
         abortOnError false
-    }
-    buildFeatures {
-        compose true
     }
 }
 
@@ -139,7 +132,6 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel:${lifeCycleVer}"
     implementation "androidx.lifecycle:lifecycle-common-java8:${lifeCycleVer}"
 
-    //implementation 'com.google.android:flexbox:1.1.0'
     implementation 'com.google.android.flexbox:flexbox:3.0.0'
 
     // wiki data

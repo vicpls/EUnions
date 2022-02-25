@@ -81,11 +81,6 @@ fun DefaultPreview() {
         .height(32.dp)
         .width(32.dp)
 
-    val cntModifier = Modifier
-        .padding(start = 20.dp)
-
-    //EUnionsTheme (false){
-
     Card( modifier = Modifier
         .padding(5.dp)
         .fillMaxWidth()
@@ -133,5 +128,4 @@ fun DefaultPreview() {
             }
         }
     }
-
 }

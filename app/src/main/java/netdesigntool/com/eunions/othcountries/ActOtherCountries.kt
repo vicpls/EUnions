@@ -123,7 +123,6 @@ class ActOtherCountries : ComponentActivity() {
         val cntModifier = Modifier
             .padding(start = 20.dp)
 
-        //EUnionsTheme (false){
 
             Card( modifier = Modifier
                .padding(5.dp)

@@ -1,21 +1,18 @@
 package netdesigntool.com.eunions.othcountries
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.Card
-import androidx.compose.material.Text
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
@@ -54,7 +51,7 @@ class FrOtherCountryList : Fragment(){
                 )
                 setContent {
                     val lazyPagingItems = pager.flow.collectAsLazyPagingItems()
-                    OthCountryLayout(lazyPagingItems, ::onCountryClick, context)
+                    ShowContent(lazyPagingItems, ::onCountryClick, context)
                 }
             }
     }
@@ -65,6 +62,16 @@ class FrOtherCountryList : Fragment(){
                 .putExtra(CountryAct.COUNTRY_ISO, iso)
                 .putExtra(CountryAct.COUNTRY_NAME, cName)
         )
+    }
+
+    @Composable
+    fun ShowContent(items: LazyPagingItems<Country>, onCountryClick: (String, String)->Unit, context: Context){
+        Surface(
+            modifier = Modifier.fillMaxSize(),
+            color = Color.White
+        ){
+            OthCountryLayout(items, onCountryClick, context)
+        }
     }
 
 }
