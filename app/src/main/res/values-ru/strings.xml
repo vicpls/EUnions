@@ -45,4 +45,5 @@
     <string name="billion">млрд</string>
     <string name="title_rank_whi">Место в рейтинге по индексу счастья</string>
     <string name="whi">Индекс счастья</string>
+    <string name="other_countries">Остальные страны</string>
 </resources>

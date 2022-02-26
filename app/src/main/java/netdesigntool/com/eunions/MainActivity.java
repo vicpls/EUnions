@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
@@ -22,6 +23,8 @@ import com.google.android.flexbox.FlexboxLayout;
 
 import netdesigntool.com.eunions.country.CountryAct;
 import netdesigntool.com.eunions.databinding.ActMainBinding;
+import netdesigntool.com.eunions.othcountries.ActOtherCountries;
+import netdesigntool.com.eunions.othcountries.FrOtherCountryList;
 
 public class MainActivity extends AppCompatActivity
                             implements View.OnClickListener
@@ -36,12 +39,15 @@ public class MainActivity extends AppCompatActivity
         binding = ActMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        ViewModelProvider.Factory vmFactory = new VmFactory(getDataRepository());
+        ViewModelProvider.Factory vmFactory = (ViewModelProvider.Factory) new VmFactory(getDataRepository());
 
         MainActViewModel myVModel = new ViewModelProvider(this, vmFactory)
                 .get(MainActViewModel.class);
 
         observeViewModel(myVModel);
+
+        //binding.flOthers.setOnClickListener(new OnOtherCountryClick());
+        binding.flOthers.setOnClickListener(new OnOtherCountryClickFr());
     }
 
     private void observeViewModel(MainActViewModel vm){
@@ -90,7 +96,7 @@ public class MainActivity extends AppCompatActivity
         return vFlexBoxItem;
     }
 
-
+    // Click on country handler
     @Override
     public void onClick(View view) {
         String country = view.getTag().toString();
@@ -100,13 +106,32 @@ public class MainActivity extends AppCompatActivity
         Intent intent = new Intent(this, CountryAct.class);
         intent.putExtra(CountryAct.COUNTRY_ISO, view.getTag().toString());
         startActivity(intent);
-
     }
 
 
+    class OnOtherCountryClick implements View.OnClickListener{
+        @Override
+        public void onClick(View v) {
+
+            Intent intent = new Intent(getApplicationContext(), ActOtherCountries.class);
+            startActivity(intent);
+    }
+    }
+
+    class OnOtherCountryClickFr implements View.OnClickListener{
+        @Override
+        public void onClick(View v) {
+
+        FragmentManager fm = MainActivity.this.getSupportFragmentManager();
+            fm.beginTransaction()
+                .add(binding.flRoot.getId(), FrOtherCountryList.class, null)
+                .addToBackStack(null)
+                .commit();
+        }
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        //return super.onCreateOptionsMenu(menu);
 
         getMenuInflater().inflate(R.menu.main, menu);
         return true;

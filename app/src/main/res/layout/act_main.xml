@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/flRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="8dp">
@@ -36,12 +39,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="12dp"
                 android:layout_marginTop="12dp"
-                android:drawableBottom="@drawable/flg_eu"
                 android:text="EU"
                 android:textColor="@android:color/black"
                 android:textSize="18sp"
                 android:textStyle="bold|italic"
-                tools:text="EU"/>
+                tools:text="EU"
+                app:drawableBottomCompat="@drawable/flg_eu" />
 
         </LinearLayout>
 
@@ -64,12 +67,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="12dp"
                 android:layout_marginTop="12dp"
-                android:drawableBottom="@drawable/flg_eu"
                 android:drawablePadding="10dp"
                 android:text="Schengen"
                 android:textColor="@android:color/black"
                 android:textStyle="bold|italic"
-                tools:text="Schengen"/>
+                tools:text="Schengen"
+                app:drawableBottomCompat="@drawable/flg_eu" />
 
         </LinearLayout>
 
@@ -102,9 +105,8 @@
             app:layout_constraintEnd_toStartOf="@+id/glRight70"
             app:layout_constraintStart_toStartOf="@+id/glLeft30"
             app:layout_constraintTop_toTopOf="parent"
-            tools:layout_height="50dp">
+            tools:layout_height="50dp"/>
 
-        </com.google.android.flexbox.FlexboxLayout>
 
         <com.google.android.flexbox.FlexboxLayout
             android:id="@+id/flexboxMiddle"
@@ -120,9 +122,9 @@
             app:layout_constraintEnd_toStartOf="@+id/glRight70"
             app:layout_constraintStart_toStartOf="@+id/glLeft30"
             app:layout_constraintTop_toBottomOf="@+id/flexboxTop"
-            tools:layout_height="75dp">
+            tools:layout_height="75dp"/>
 
-        </com.google.android.flexbox.FlexboxLayout>
+
 
         <com.google.android.flexbox.FlexboxLayout
             android:id="@+id/flexboxBottom"
@@ -138,11 +140,32 @@
             app:layout_constraintEnd_toStartOf="@+id/glRight70"
             app:layout_constraintStart_toStartOf="@+id/glLeft30"
             app:layout_constraintTop_toBottomOf="@+id/flexboxMiddle"
-            tools:layout_height="50dp">
-
-        </com.google.android.flexbox.FlexboxLayout>
+            tools:layout_height="50dp"/>
 
 
+        <LinearLayout
+            android:id="@+id/flOthers"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/rounded_oth"
+            android:clickable="true"
+            android:gravity="center"
+            android:minHeight="40dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="@id/flRight"
+            app:layout_constraintStart_toStartOf="@id/flLeft"
+            app:layout_constraintTop_toBottomOf="@+id/flexboxBottom"
+            android:focusable="true">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:text="@string/other_countries" />
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
+</FrameLayout>

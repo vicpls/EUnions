@@ -36,6 +36,7 @@ import netdesigntool.com.eunions.databinding.ActCountryBinding;
 public class CountryAct extends AppCompatActivity {
 
     public static final String COUNTRY_ISO = "ISO";
+    public static final String COUNTRY_NAME = "cNAME";
 
     private ActCountryBinding binding;
 
@@ -52,6 +53,7 @@ public class CountryAct extends AppCompatActivity {
         }
 
         String sISO = getIntent().getExtras().getString(COUNTRY_ISO);
+        String countryName = getIntent().getExtras().getString(COUNTRY_NAME);
 
         if ( isConnected(this)){
             subscribeWikiObservers(sISO);
@@ -61,7 +63,7 @@ public class CountryAct extends AppCompatActivity {
 
         subscribeFireBaseObservers(sISO);
 
-        initViews(sISO);
+        initViews(sISO, countryName);
     }
 
 
@@ -73,11 +75,18 @@ public class CountryAct extends AppCompatActivity {
     }
 
 
-    private void initViews(String sISO) {
-        binding.tvCountryName.setText( getResources().getIdentifier(sISO, "string", getPackageName()));
+    private void initViews(String sISO, String cName) {
+
+        int cNameIdRes = getResources().getIdentifier(sISO, "string", getPackageName());
+
+        if (cNameIdRes >0)
+            binding.tvCountryName.setText(cNameIdRes);
+        else
+            binding.tvCountryName.setText(cName);
+
         binding.ivFlag.setImageResource( getResources().getIdentifier("flg_"+ sISO, "drawable", getPackageName()));
 
-        binding.tvLinkToGuide.setText( Util.getTravelGuideUrl(this, sISO));
+        binding.tvLinkToGuide.setText( Util.getTravelGuideUrl(this, sISO, cName));
         binding.tvLinkToGuide.setMovementMethod( LinkMovementMethod.getInstance());
     }
 
@@ -87,6 +96,9 @@ public class CountryAct extends AppCompatActivity {
 
         CountryActViewModel viewModel = new ViewModelProvider(this, (ViewModelProvider.Factory) vmFactory)
                 .get(CountryActViewModel.class);
+
+        //ViewModelProvider.Factory andFactory = (ViewModelProvider.Factory) new ModelFactory(sISO, getApplication());
+        //CountryActViewModel viewModel = new ViewModelProvider(this, andFactory);
 
 
         LiveData<ArrayList<Parameter>> liveData = viewModel.getResultStr();
