@@ -30,7 +30,7 @@ public class CountryActTest {
     public ActivityScenarioRule<CountryAct> actRule = new ActivityScenarioRule<CountryAct>(intContAct);
 
     @Test
-    public void testCountryActGetDataFromInternet() {
+    public void testCountryActGet() {
 
         try {
             Thread.sleep(3000);

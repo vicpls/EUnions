@@ -38,7 +38,7 @@ class OthCountryPagingSource : PagingSource<Int, Country>() {
         return result
     }
 
-    private fun getContext() : Context = App.getAppContext()
+    private fun getContext() : Context? = App.getAppContext()
 
 
 }
