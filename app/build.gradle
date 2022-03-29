@@ -13,7 +13,7 @@ android {
         applicationId "netdesigntool.com.eunions"
         minSdkVersion 21
         targetSdkVersion 31
-        versionCode 8
+        versionCode 9
         versionName '1.3'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
@@ -107,11 +107,10 @@ configurations.all {
 //tasks.withType(Test) {
 //    useJUnitPlatform()
 //}
-ext {
-    compose_version = '1.1.0'
-}
 
 dependencies {
+
+    ext{ compose_version = '1.1.1' }
 
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'androidx.appcompat:appcompat:1.4.1'
@@ -125,32 +124,32 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.4.1'
 
     //
-    def lifeCycleVer = '2.4.1'
+    ext{ lifeCycleVer = '2.4.1' }
     //noinspection KtxExtensionAvailable
-    implementation "androidx.lifecycle:lifecycle-viewmodel:${lifeCycleVer}"
-    implementation "androidx.lifecycle:lifecycle-common-java8:${lifeCycleVer}"
+    implementation "androidx.lifecycle:lifecycle-viewmodel:$lifeCycleVer"
+    implementation "androidx.lifecycle:lifecycle-common-java8:$lifeCycleVer"
 
     implementation 'com.google.android.flexbox:flexbox:3.0.0'
 
     // wiki data
-    def wiki = 'org.wikidata.wdtk'
-    def wikiVer = '0.11.1'
-    implementation "${wiki}:wdtk-wikibaseapi:${wikiVer}"
-    implementation "${wiki}:wdtk-datamodel:${wikiVer}"
+    ext{ wiki = 'org.wikidata.wdtk'
+         wikiVer = '0.11.1'}
+    implementation "$wiki:wdtk-wikibaseapi:$wikiVer"
+    implementation "$wiki:wdtk-datamodel:$wikiVer"
     implementation 'org.slf4j:slf4j-log4j12:1.8.0-beta4'
 
     // Retrofit
-    def retrofit = 'com.squareup.retrofit2'
-    def retrofitVer = '2.9.0'
-    implementation "${retrofit}:retrofit:${retrofitVer}"
+    ext{ retrofit = 'com.squareup.retrofit2'
+         retrofitVer = '2.9.0'}
+    implementation "$retrofit:retrofit:$retrofitVer"
     //implementation "com.squareup.retrofit2:converter-gson:${retrofitVer}"
-    implementation "${retrofit}:converter-moshi:${retrofitVer}"
-    implementation "${retrofit}:adapter-rxjava2:${retrofitVer}"
+    implementation "$retrofit:converter-moshi:$retrofitVer"
+    implementation "$retrofit:adapter-rxjava2:$retrofitVer"
     implementation 'com.squareup.okhttp3:logging-interceptor:4.9.3'
 
     // Kotlin coroutine
     //implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.9'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0-native-mt'
 
 
     // RxJava
@@ -168,7 +167,7 @@ dependencies {
     // Declare the dependencies for the desired Firebase products without specifying versions
     // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation 'com.google.firebase:firebase-database-ktx'
-    implementation 'com.google.firebase:firebase-appcheck-safetynet:16.0.0-beta04'
+    implementation 'com.google.firebase:firebase-appcheck-safetynet:16.0.0-beta05'
 
     // ===================================================================
 
@@ -177,30 +176,30 @@ dependencies {
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 
     //   =============== Jetpack Compose ====================
-    implementation "androidx.compose.compiler:compiler:1.2.0-alpha04"
+    implementation "androidx.compose.compiler:compiler:1.2.0-alpha06"
     // Integration with activities
     implementation 'androidx.activity:activity-compose:1.4.0'
     // Compose Material Design
-    implementation 'androidx.compose.material:material:1.1.0'
+    implementation 'androidx.compose.material:material:1.1.1'
     // Animations
     //implementation 'androidx.compose.animation:animation:1.0.5'
     // Tooling support (Previews, etc.)
-    implementation 'androidx.compose.ui:ui-tooling:1.1.0'
+    implementation 'androidx.compose.ui:ui-tooling:1.1.1'
     // Integration with ViewModels
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.5.0-alpha02'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.5.0-alpha05'
     implementation "com.google.accompanist:accompanist-appcompat-theme:0.16.0"
     // UI Tests
     //androidTestImplementation 'androidx.compose.ui:ui-test-junit4:1.0.5'
 
 
     //          Paging
-    implementation("androidx.paging:paging-runtime-ktx:3.1.0")
+    implementation("androidx.paging:paging-runtime-ktx:3.1.1")
     implementation("androidx.paging:paging-compose:1.0.0-alpha14")
 
 
-    def hilt_ver = '2.40.5'
-    implementation "com.google.dagger:hilt-android:${hilt_ver}"
-    kapt "com.google.dagger:hilt-compiler:${hilt_ver}"
+    ext{ hilt_ver = '2.41' }
+    implementation "com.google.dagger:hilt-android:$hilt_ver"
+    kapt "com.google.dagger:hilt-compiler:$hilt_ver"
     //annotationProcessor "com.google.dagger:hilt-compiler:${hilt_ver}"
 
 
@@ -211,7 +210,7 @@ dependencies {
     //testImplementation 'org.mockito:mockito-core:4.2.0'
     testImplementation 'org.mockito:mockito-inline:+'
     testImplementation 'org.robolectric:robolectric:4.7.+'
-    testImplementation 'org.awaitility:awaitility:4.1.1'
+    testImplementation 'org.awaitility:awaitility:4.2.0'
 
     
     //    AndroidTest
@@ -222,7 +221,7 @@ dependencies {
     //androidTestImplementation 'androidx.test.espresso:espresso-intents:3.4.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
     //androidTestImplementation 'org.hamcrest:hamcrest:2.1'
-    androidTestImplementation 'org.awaitility:awaitility:4.1.1'
+    androidTestImplementation 'org.awaitility:awaitility:4.2.0'
     //
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
 
