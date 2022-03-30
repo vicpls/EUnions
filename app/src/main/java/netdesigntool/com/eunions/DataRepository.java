@@ -22,13 +22,15 @@ public class DataRepository {
     final static String COL_EU = "eu";
     final static String COL_NAME = "name";
 
+    // SQL requests:
     // Only members of EU or Schengen.
     private static final String PARTICIPIAL_COUNTRIES = "SELECT * FROM participial_countries";
+    // Countries exclude EU or Schengen.
     private static final String OTHER_COUNTRIES = "SELECT * FROM other_countries LIMIT %d OFFSET %d";
 
     private static DataRepository me;
 
-    SQLiteDatabase dbase;
+    private SQLiteDatabase dbase;
 
     private DataRepository() {}
 
