@@ -11,7 +11,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
-
+@Deprecated
 public class DataRepository {
 
     final private static String dbFileName = "eunion.db";

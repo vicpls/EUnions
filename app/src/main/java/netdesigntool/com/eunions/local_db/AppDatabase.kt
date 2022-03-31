@@ -8,6 +8,6 @@ import netdesigntool.com.eunions.local_db.entities.OtherCountry
 
 @Database(entities = [EuOnly::class, OtherCountry::class], version = 3)
 
-abstract class CountriesDb : RoomDatabase() {
+abstract class AppDatabase : RoomDatabase() {
     abstract fun countriesDao(): CountriesDao
 }

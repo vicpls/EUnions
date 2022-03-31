@@ -5,12 +5,12 @@ import androidx.room.Room
 
 private const val DB_FILE_NAME= "eunion.db"
 
-class CountriesDbProvider {
+class DbProvider {
 
-    fun getDB(context: Context) : CountriesDb{
+    fun getDB(context: Context) : AppDatabase{
         return Room.databaseBuilder(
                         context,
-                        CountriesDb::class.java,
+                        AppDatabase::class.java,
                         DB_FILE_NAME)
                     .createFromAsset(DB_FILE_NAME)
                     .fallbackToDestructiveMigration()
