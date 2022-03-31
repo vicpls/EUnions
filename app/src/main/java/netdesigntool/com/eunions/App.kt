@@ -10,7 +10,7 @@ class App: Application()
 
 {
     companion object{
-        lateinit var cont : WeakReference<Context>;
+        lateinit var cont : WeakReference<Context>
         fun getAppContext() : Context? = cont.get()
     }
 

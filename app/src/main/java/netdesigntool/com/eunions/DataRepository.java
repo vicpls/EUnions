@@ -102,7 +102,6 @@ public class DataRepository {
 
         if (cursor ==null || cursor.getCount() <1) return result;   //no data - return empty list
 
-        int qty = cursor.getCount();
         cursor.moveToFirst();
 
         int indISO, indName;
@@ -116,7 +115,6 @@ public class DataRepository {
         }
 
 
-        //for(int i=0; i<qty; i++){
         do{
             Country country = new Country(
                     cursor.getString(indISO)
