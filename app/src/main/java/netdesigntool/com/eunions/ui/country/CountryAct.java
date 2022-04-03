@@ -1,4 +1,4 @@
-package netdesigntool.com.eunions.country;
+package netdesigntool.com.eunions.ui.country;
 
 import static netdesigntool.com.eunions.Util.LTAG;
 import static netdesigntool.com.eunions.Util.isConnected;
@@ -28,8 +28,8 @@ import dagger.hilt.android.AndroidEntryPoint;
 import netdesigntool.com.eunions.Parameter;
 import netdesigntool.com.eunions.R;
 import netdesigntool.com.eunions.Util;
-import netdesigntool.com.eunions.chart.ChartFragment;
-import netdesigntool.com.eunions.chart.ChartViewModel;
+import netdesigntool.com.eunions.ui.chart.ChartFragment;
+import netdesigntool.com.eunions.ui.chart.ChartViewModel;
 import netdesigntool.com.eunions.databinding.ActCountryBinding;
 
 @AndroidEntryPoint

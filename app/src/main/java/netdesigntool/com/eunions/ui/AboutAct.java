@@ -1,4 +1,4 @@
-package netdesigntool.com.eunions;
+package netdesigntool.com.eunions.ui;
 
 import android.app.Activity;
 import android.content.Context;
@@ -9,11 +9,13 @@ import com.mcsoft.aboutactivity.NoticesParcelable;
 import de.psdev.licensesdialog.licenses.ApacheSoftwareLicense20;
 import de.psdev.licensesdialog.licenses.License;
 import de.psdev.licensesdialog.model.Notice;
+import netdesigntool.com.eunions.BuildConfig;
+import netdesigntool.com.eunions.R;
 
-class AboutAct {
+public class AboutAct {
 
 
-    void startAboutAct(Activity act) {
+    public void startAboutAct(Activity act) {
 
         final NoticesParcelable notices = new NoticesParcelable();
 

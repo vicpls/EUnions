@@ -1,4 +1,4 @@
-package netdesigntool.com.eunions.country;
+package netdesigntool.com.eunions.ui.country;
 
 import android.app.Application;
 

@@ -1,4 +1,4 @@
-package netdesigntool.com.eunions.chart
+package netdesigntool.com.eunions.ui.chart
 
 import android.graphics.Paint
 import android.os.Build

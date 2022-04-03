@@ -13,7 +13,7 @@ import java.util.concurrent.atomic.AtomicBoolean
 import javax.inject.Inject
 
 @HiltViewModel
-class MainActVM @Inject constructor(val appDb : AppDatabase) : ViewModel(){
+class MainActVM @Inject constructor(val appDb : AppDatabase) : ViewModel() {
 
     val ldSchAndEu : LiveData<List<Country>>
         get() = _ldSchAndEu

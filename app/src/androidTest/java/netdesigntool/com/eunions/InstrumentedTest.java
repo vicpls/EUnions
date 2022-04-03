@@ -23,6 +23,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import netdesigntool.com.eunions.ui.main.MainActivity;
+
 @RunWith(AndroidJUnit4.class)
 public class InstrumentedTest {
 

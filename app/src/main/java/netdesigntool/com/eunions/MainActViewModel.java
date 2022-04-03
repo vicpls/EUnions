@@ -12,7 +12,7 @@ import androidx.lifecycle.MutableLiveData;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-
+@Deprecated
 public class MainActViewModel extends AndroidViewModel {
 
     private DataRepository dataRepository;

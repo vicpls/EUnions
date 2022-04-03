@@ -1,4 +1,4 @@
-package netdesigntool.com.eunions.othcountries
+package netdesigntool.com.eunions.ui.othcountries
 
 import android.content.Context
 import android.content.Intent
@@ -19,7 +19,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import netdesigntool.com.eunions.Country
-import netdesigntool.com.eunions.country.CountryAct
+import netdesigntool.com.eunions.ui.country.CountryAct
 
 /**
  *      Fragment show a list of the Countries not included in EU or Schengen.

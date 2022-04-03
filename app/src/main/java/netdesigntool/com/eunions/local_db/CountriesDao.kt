@@ -12,9 +12,9 @@ interface CountriesDao {
     @Query("SELECT * FROM participial_countries")
     suspend fun getMemberCountries() : List<Country>
 
-    @Deprecated("This old solution", ReplaceWith("getOtherCountries() : PagingSource"))
+    /*@Deprecated("This old solution", ReplaceWith("getOtherCountries() : PagingSource"))
     @Query("SELECT * FROM other_countries LIMIT :limit OFFSET :offset")
-    fun getOtherCountries(offset: Int, limit: Int)
+    fun getOtherCountries(offset: Int, limit: Int)*/
 
     @Query("SELECT * FROM other_countries")
     suspend fun getOtherCountries() : PagingSource<Int, Country>

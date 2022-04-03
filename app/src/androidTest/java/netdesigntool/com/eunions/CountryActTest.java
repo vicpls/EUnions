@@ -3,7 +3,7 @@ package netdesigntool.com.eunions;
 import static androidx.test.core.app.ApplicationProvider.getApplicationContext;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
-import static netdesigntool.com.eunions.country.CountryAct.COUNTRY_ISO;
+import static netdesigntool.com.eunions.ui.country.CountryAct.COUNTRY_ISO;
 
 import android.content.Intent;
 
@@ -14,7 +14,7 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import netdesigntool.com.eunions.country.CountryAct;
+import netdesigntool.com.eunions.ui.country.CountryAct;
 
 //@RunWith(AndroidJUnit4.class)
 public class CountryActTest {

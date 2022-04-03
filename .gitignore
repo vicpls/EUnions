@@ -14,3 +14,4 @@ local.properties
 keystore.properties
 gradlew*
 /keystore_add.properties
+fir-a0980-export.json

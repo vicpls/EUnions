@@ -1,4 +1,4 @@
-package netdesigntool.com.eunions.othcountries
+package netdesigntool.com.eunions.ui.othcountries
 
 import android.content.Context
 import android.util.Log

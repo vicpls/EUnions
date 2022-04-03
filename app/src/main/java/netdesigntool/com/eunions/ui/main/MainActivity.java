@@ -1,6 +1,5 @@
-package netdesigntool.com.eunions;
+package netdesigntool.com.eunions.ui.main;
 
-import static netdesigntool.com.eunions.DataRepository.getDataRepository;
 import static netdesigntool.com.eunions.Util.LTAG;
 
 import android.content.Intent;
@@ -21,11 +20,20 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.flexbox.FlexboxLayout;
 
-import netdesigntool.com.eunions.country.CountryAct;
-import netdesigntool.com.eunions.databinding.ActMainBinding;
-import netdesigntool.com.eunions.othcountries.ActOtherCountries;
-import netdesigntool.com.eunions.othcountries.FrOtherCountryList;
+import java.util.List;
 
+import dagger.hilt.android.AndroidEntryPoint;
+import netdesigntool.com.eunions.Country;
+import netdesigntool.com.eunions.DataRepository;
+import netdesigntool.com.eunions.MainActViewModel;
+import netdesigntool.com.eunions.R;
+import netdesigntool.com.eunions.databinding.ActMainBinding;
+import netdesigntool.com.eunions.ui.AboutAct;
+import netdesigntool.com.eunions.ui.country.CountryAct;
+import netdesigntool.com.eunions.ui.othcountries.ActOtherCountries;
+import netdesigntool.com.eunions.ui.othcountries.FrOtherCountryList;
+
+@AndroidEntryPoint
 public class MainActivity extends AppCompatActivity
                             implements View.OnClickListener
 {
@@ -39,21 +47,22 @@ public class MainActivity extends AppCompatActivity
         binding = ActMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        ViewModelProvider.Factory vmFactory = (ViewModelProvider.Factory) new VmFactory(getDataRepository());
+        /*ViewModelProvider.Factory vmFactory = (ViewModelProvider.Factory) new VmFactory(getDataRepository());
 
         MainActViewModel myVModel = new ViewModelProvider(this, vmFactory)
-                .get(MainActViewModel.class);
+                .get(MainActViewModel.class);*/
 
-        observeViewModel(myVModel);
+        MainActVM mainActVM = new ViewModelProvider(this).get(MainActVM.class);
 
-        //binding.flOthers.setOnClickListener(new OnOtherCountryClick());
+        observeViewModel(mainActVM);
+
         binding.flOthers.setOnClickListener(new OnOtherCountryClickFr());
     }
 
-    private void observeViewModel(MainActViewModel vm){
-        LiveData<Country[]> countryEU = vm.getEu();
-        LiveData<Country[]> countrySchEu = vm.getSchAndEu();
-        LiveData<Country[]> countrySch = vm.getSchen();
+    private void observeViewModel(MainActVM vm){
+        LiveData<List<Country>> countryEU = vm.getLdEu();
+        LiveData<List<Country>> countrySchEu = vm.getLdSchAndEu();
+        LiveData<List<Country>> countrySch = vm.getLdSchen();
 
         countryEU.observe(this, this::fillUpFbTop);
         countrySchEu.observe(this, this::fillUpFbMiddle);
@@ -61,19 +70,19 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-    private void fillUpFbTop(Country[] countries) {
+    private void fillUpFbTop(List<Country> countries) {
         fillUpFlexBox(countries, binding.flexboxTop);
     }
 
-    private void fillUpFbMiddle(Country[] countries) {
+    private void fillUpFbMiddle(List<Country> countries) {
         fillUpFlexBox(countries, binding.flexboxMiddle);
     }
 
-    private void fillUpFbBottom(Country[] countries) {
+    private void fillUpFbBottom(List<Country> countries) {
         fillUpFlexBox(countries, binding.flexboxBottom);
     }
 
-    private void fillUpFlexBox(Country[] countries, FlexboxLayout flexbox){
+    private void fillUpFlexBox(List<Country> countries, FlexboxLayout flexbox){
         for (Country country : countries){
             flexbox.addView(createViewForCountry(country));
         }
@@ -151,6 +160,7 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+    @Deprecated
     private class VmFactory extends ViewModelProvider.NewInstanceFactory{
 
         private final DataRepository dataRepository;
