@@ -19,6 +19,8 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import netdesigntool.com.eunions.model.Country;
+
 
 @RunWith(MockitoJUnitRunner.class)
 public class MainActViewModelTest {

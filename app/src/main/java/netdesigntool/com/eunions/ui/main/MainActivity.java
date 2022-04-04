@@ -23,7 +23,7 @@ import com.google.android.flexbox.FlexboxLayout;
 import java.util.List;
 
 import dagger.hilt.android.AndroidEntryPoint;
-import netdesigntool.com.eunions.Country;
+import netdesigntool.com.eunions.model.Country;
 import netdesigntool.com.eunions.DataRepository;
 import netdesigntool.com.eunions.MainActViewModel;
 import netdesigntool.com.eunions.R;

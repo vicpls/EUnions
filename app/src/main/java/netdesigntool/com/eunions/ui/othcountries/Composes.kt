@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.items
-import netdesigntool.com.eunions.Country
+import netdesigntool.com.eunions.model.Country
 import netdesigntool.com.eunions.R
 
 @Composable

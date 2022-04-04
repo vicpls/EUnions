@@ -5,7 +5,7 @@ import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import netdesigntool.com.eunions.App
-import netdesigntool.com.eunions.Country
+import netdesigntool.com.eunions.model.Country
 import netdesigntool.com.eunions.DataRepository
 import netdesigntool.com.eunions.Util.LTAG
 

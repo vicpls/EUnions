@@ -25,7 +25,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
-import netdesigntool.com.eunions.Country
+import netdesigntool.com.eunions.model.Country
 import netdesigntool.com.eunions.R
 import netdesigntool.com.eunions.ui.country.CountryAct
 import netdesigntool.com.eunions.ui.country.CountryAct.COUNTRY_ISO

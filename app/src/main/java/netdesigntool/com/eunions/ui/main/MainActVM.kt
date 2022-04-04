@@ -7,8 +7,9 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import netdesigntool.com.eunions.Country
+import netdesigntool.com.eunions.model.Country
 import netdesigntool.com.eunions.local_db.AppDatabase
+import netdesigntool.com.eunions.model.toCountry
 import java.util.concurrent.atomic.AtomicBoolean
 import javax.inject.Inject
 
@@ -51,6 +52,7 @@ class MainActVM @Inject constructor(val appDb : AppDatabase) : ViewModel() {
 
         appDb.countriesDao()
                 .getMemberCountries()
+                .map{it.toCountry()}
                 .forEach { country ->
                     when {
                         (country.isEU && country.isSchen) -> schAndEu.add(country)
