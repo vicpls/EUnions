@@ -21,9 +21,11 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.items
 import netdesigntool.com.eunions.model.Country
 import netdesigntool.com.eunions.R
+import netdesigntool.com.eunions.local_db.entities.OtherCountry
+import netdesigntool.com.eunions.model.CommonCountry
 
 @Composable
-fun OthCountryLayout(items: LazyPagingItems<Country>, onCountryClick: (String, String)->Unit, context: Context) {
+fun OthCountryLayout(items: LazyPagingItems<CommonCountry>, onCountryClick: (String, String)->Unit, context: Context) {
 
     Card( modifier = Modifier
         .padding(8.dp)
@@ -35,7 +37,7 @@ fun OthCountryLayout(items: LazyPagingItems<Country>, onCountryClick: (String, S
 }
 
 @Composable
-fun CountryList(items: LazyPagingItems<Country>, onCountryClick: (String, String)->Unit, context: Context) {
+fun CountryList(items: LazyPagingItems<CommonCountry>, onCountryClick: (String, String)->Unit, context: Context) {
 
     val flgModifier = Modifier
         .height(32.dp)

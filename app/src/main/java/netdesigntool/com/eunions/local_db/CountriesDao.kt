@@ -17,5 +17,6 @@ interface CountriesDao {
     fun getOtherCountries(offset: Int, limit: Int)*/
 
     @Query("SELECT * FROM other_countries")
-    suspend fun getOtherCountries() : PagingSource<Int, OtherCountry>
+    fun getOtherCountries() : PagingSource<Int, OtherCountry>
+    //suspend fun getOtherCountries() : PagingSource<Int, OtherCountry>
 }

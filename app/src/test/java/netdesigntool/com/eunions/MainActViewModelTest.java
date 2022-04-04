@@ -92,7 +92,7 @@ public class MainActViewModelTest {
         assertEquals(assertMessage, arrCountry.length, 1);
 
         Country result = arrCountry[0];
-        assertEquals(expected.getISO(), result.getISO());
+        assertEquals(expected.getIso(), result.getIso());
     }
 
 

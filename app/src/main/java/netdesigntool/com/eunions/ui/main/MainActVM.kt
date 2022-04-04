@@ -31,6 +31,7 @@ class MainActVM @Inject constructor(val appDb : AppDatabase) : ViewModel() {
     private val _ldEu = MutableLiveData<List<Country>>()
         get() = field.also{startFetchLdCountries()}
 
+
     private val isFetched = AtomicBoolean(false)
 
 

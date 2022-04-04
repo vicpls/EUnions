@@ -9,7 +9,7 @@ import androidx.room.DatabaseView
                     WHEN ScHENGEN<=1 AND eu>1 THEN 1 
                     WHEN schengen<=1 AND eu<=1 THEN 2 
                     WHEN schengen>1 AND eu<=1 THEN 3 END, name""",
-    "participial_countries")
+            viewName = "participial_countries")
 data class ParticipialCountries (
     //@ColumnInfo(name = "_id")      val id :Int,
     @ColumnInfo(name = "schengen") val schengen :Int,

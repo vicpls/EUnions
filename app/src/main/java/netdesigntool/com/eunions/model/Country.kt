@@ -1,11 +1,12 @@
 package netdesigntool.com.eunions.model
 
 data class Country(
-    val iSO: String,            // 0<= Country is a member of EU
-    private val euni: Int,      // 0<= Country is a member of Shengen
-    private val schen: Int,
-    val name: String
-) {
+    override val iso: String,
+    private val euni: Int,          // 0<= Country is a member of EU
+    private val schen: Int,         // 0<= Country is a member of Shengen
+    override val name: String
+) : CommonCountry {
+
     val isEU: Boolean
         get() = euni <= 0
 

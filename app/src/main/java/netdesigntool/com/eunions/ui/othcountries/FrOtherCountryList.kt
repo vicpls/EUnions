@@ -16,26 +16,32 @@ import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
+import androidx.paging.PagingSource
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import netdesigntool.com.eunions.model.Country
+import dagger.hilt.android.AndroidEntryPoint
+import netdesigntool.com.eunions.local_db.AppDatabase
+import netdesigntool.com.eunions.model.CommonCountry
 import netdesigntool.com.eunions.ui.country.CountryAct
+import javax.inject.Inject
 
 /**
  *      Fragment show a list of the Countries not included in EU or Schengen.
  *      The same as [ActOtherCountries]
  */
+@AndroidEntryPoint
 class FrOtherCountryList : Fragment(){
 
-    private lateinit var pager : Pager<Int, Country>
+    @Inject private lateinit var appDB : AppDatabase
+    private lateinit var pager : Pager<Int, CommonCountry>
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val pConfig = PagingConfig(18, 2, false)
+        val pConfig = PagingConfig(20, 3, false)
 
-        pager = Pager(pConfig, null, ::OthCountryPagingSource)
+        pager = Pager(pConfig, null) { appDB.countriesDao().getOtherCountries() as PagingSource<Int, CommonCountry>}
     }
 
     override fun onCreateView(
@@ -65,7 +71,7 @@ class FrOtherCountryList : Fragment(){
     }
 
     @Composable
-    fun ShowContent(items: LazyPagingItems<Country>, onCountryClick: (String, String)->Unit, context: Context){
+    fun ShowContent(items: LazyPagingItems<CommonCountry>, onCountryClick: (String, String)->Unit, context: Context){
         Surface(
             modifier = Modifier.fillMaxSize(),
             color = Color.White

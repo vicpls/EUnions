@@ -94,13 +94,13 @@ public class MainActivity extends AppCompatActivity
         View vFlexBoxItem = this.getLayoutInflater().inflate(R.layout.item, null);
         vFlexBoxItem.setOnClickListener(this);
 
-        vFlexBoxItem.setTag(country.getISO());
+        vFlexBoxItem.setTag(country.getIso());
 
         TextView tvCountry = vFlexBoxItem.findViewById(R.id.tvCountry);
         ImageView ivFlag = vFlexBoxItem.findViewById(R.id.ivFlag);
 
-        tvCountry.setText(getResources().getIdentifier(country.getISO(), "string", getPackageName()));
-        ivFlag.setImageResource( getResources().getIdentifier("flg_"+ country.getISO(), "drawable", getPackageName()));
+        tvCountry.setText(getResources().getIdentifier(country.getIso(), "string", getPackageName()));
+        ivFlag.setImageResource( getResources().getIdentifier("flg_"+ country.getIso(), "drawable", getPackageName()));
 
         return vFlexBoxItem;
     }
