@@ -47,13 +47,13 @@ class FirebaseDataProvider @Inject constructor (
      * Rank of country in the list of World Happiness Index.
      * Map of <year, value> where year as String
      */
-    val ldRankWHI : LiveData<Map<String, Number>> = MutableLiveData(HashMap())       // The rank of country in the WHI listing. <year, rank>
+    val ldRankWHI : LiveData<Map<String, Number>> = MutableLiveData(HashMap())
 
     /**
      * Values of World Happiness Index
      * Map of <year, value> where year as String
      */
-    val ldWHI : LiveData<Map<String, Float>> = MutableLiveData(HashMap())         // The value of WHI. <year, value>
+    val ldWHI : LiveData<Map<String, Float>> = MutableLiveData(HashMap())
 
     /**
      * Launch request to the countries' base for WHI values.
@@ -77,16 +77,16 @@ class FirebaseDataProvider @Inject constructor (
     }
 
 
-    //----------------------------------------------------------------------------------------------------------
-
     private fun fbAppInit(cont: Context) {
         FirebaseApp.initializeApp(cont)
 
         try {
-            Firebase.database.setPersistenceCacheSizeBytes(1024 * 1024 * 1)     // 1Mb for FireBase cache.
-            Firebase.database.setPersistenceEnabled(true)                       // Cashing enable.
+            with(Firebase.database){
+                setPersistenceCacheSizeBytes(1024 * 1024 * 1)     // 1Mb for FireBase cache.
+                setPersistenceEnabled(true)                       // Cashing enable.
+            }
         } catch (dbE: DatabaseException) {
-            Log.d(LTAG, dbE.message!!)
+            Log.d(LTAG, dbE.message ?: "Firebase exeption")
         }
 
 

@@ -7,15 +7,3 @@ import java.lang.ref.WeakReference
 
 @HiltAndroidApp
 class App: Application()
-
-{
-    companion object{
-        lateinit var cont : WeakReference<Context>
-        fun getAppContext() : Context? = cont.get()
-    }
-
-    override fun onCreate() {
-        super.onCreate()
-        cont=WeakReference(applicationContext)
-    }
-}

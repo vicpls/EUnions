@@ -3,8 +3,8 @@ package netdesigntool.com.eunions;
 
 import netdesigntool.com.eunions.wiki.HumanReadableNumber;
 
-/** This is the container for data got from DataProvider
- *  e.g. Wiki.
+/**
+ *  This is the container for data got from Wiki DataProvider
  *
  */
 

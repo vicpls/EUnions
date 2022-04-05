@@ -25,7 +25,9 @@ import netdesigntool.com.eunions.local_db.entities.OtherCountry
 import netdesigntool.com.eunions.model.CommonCountry
 
 @Composable
-fun OthCountryLayout(items: LazyPagingItems<CommonCountry>, onCountryClick: (String, String)->Unit, context: Context) {
+fun OthCountryLayout(items: LazyPagingItems<CommonCountry>,
+                     onCountryClick: (String, String)->Unit,
+                     context: Context) {
 
     Card( modifier = Modifier
         .padding(8.dp)
@@ -37,7 +39,9 @@ fun OthCountryLayout(items: LazyPagingItems<CommonCountry>, onCountryClick: (Str
 }
 
 @Composable
-fun CountryList(items: LazyPagingItems<CommonCountry>, onCountryClick: (String, String)->Unit, context: Context) {
+fun CountryList(items: LazyPagingItems<CommonCountry>,
+                onCountryClick: (String, String)->Unit,
+                context: Context) {
 
     val flgModifier = Modifier
         .height(32.dp)

@@ -27,7 +27,7 @@ import javax.inject.Inject
 
 /**
  *      Fragment show a list of the Countries not included in EU or Schengen.
- *      The same as [ActOtherCountries]
+ *
  */
 @AndroidEntryPoint
 class FrOtherCountryList : Fragment(){
