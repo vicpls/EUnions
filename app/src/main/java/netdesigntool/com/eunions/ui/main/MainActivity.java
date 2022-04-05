@@ -11,11 +11,9 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.flexbox.FlexboxLayout;
@@ -23,14 +21,11 @@ import com.google.android.flexbox.FlexboxLayout;
 import java.util.List;
 
 import dagger.hilt.android.AndroidEntryPoint;
-import netdesigntool.com.eunions.model.Country;
-import netdesigntool.com.eunions.DataRepository;
-import netdesigntool.com.eunions.MainActViewModel;
 import netdesigntool.com.eunions.R;
 import netdesigntool.com.eunions.databinding.ActMainBinding;
+import netdesigntool.com.eunions.model.Country;
 import netdesigntool.com.eunions.ui.AboutAct;
 import netdesigntool.com.eunions.ui.country.CountryAct;
-import netdesigntool.com.eunions.ui.othcountries.ActOtherCountries;
 import netdesigntool.com.eunions.ui.othcountries.FrOtherCountryList;
 
 @AndroidEntryPoint
@@ -46,11 +41,6 @@ public class MainActivity extends AppCompatActivity
 
         binding = ActMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
-        /*ViewModelProvider.Factory vmFactory = (ViewModelProvider.Factory) new VmFactory(getDataRepository());
-
-        MainActViewModel myVModel = new ViewModelProvider(this, vmFactory)
-                .get(MainActViewModel.class);*/
 
         MainActVM mainActVM = new ViewModelProvider(this).get(MainActVM.class);
 
@@ -118,14 +108,6 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-    class OnOtherCountryClick implements View.OnClickListener{
-        @Override
-        public void onClick(View v) {
-
-            Intent intent = new Intent(getApplicationContext(), ActOtherCountries.class);
-            startActivity(intent);
-    }
-    }
 
     class OnOtherCountryClickFr implements View.OnClickListener{
         @Override
@@ -158,25 +140,6 @@ public class MainActivity extends AppCompatActivity
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    @Deprecated
-    private class VmFactory extends ViewModelProvider.NewInstanceFactory{
-
-        private final DataRepository dataRepository;
-
-        VmFactory(DataRepository dataRepository){
-            this.dataRepository = dataRepository;
-        }
-
-        @NonNull
-        @Override
-        public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-            if (modelClass == MainActViewModel.class) {
-                return (T) new MainActViewModel(getApplication(), dataRepository);
-            }
-            return super.create(modelClass);
-        }
     }
 
 }

@@ -32,7 +32,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class FrOtherCountryList : Fragment(){
 
-    @Inject private lateinit var appDB : AppDatabase
+    @Inject lateinit var appDB : AppDatabase
     private lateinit var pager : Pager<Int, CommonCountry>
 
 
@@ -41,7 +41,9 @@ class FrOtherCountryList : Fragment(){
 
         val pConfig = PagingConfig(20, 3, false)
 
-        pager = Pager(pConfig, null) { appDB.countriesDao().getOtherCountries() as PagingSource<Int, CommonCountry>}
+        pager = Pager(pConfig, null) {
+            appDB.countriesDao().getOtherCountries() as PagingSource<Int, CommonCountry>
+            }
     }
 
     override fun onCreateView(
@@ -71,7 +73,9 @@ class FrOtherCountryList : Fragment(){
     }
 
     @Composable
-    fun ShowContent(items: LazyPagingItems<CommonCountry>, onCountryClick: (String, String)->Unit, context: Context){
+    fun ShowContent(items: LazyPagingItems<CommonCountry>,
+                    onCountryClick: (String, String)->Unit,
+                    context: Context){
         Surface(
             modifier = Modifier.fillMaxSize(),
             color = Color.White

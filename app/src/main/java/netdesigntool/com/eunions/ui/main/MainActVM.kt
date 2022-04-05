@@ -37,10 +37,10 @@ class MainActVM @Inject constructor(val appDb : AppDatabase) : ViewModel() {
 
     private fun startFetchLdCountries(){
 
-        if (isFetched.compareAndSet(false, true)) return
-
-        CoroutineScope(Dispatchers.IO).launch {
-            fetchLdCountries()
+        if ( isFetched.compareAndSet(false, true)) {
+            CoroutineScope(Dispatchers.IO).launch {
+                fetchLdCountries()
+            }
         }
     }
 

@@ -9,6 +9,7 @@ import android.app.Application;
 import android.content.Context;
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import org.junit.After;
@@ -19,21 +20,25 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import java.util.List;
+
+import netdesigntool.com.eunions.local_db.AppDatabase;
 import netdesigntool.com.eunions.model.Country;
+import netdesigntool.com.eunions.ui.main.MainActVM;
 
 
 @RunWith(MockitoJUnitRunner.class)
 public class MainActViewModelTest {
 
     @Mock
-    DataRepository dataRep;
+    AppDatabase dataRep;
     @Mock
     Application app;
     @Mock
     Context context;
 
     @Mock
-    MainActViewModel _model;
+    MainActVM _model;
 
 
     Country nothing = new Country("nothing", 1,1, "nothing");
@@ -41,18 +46,18 @@ public class MainActViewModelTest {
     Country shen = new Country("shen", 1, 0, "shen");
     Country eu = new Country("eu", 0, 1, "eu");
 
-    private MutableLiveData<Country[]> ld;
-    private Country[] arrCountry;
+    private LiveData<List<Country>> ld;
+    private List<Country> arrCountry;
 
     @Before
     public void testInit(){
         
         when(app.getApplicationContext()).thenReturn(context);
 
-        when(dataRep.loadCountries(context)).thenReturn(
-                new Country[]{ nothing, both, shen, eu});
+        /*when(dataRep.countriesDao().getMemberCountries()).thenReturn(
+                new Country[]{ nothing, both, shen, eu});*/
 
-        _model = new MainActViewModel(app, dataRep);
+        _model = new MainActVM(dataRep);
     }
 
     @After
@@ -89,9 +94,9 @@ public class MainActViewModelTest {
     // Assert LD value for only one, expected value.
     private void assertLdValue(String assertMessage, Country expected){
 
-        assertEquals(assertMessage, arrCountry.length, 1);
+        assertEquals(assertMessage, arrCountry.size(), 1);
 
-        Country result = arrCountry[0];
+        Country result = arrCountry.get(0);
         assertEquals(expected.getIso(), result.getIso());
     }
 
@@ -99,7 +104,7 @@ public class MainActViewModelTest {
     @Test
     public void getShen_Test() {
 
-        ld = _model.getSchen();
+        ld = _model.getLdSchen();
 
         ldSubscribeAndFetch();
 
@@ -109,7 +114,7 @@ public class MainActViewModelTest {
     @Test
     public void getEu_Test() {
 
-        ld = _model.getEu();
+        ld = _model.getLdEu();
 
         ldSubscribeAndFetch();
 
@@ -119,7 +124,7 @@ public class MainActViewModelTest {
     @Test
     public void getBoth_Test() {
 
-        ld = _model.getSchAndEu();
+        ld = _model.getLdSchAndEu();
 
         ldSubscribeAndFetch();
 

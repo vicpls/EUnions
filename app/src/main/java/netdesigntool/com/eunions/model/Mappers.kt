@@ -11,7 +11,7 @@ fun ParticipialCountries.toCountry() = Country(
 )
 
 fun OtherCountry.toCountry() = Country(
-    iso = member,
+    iso = iso,
     euni = 1,
     schen = 1,
     name = name
