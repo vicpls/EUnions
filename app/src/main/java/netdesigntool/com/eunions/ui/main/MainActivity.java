@@ -133,9 +133,7 @@ public class MainActivity extends AppCompatActivity
     public boolean onOptionsItemSelected(MenuItem item) {
 
         if (item.getItemId() ==R.id.about){
-
             new AboutAct().startAboutAct(this);
-
             return true;
         }
 

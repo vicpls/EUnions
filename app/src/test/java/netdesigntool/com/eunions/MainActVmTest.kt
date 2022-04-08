@@ -2,59 +2,71 @@ package netdesigntool.com.eunions
 
 import android.app.Application
 import android.content.Context
-import org.mockito.junit.MockitoJUnitRunner
-import org.mockito.Mock
-import netdesigntool.com.eunions.local_db.AppDatabase
-import netdesigntool.com.eunions.ui.main.MainActVM
-import netdesigntool.com.eunions.model.Country
-import androidx.lifecycle.LiveData
-import org.mockito.Mockito
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.lifecycle.LiveData
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.runTest
+import netdesigntool.com.eunions.local_db.AppDatabase
+import netdesigntool.com.eunions.local_db.CountriesDao
+import netdesigntool.com.eunions.local_db.entities.ParticipialCountries
+import netdesigntool.com.eunions.model.Country
+import netdesigntool.com.eunions.model.toCountry
+import netdesigntool.com.eunions.ui.main.MainActVM
 import org.awaitility.Awaitility
 import org.junit.*
 import org.junit.runner.RunWith
+import org.mockito.Mock
+import org.mockito.Mockito
 import org.mockito.Mockito.`when`
+import org.mockito.junit.MockitoJUnitRunner
 import java.util.concurrent.TimeUnit
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @RunWith(MockitoJUnitRunner::class)
-class MainActViewModelTest2 {
+class MainActVmTest {
 
     @Mock
-    var dataRep: AppDatabase? = null
+    lateinit var dataRep: AppDatabase
 
     @Mock
-    var app: Application? = null
+    lateinit var app: Application
 
     @Mock
-    var context: Context? = null
+    lateinit var context: Context
 
     @Mock
+    lateinit var cntDAO: CountriesDao
+
+    //@Mock
     var _model: MainActVM? = null
 
-    val nothing = Country("nothing", 1, 1, "nothing")
-    val both = Country("both", 0, 0, "both")
-    val shen = Country("shen", 1, 0, "shen")
-    val eu = Country("eu", 0, 1, "eu")
+    val nothing = ParticipialCountries(1, "nothing",1,"nothing")
+    val both = ParticipialCountries(0, "both", 0, "both")
+    val shen = ParticipialCountries(0, "shen", 1, "shen")
+    val eu = ParticipialCountries(1, "eu", 0, "eu")
+
+        /*val both = Country("both", 0, 0, "both")
+        val shen = Country("shen", 1, 0, "shen")
+        val eu = Country("eu", 0, 1, "eu")*/
 
     private var ld: LiveData<List<Country>>? = null
     private var lstCountry: List<Country>? = null
 
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     @Before
     fun testInit() {
-        Mockito.`when`(app!!.applicationContext).thenReturn(context)
+
+        _model = MainActVM(dataRep)
+
+        `when`(app.applicationContext).thenReturn(context)
+
+        `when`(dataRep.countriesDao()).thenReturn(cntDAO)
 
         runTest{
-            `when`<List<Any>>(dataRep!!.countriesDao().getMemberCountries())
+            `when`(dataRep.countriesDao().getMemberCountries())
                 .thenReturn(listOf(nothing, both, shen, eu))
         }
-
-        _model = MainActVM(dataRep!!)
     }
 
     @After
@@ -62,8 +74,8 @@ class MainActViewModelTest2 {
         ld = null
     }
 
-    @Rule
-    var instantTaskExecutorRule = InstantTaskExecutorRule()
+    @Rule @JvmField
+    val instantTaskExecutorRule = InstantTaskExecutorRule()
 
     // helper method to allow us to get the value from a LiveData
     // LiveData won't publish a result until there is at least one observer
@@ -83,28 +95,28 @@ class MainActViewModelTest2 {
 
         Assert.assertEquals(assertMessage, lstCountry?.size, 1)
 
-        val iso = lstCountry?.get(0)
-        Assert.assertEquals(expected.iso, iso)
+        val cnt = lstCountry?.get(0)
+        Assert.assertEquals(expected.iso, cnt?.iso)
     }
 
     @Test
-    fun getShen_Test() {
+    fun getShen_Test(){
         ld = _model?.ldSchen
         ldSubscribeAndFetch()
-        assertLdValue("Only one Shengen-member must be in array.", shen)
+        assertLdValue("Only one Shengen-member must be in array.", shen.toCountry())
     }
 
     @Test
-    fun getEu_Test() {
+    fun eu_Test(){
         ld = _model?.ldEu
         ldSubscribeAndFetch()
-        assertLdValue("Only one EU-member must be in array.", eu)
+        assertLdValue("Only one EU-member must be in array.", eu.toCountry())
     }
 
     @Test
     fun getBoth_Test() {
         ld = _model?.ldSchAndEu
         ldSubscribeAndFetch()
-        assertLdValue("Only one EU and Shengen-member must be in array.", both)
+        assertLdValue("Only one EU and Shengen-member must be in array.", both.toCountry())
     }
 }

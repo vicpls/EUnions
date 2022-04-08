@@ -8,7 +8,6 @@ import androidx.room.DatabaseView
                 "ORDER BY name",
             viewName = "participial_countries")
 data class ParticipialCountries (
-    //@ColumnInfo(name = "_id")      val id :Int,
     @ColumnInfo(name = "schengen") val schengen :Int,
     @ColumnInfo(name = "member")   val member: String,
     @ColumnInfo(name = "eu")       val eu: Int,
