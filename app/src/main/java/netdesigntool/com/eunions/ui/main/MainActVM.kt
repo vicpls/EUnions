@@ -66,5 +66,4 @@ class MainActVM @Inject constructor(val appDb : AppDatabase) : ViewModel() {
         _ldSchAndEu.postValue(schAndEu)
         _ldSchen.postValue(schen)
     }
-
 }

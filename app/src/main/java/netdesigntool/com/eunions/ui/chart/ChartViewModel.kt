@@ -3,15 +3,15 @@ package netdesigntool.com.eunions.ui.chart
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import netdesigntool.com.eunions.firebase.FirebaseDataProvider
 import javax.inject.Inject
 
 @HiltViewModel
 class ChartViewModel @Inject constructor(
-    app :Application,
     private val fbProv: FirebaseDataProvider
-    ) : AndroidViewModel(app) {
+    ) : ViewModel() {
 
     var ldWHI: LiveData<Map<String, Float>> = fbProv.ldWHI
     var ldRankWHI: LiveData<Map<String, Number>> = fbProv.ldRankWHI

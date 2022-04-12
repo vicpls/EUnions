@@ -1,6 +1,5 @@
 package netdesigntool.com.eunions.firebase
 
-import android.app.Application
 import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -13,12 +12,7 @@ import com.google.firebase.database.DatabaseException
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
-import dagger.hilt.EntryPoint
-import dagger.hilt.EntryPoints
-import dagger.hilt.InstallIn
-import dagger.hilt.android.scopes.ActivityScoped
-import dagger.hilt.android.scopes.ViewModelScoped
-import dagger.hilt.components.SingletonComponent
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -30,11 +24,11 @@ import javax.inject.Singleton
  *  Initialise and provide access to Firebase.
  */
 
-@ViewModelScoped
-class FirebaseDataProvider @Inject constructor (
-    app :Application,
-    private val fbAttrib: FirebaseAttribute)
-{
+@Singleton
+class FirebaseDataProvider @Inject constructor(
+    @ApplicationContext app: Context,
+    private val fbAttrib: FirebaseAttribute
+) {
 
     private val providerScope = CoroutineScope(Dispatchers.IO)
     private var providerJob = providerScope.launch { fbAppInit(app) }
@@ -110,7 +104,6 @@ class FirebaseDataProvider @Inject constructor (
         result: MutableLiveData<Map<String, Float>>,
         title: String
     ) {
-
         val previousJob = providerJob
 
         providerJob = providerScope.launch {

@@ -2,8 +2,8 @@ plugins {
     id 'com.android.application'
     id 'com.google.gms.google-services'
     id 'kotlin-android'
-    id 'dagger.hilt.android.plugin'
     id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
 }
 
 
@@ -19,6 +19,7 @@ android {
         multiDexEnabled true
         resConfigs 'en', 'ru'
 
+        // to generate json file with db schema for each db version
         javaCompileOptions {
             annotationProcessorOptions {
                 arguments += ["room.schemaLocation": "$projectDir/schemas".toString()]
@@ -41,11 +42,12 @@ android {
         }
 
         debug {
-            def suffix
             //useProguard false
-            if ("Linux" == System.getProperty("os.name")){
+            def suffix
+
+            if ("Linux" == System.getProperty("os.name")) {
                 suffix= ".linux.debug"
-            }else {
+            } else {
                 suffix= ".debug"
             }
             applicationIdSuffix suffix
@@ -62,6 +64,7 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
         sourceCompatibility JavaVersion.VERSION_1_8
     }
+
     packagingOptions {
         resources {
             excludes += ['META-INF/DEPENDENCIES']
@@ -70,12 +73,6 @@ android {
 
     kotlinOptions {
         jvmTarget = "1.8"
-
-        // Suppress Compose Kotlin compiler compatibility warning
-        /*freeCompilerArgs += [
-                "-P",
-                "plugin:androidx.compose.compiler.plugins.kotlin:suppressKotlinVersionCompatibilityCheck=true"
-        ]*/
     }
 
     composeOptions {
@@ -88,6 +85,7 @@ android {
             includeAndroidResources = true
         }
     }
+
     lint {
         abortOnError false
     }
@@ -97,6 +95,7 @@ tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
     kotlinOptions {
         //freeCompilerArgs += "-Xopt-in=io.ktor.util.KtorExperimentalAPI"
         freeCompilerArgs += "-opt-in=kotlin.RequiresOptIn"
+        freeCompilerArgs += "-opt-in=org.mylibrary.OptInAnnotation"
     }
 }
 
@@ -121,12 +120,7 @@ configurations.all {
 //    useJUnitPlatform()
 //}
 
-///-opt-in=kotlin.RequiresOptIn
-tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
-    kotlinOptions {
-        freeCompilerArgs += "-opt-in=org.mylibrary.OptInAnnotation"
-    }
-}
+
 
 dependencies {
 
@@ -162,7 +156,7 @@ dependencies {
     def retrofit = 'com.squareup.retrofit2'
     def retrofitVer = '2.9.0'
     implementation "$retrofit:retrofit:$retrofitVer"
-    //implementation "com.squareup.retrofit2:converter-gson:${retrofitVer}"
+    //implementation "$retrofit:converter-gson:$retrofitVer"
     implementation "$retrofit:converter-moshi:$retrofitVer"
     implementation "$retrofit:adapter-rxjava2:$retrofitVer"
     implementation 'com.squareup.okhttp3:logging-interceptor:4.9.3'
@@ -212,19 +206,17 @@ dependencies {
 
 
     //          Paging
-    implementation("androidx.paging:paging-runtime-ktx:3.1.1")
-    implementation("androidx.paging:paging-compose:1.0.0-alpha14")
+    implementation "androidx.paging:paging-runtime-ktx:3.1.1"
+    implementation "androidx.paging:paging-compose:1.0.0-alpha14"
 
     //          Hilt
     def hilt_ver = '2.41'
     implementation "com.google.dagger:hilt-android:$hilt_ver"
     kapt "com.google.dagger:hilt-compiler:$hilt_ver"
-    //annotationProcessor "com.google.dagger:hilt-compiler:${hilt_ver}"
 
     //          Room
     def room_version = "2.4.2"
     implementation "androidx.room:room-runtime:$room_version"
-    //annotationProcessor "androidx.room:room-compiler:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
     implementation "androidx.room:room-ktx:$room_version"
     implementation "androidx.room:room-paging:$room_version"
@@ -234,7 +226,6 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     testImplementation "android.arch.core:core-testing:1.1.1"
     //testImplementation 'androidx.test:core:1.4.0'
-    //testImplementation 'org.mockito:mockito-core:4.4.0'
     testImplementation 'org.mockito:mockito-inline:4.4.0'
     testImplementation "org.mockito.kotlin:mockito-kotlin:4.0.0"
     testImplementation 'org.robolectric:robolectric:4.7.3'
@@ -245,13 +236,10 @@ dependencies {
     //    AndroidTest
     androidTestImplementation 'androidx.test:runner:1.4.0'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
-
     androidTestImplementation 'androidx.test:rules:1.4.0'
     //androidTestImplementation 'androidx.test.espresso:espresso-intents:3.4.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
-    //androidTestImplementation 'org.hamcrest:hamcrest:2.1'
     androidTestImplementation 'org.awaitility:awaitility:4.2.0'
-    //
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
 
     // *** Hilt ***
