@@ -1,10 +1,14 @@
 # EUnions
 Application pull the some interesting information from Internet about countries
 of European Union and Schengen agreement and also other countries for compering.
-The sources of information are wiki and Human Development Index sites https://hdr.undp.org/en/content/human-development-index-hdi.
+The sources of information are wiki and [Human Development Index](https://hdr.undp.org/en/content/human-development-index-hdi) sites.
 
-<img src="src/main/res/drawable-xxxhdpi/ic_link_variant.webp">
-[Google Play](https://play.google.com/store/apps/details?id=netdesigntool.com.eunions "EUnions")
+## [EUnions in Google Play](https://play.google.com/store/apps/details?id=netdesigntool.com.eunions "EUnions in Google Play")
+<a href="https://play.google.com/store/apps/details?id=netdesigntool.com.eunions" target="_blank">
+<img src="app/src/main/res/mipmap-xxhdpi/eur_union_192.png" width="45">
+  </a>
+
+
 
 ## Preview
 
