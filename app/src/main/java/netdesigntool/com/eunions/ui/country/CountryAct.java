@@ -167,7 +167,7 @@ public class CountryAct extends AppCompatActivity {
             }
 
             // Only first element of fbParam shows
-            String year = getOne(fbParam);
+            String year = getLastKey(fbParam);
 
             showInfo(
                     new Parameter(""
@@ -183,7 +183,7 @@ public class CountryAct extends AppCompatActivity {
 
 
         // return the last key in Map
-        private <T> String getOne(Map<String, T> mMap){
+        private <T> String getLastKey(Map<String, T> mMap){
 
             String result="";
 

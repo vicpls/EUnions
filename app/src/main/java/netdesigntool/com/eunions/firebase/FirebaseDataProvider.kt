@@ -67,7 +67,7 @@ class FirebaseDataProvider @Inject constructor(
 
         val request =  createRequest(isoCountryCode,"whiRank")
 
-        launchRequest(request, ldRankWHI as MutableLiveData<Map<String, Float>>, title)
+        launchRequest(request, ldRankWHI as MutableLiveData<Map<String, Float>> , title)
     }
 
 
