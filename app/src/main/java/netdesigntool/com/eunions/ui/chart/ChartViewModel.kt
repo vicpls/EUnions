@@ -11,7 +11,7 @@ class ChartViewModel @Inject constructor(
     private val fbProv: FirebaseDataProvider
     ) : ViewModel() {
 
-    var ldWHI: LiveData<Map<String, Float>> = fbProv.ldWHI
+    var ldWHI: LiveData<Map<String, Number>> = fbProv.ldWHI
     var ldRankWHI: LiveData<Map<String, Number>> = fbProv.ldRankWHI
 
     fun requestWHI(isoCountryCode: String, title: String ="WHI"){

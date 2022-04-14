@@ -33,7 +33,8 @@ import netdesigntool.com.eunions.ui.chart.ChartViewModel;
 import netdesigntool.com.eunions.databinding.ActCountryBinding;
 
 @AndroidEntryPoint
-public class CountryAct extends AppCompatActivity {
+public class
+CountryAct extends AppCompatActivity {
 
     public static final String COUNTRY_ISO = "ISO";
     public static final String COUNTRY_NAME = "cNAME";
@@ -216,11 +217,11 @@ public class CountryAct extends AppCompatActivity {
 
 
 
-    class FbChartObserver implements Observer<Map<String, Float>>{
+    class FbChartObserver implements Observer<Map<String, Number>>{
         final String tag = "chartWHI";
 
         @Override
-        public void onChanged(Map<String, Float> fbChartData) {
+        public void onChanged(Map<String, Number> fbChartData) {
 
             if (fbChartData ==null || fbChartData.isEmpty()) {
                 Log.d(LTAG, this.getClass().getSimpleName() + ": Null or empty answer from Firebase.");

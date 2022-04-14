@@ -41,13 +41,16 @@ class FirebaseDataProvider @Inject constructor(
      * Rank of country in the list of World Happiness Index.
      * Map of <year, value> where year as String
      */
-    val ldRankWHI : LiveData<Map<String, Number>> = MutableLiveData(HashMap())
+    val ldRankWHI : LiveData<Map<String, Number>> by this::_ldRankWHI
+    private val _ldRankWHI : MutableLiveData<Map<String, Number>> = MutableLiveData(HashMap())
+
 
     /**
      * Values of World Happiness Index
      * Map of <year, value> where year as String
      */
-    val ldWHI : LiveData<Map<String, Float>> = MutableLiveData(HashMap())
+    val ldWHI : LiveData<Map<String, Number>> by this::_ldWHI
+    private val _ldWHI : MutableLiveData<Map<String, Number>> = MutableLiveData(HashMap())
 
     /**
      * Launch request to the countries' base for WHI values.
@@ -56,7 +59,7 @@ class FirebaseDataProvider @Inject constructor(
 
         val request = createRequest(isoCountryCode, "whi")
 
-        launchRequest(request, ldWHI as MutableLiveData<Map<String, Float>>, title)
+        launchRequest(request, _ldWHI, title)
     }
 
 
@@ -67,7 +70,7 @@ class FirebaseDataProvider @Inject constructor(
 
         val request =  createRequest(isoCountryCode,"whiRank")
 
-        launchRequest(request, ldRankWHI as MutableLiveData<Map<String, Float>> , title)
+        launchRequest(request, _ldRankWHI  , title)
     }
 
 
@@ -101,7 +104,7 @@ class FirebaseDataProvider @Inject constructor(
     // Start the parametrised request to Firebase. Fetch result.
     private fun launchRequest(
         dbRef: DatabaseReference,
-        result: MutableLiveData<Map<String, Float>>,
+        result: MutableLiveData<Map<String, Number>>,
         title: String
     ) {
         val previousJob = providerJob
@@ -121,7 +124,8 @@ class FirebaseDataProvider @Inject constructor(
 
     private fun responseProcessing(
         ds: DataSnapshot,
-        result: MutableLiveData<Map<String, Float>>,
+        //result: MutableLiveData<Map<String, Float>>,
+        result: MutableLiveData<Map<String, Number>>,
         title: String,
         dbRef: DatabaseReference
     ) {
@@ -144,7 +148,6 @@ class FirebaseDataProvider @Inject constructor(
             when (answer) {
                 is Long   -> result[title] = answer.toFloat()
                 is Double -> result[title] = answer.toFloat()
-
                 is Map<*,*> -> result = answer as HashMap<String, Float>
             }
         }
