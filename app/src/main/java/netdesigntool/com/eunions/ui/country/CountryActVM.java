@@ -2,8 +2,8 @@ package netdesigntool.com.eunions.ui.country;
 
 import static netdesigntool.com.eunions.Util.LTAG;
 import static netdesigntool.com.eunions.Util.getIntegerPart;
-import static netdesigntool.com.eunions.wiki.SPARQLquery.AREA_ID;
-import static netdesigntool.com.eunions.wiki.SPARQLquery.POP_ID;
+import static netdesigntool.com.eunions.repo.wiki.SPARQLquery.AREA_ID;
+import static netdesigntool.com.eunions.repo.wiki.SPARQLquery.POP_ID;
 
 import android.app.Application;
 import android.content.res.Resources;
@@ -22,14 +22,14 @@ import dagger.hilt.EntryPoint;
 import dagger.hilt.EntryPoints;
 import dagger.hilt.InstallIn;
 import dagger.hilt.components.SingletonComponent;
-import netdesigntool.com.eunions.Parameter;
+import netdesigntool.com.eunions.repo.wiki.Parameter;
 import netdesigntool.com.eunions.R;
 import netdesigntool.com.eunions.Util;
-import netdesigntool.com.eunions.wiki.HumanReadableNumber;
-import netdesigntool.com.eunions.wiki.WikiRxDataProvider;
+import netdesigntool.com.eunions.repo.wiki.HumanReadableNumber;
+import netdesigntool.com.eunions.repo.wiki.WikiRxDataProvider;
 
 
-public class CountryActViewModel extends AndroidViewModel {
+public class CountryActVM extends AndroidViewModel {
 
     private final String iso;
     private final WikiRxDataProvider prov;
@@ -44,7 +44,7 @@ public class CountryActViewModel extends AndroidViewModel {
     private MediatorLiveData<ArrayList<Parameter>> resultStr;
 
 
-    public CountryActViewModel(String iso, Application app) {
+    public CountryActVM(String iso, Application app) {
         super(app);
 
         this.iso = iso;
@@ -138,7 +138,6 @@ public class CountryActViewModel extends AndroidViewModel {
         private String pop, area, year;
         private boolean calculated = false;
 
-
         private PopOnKmObserver(){}
 
 
@@ -173,7 +172,8 @@ public class CountryActViewModel extends AndroidViewModel {
         // Calculate density
         private Parameter getDensity(){
 
-            if (pop ==null || area ==null || calculated || pop.isEmpty() || area.isEmpty()) return null;
+            if (pop ==null || area ==null || calculated
+                    || pop.isEmpty() || area.isEmpty()) return null;
 
             int iPop, iArea;
             try {

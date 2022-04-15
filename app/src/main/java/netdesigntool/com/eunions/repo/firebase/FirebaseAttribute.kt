@@ -1,4 +1,4 @@
-package netdesigntool.com.eunions.firebase
+package netdesigntool.com.eunions.repo.firebase
 
 import javax.inject.Inject
 import javax.inject.Singleton

@@ -73,7 +73,7 @@ public final class Util {
 
 
 
-    /** Round and after delimiter
+    /** Trim number (as String) and place current system delimiter
      *
      * @param number number by string, exp."736539"
      * @param accuracy sign quantity after delimiter point, exp. 2

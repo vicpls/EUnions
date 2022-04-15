@@ -5,7 +5,8 @@ import static org.junit.Assert.assertNotEquals;
 
 import org.junit.Test;
 
-import netdesigntool.com.eunions.wiki.HumanReadableNumber;
+import netdesigntool.com.eunions.repo.wiki.HumanReadableNumber;
+import netdesigntool.com.eunions.repo.wiki.Parameter;
 
 public class ParameterTest {
 

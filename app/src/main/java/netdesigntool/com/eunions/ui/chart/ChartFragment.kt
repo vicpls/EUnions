@@ -18,6 +18,10 @@ import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.ValueFormatter
 import netdesigntool.com.eunions.R
 
+/**
+ *   Draw a Chart.
+ *   Require a [ChartVM].
+ */
 class ChartFragment : Fragment() {
 
     var lChart : LineChart? = null
@@ -36,9 +40,9 @@ class ChartFragment : Fragment() {
 
         lChart = view.findViewById(R.id.lChart)
 
-        val vModel = ViewModelProvider(requireActivity()).get(ChartViewModel::class.java)
+        val vModel = ViewModelProvider(requireActivity())[ChartVM::class.java]
 
-        vModel.ldWHI.observe(viewLifecycleOwner, { drawLine(it as Map<String, Float>) })
+        vModel.ldWHI.observe(viewLifecycleOwner, ::drawLine)
     }
 
 
@@ -49,7 +53,7 @@ class ChartFragment : Fragment() {
 
     }
 
-    private fun drawLine(rMap: Map<String, Float>) {
+    private fun drawLine(rMap: Map<String, Number>) {
 
         // На основании массива точек создадим первую линию с названием
         val lEntrs = mapToEntryConverter(rMap)
@@ -124,7 +128,7 @@ class ChartFragment : Fragment() {
         return dataset
     }
 
-    private fun mapToEntryConverter(m: Map<String, Float>): List<Entry> {
+    private fun mapToEntryConverter(m: Map<String, Number>): List<Entry> {
 
         val result = mutableListOf<Entry>()
 

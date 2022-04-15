@@ -1,4 +1,4 @@
-package netdesigntool.com.eunions.local_db.entities
+package netdesigntool.com.eunions.repo.local_db.entities
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

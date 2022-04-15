@@ -1,7 +1,5 @@
-package netdesigntool.com.eunions;
+package netdesigntool.com.eunions.repo.wiki;
 
-
-import netdesigntool.com.eunions.wiki.HumanReadableNumber;
 
 /**
  *  This is the container for data got from Wiki DataProvider

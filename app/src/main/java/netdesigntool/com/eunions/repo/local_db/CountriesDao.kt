@@ -1,10 +1,10 @@
-package netdesigntool.com.eunions.local_db
+package netdesigntool.com.eunions.repo.local_db
 
 import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Query
-import netdesigntool.com.eunions.local_db.entities.OtherCountry
-import netdesigntool.com.eunions.local_db.entities.ParticipialCountries
+import netdesigntool.com.eunions.repo.local_db.entities.OtherCountry
+import netdesigntool.com.eunions.repo.local_db.entities.ParticipialCountries
 
 @Dao
 interface CountriesDao {

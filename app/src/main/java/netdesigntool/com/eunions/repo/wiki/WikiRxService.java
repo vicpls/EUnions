@@ -1,4 +1,4 @@
-package netdesigntool.com.eunions.wiki;
+package netdesigntool.com.eunions.repo.wiki;
 
 import io.reactivex.Single;
 import retrofit2.http.GET;

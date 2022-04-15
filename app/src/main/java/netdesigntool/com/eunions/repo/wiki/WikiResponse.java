@@ -1,4 +1,4 @@
-package netdesigntool.com.eunions.wiki;
+package netdesigntool.com.eunions.repo.wiki;
 
 import androidx.annotation.Keep;
 
@@ -6,7 +6,7 @@ import com.squareup.moshi.Json;
 import java.util.List;
 
 /*
-    POJO for parsing Wiki JSON response by Moshi.
+    POJO for parsing Wiki JSON-response by Moshi.
  */
 
 @Keep

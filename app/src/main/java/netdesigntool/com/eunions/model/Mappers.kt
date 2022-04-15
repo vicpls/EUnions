@@ -1,7 +1,7 @@
 package netdesigntool.com.eunions.model
 
-import netdesigntool.com.eunions.local_db.entities.OtherCountry
-import netdesigntool.com.eunions.local_db.entities.ParticipialCountries
+import netdesigntool.com.eunions.repo.local_db.entities.OtherCountry
+import netdesigntool.com.eunions.repo.local_db.entities.ParticipialCountries
 
 fun ParticipialCountries.toCountry() = Country(
     iso = member,

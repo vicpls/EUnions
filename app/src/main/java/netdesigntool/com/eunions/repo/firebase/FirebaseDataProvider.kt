@@ -1,4 +1,4 @@
-package netdesigntool.com.eunions.firebase
+package netdesigntool.com.eunions.repo.firebase
 
 import android.content.Context
 import android.util.Log
@@ -124,7 +124,6 @@ class FirebaseDataProvider @Inject constructor(
 
     private fun responseProcessing(
         ds: DataSnapshot,
-        //result: MutableLiveData<Map<String, Float>>,
         result: MutableLiveData<Map<String, Number>>,
         title: String,
         dbRef: DatabaseReference
@@ -148,7 +147,7 @@ class FirebaseDataProvider @Inject constructor(
             when (answer) {
                 is Long   -> result[title] = answer.toFloat()
                 is Double -> result[title] = answer.toFloat()
-                is Map<*,*> -> result = answer as HashMap<String, Float>
+                is HashMap<*,*> -> result = answer as HashMap<String, Float>
             }
         }
 

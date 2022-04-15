@@ -10,13 +10,6 @@ import androidx.lifecycle.viewmodel.CreationExtras;
 class VModelFactory extends ViewModelProvider.AndroidViewModelFactory{
 
     private final String iso;
-
-    @io.reactivex.annotations.NonNull
-    @Override
-    public <T extends ViewModel> T create(@io.reactivex.annotations.NonNull Class<T> modelClass, @io.reactivex.annotations.NonNull CreationExtras extras) {
-        return create(modelClass);
-    }
-
     private final Application app;
 
     public VModelFactory(String iso, Application app) {
@@ -27,11 +20,19 @@ class VModelFactory extends ViewModelProvider.AndroidViewModelFactory{
 
     @NonNull
     @Override
+    public <T extends ViewModel> T create (
+            @NonNull Class<T> modelClass,
+            @NonNull CreationExtras extras)
+    {
+        return create(modelClass);
+    }
+
+    @NonNull
+    @Override
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-        if (modelClass == CountryActViewModel.class) {
-            return (T) new CountryActViewModel(iso, app);
+        if (modelClass == CountryActVM.class) {
+            return (T) new CountryActVM(iso, app);
         }
         throw new IllegalArgumentException("Unknown ViewModel class");
-        //return super.create(modelClass);
     }
 }

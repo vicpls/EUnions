@@ -21,16 +21,22 @@ import androidx.lifecycle.ViewModelProvider;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.ListIterator;
 import java.util.Map;
 
 import dagger.hilt.android.AndroidEntryPoint;
-import netdesigntool.com.eunions.Parameter;
+import netdesigntool.com.eunions.repo.wiki.Parameter;
 import netdesigntool.com.eunions.R;
 import netdesigntool.com.eunions.Util;
 import netdesigntool.com.eunions.ui.chart.ChartFragment;
-import netdesigntool.com.eunions.ui.chart.ChartViewModel;
+import netdesigntool.com.eunions.ui.chart.ChartVM;
 import netdesigntool.com.eunions.databinding.ActCountryBinding;
+
+/**
+ *      Show information for selected country.
+ *      Requires bundle with Strings COUNTRY_ISO, COUNTRY_NAME
+ */
 
 @AndroidEntryPoint
 public class
@@ -49,22 +55,27 @@ CountryAct extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         if (getIntent().getExtras() ==null) {
-            Log.w(LTAG, "Act closed. No ISO of country was provided for: " + this.getClass().getSimpleName());
+            Log.w(LTAG, "Act closed. No ISO of country was provided for: "
+                    + this.getClass().getSimpleName());
             return;
         }
 
         String sISO = getIntent().getExtras().getString(COUNTRY_ISO);
         String countryName = getIntent().getExtras().getString(COUNTRY_NAME);
 
+        subscribeWiki(sISO);
+
+        subscribeFireBaseObservers(sISO);
+
+        initViews(sISO, countryName);
+    }
+
+    private void subscribeWiki(String sISO) {
         if ( isConnected(this)){
             subscribeWikiObservers(sISO);
         } else {
             userNotify(R.string.no_connection);
         }
-
-        subscribeFireBaseObservers(sISO);
-
-        initViews(sISO, countryName);
     }
 
 
@@ -85,7 +96,8 @@ CountryAct extends AppCompatActivity {
         else
             binding.tvCountryName.setText(cName);
 
-        binding.ivFlag.setImageResource( getResources().getIdentifier("flg_"+ sISO, "drawable", getPackageName()));
+        binding.ivFlag.setImageResource( getResources()
+                .getIdentifier("flg_"+ sISO, "drawable", getPackageName()));
 
         binding.tvLinkToGuide.setText( Util.getTravelGuideUrl(this, sISO, cName));
         binding.tvLinkToGuide.setMovementMethod( LinkMovementMethod.getInstance());
@@ -93,17 +105,15 @@ CountryAct extends AppCompatActivity {
 
     private void subscribeWikiObservers(String sISO) {
 
-        ViewModelProvider.AndroidViewModelFactory vmFactory = new VModelFactory(sISO, getApplication());
+        ViewModelProvider.AndroidViewModelFactory vmFactory =
+                new VModelFactory(sISO, getApplication());
 
-        CountryActViewModel viewModel = new ViewModelProvider(this, (ViewModelProvider.Factory) vmFactory)
-                .get(CountryActViewModel.class);
+        //noinspection ConstantConditions
+        CountryActVM viewModel = new ViewModelProvider(this,
+                (ViewModelProvider.Factory) vmFactory).get(CountryActVM.class);
 
-        //ViewModelProvider.Factory andFactory = (ViewModelProvider.Factory) new ModelFactory(sISO, getApplication());
-        //CountryActViewModel viewModel = new ViewModelProvider(this, andFactory);
-
-
-        LiveData<ArrayList<Parameter>> liveData = viewModel.getResultStr();
-        liveData.observe(this, new myObserver());
+        LiveData<ArrayList<Parameter>> ldCountryData = viewModel.getResultStr();
+        ldCountryData.observe(this, new myObserver());
 
         LiveData<ArrayList<String>> ldMembers = viewModel.getMembership();
         ldMembers.observe(this, new MembershipsObserver());
@@ -111,7 +121,7 @@ CountryAct extends AppCompatActivity {
 
     private void subscribeFireBaseObservers(String sISO) {
 
-        ChartViewModel fbVModel = new ViewModelProvider(this).get(ChartViewModel.class);
+        ChartVM fbVModel = new ViewModelProvider(this).get(ChartVM.class);
         fbVModel.requestWHI(sISO, "whi");
         fbVModel.requestRankWHI(sISO, "rank");
         fbVModel.getLdRankWHI().observe(this, new FbParameterObserver());
@@ -119,8 +129,7 @@ CountryAct extends AppCompatActivity {
     }
 
 
-    /*  Handler of common parameters for country
-     */
+    //  Handler of common parameters for country
     class myObserver implements Observer<ArrayList<Parameter>> {
         @Override
         public void onChanged(@Nullable ArrayList<Parameter> arMap) {
@@ -138,8 +147,7 @@ CountryAct extends AppCompatActivity {
     }
 
 
-    /*  Handler of requesting a country's membership in organizations.
-     */
+    //  Handler of requesting a country's membership in organizations.
     class MembershipsObserver implements Observer<ArrayList<String>>{
         @Override
         public void onChanged(@Nullable ArrayList<String> members) {
@@ -163,7 +171,8 @@ CountryAct extends AppCompatActivity {
         public void onChanged(Map<String, Number> fbParam) {
 
             if (fbParam ==null || fbParam.isEmpty()) {
-                Log.d(LTAG, this.getClass().getSimpleName() + ": Null or empty answer from Firebase.");
+                Log.d(LTAG, this.getClass().getSimpleName()
+                        + ": Null or empty answer from Firebase.");
                 return;
             }
 
@@ -185,7 +194,6 @@ CountryAct extends AppCompatActivity {
 
         // return the last key in Map
         private <T> String getLastKey(Map<String, T> mMap){
-
             String result="";
 
             for (String k : mMap.keySet()) {
@@ -224,12 +232,14 @@ CountryAct extends AppCompatActivity {
         public void onChanged(Map<String, Number> fbChartData) {
 
             if (fbChartData ==null || fbChartData.isEmpty()) {
-                Log.d(LTAG, this.getClass().getSimpleName() + ": Null or empty answer from Firebase.");
+                Log.d(LTAG, this.getClass().getSimpleName()
+                        + ": Null or empty answer from Firebase.");
                 return;
             }
 
             // Create place for fragment
-            View chartItem = CountryAct.this.getLayoutInflater().inflate(R.layout.act_country_chart, null, false);
+            View chartItem = CountryAct.this.getLayoutInflater()
+                    .inflate(R.layout.act_country_chart, null, false);
             binding.scrollBox.addView(chartItem);
 
             FragmentManager frm = CountryAct.this.getSupportFragmentManager();
@@ -243,7 +253,7 @@ CountryAct extends AppCompatActivity {
 
 
     @SuppressLint("SetTextI18n")
-    private View getInfoLine(Parameter param){
+    private View getInfoLineView(Parameter param){
 
         View result = getLayoutInflater().inflate(R.layout.act_country_item_v2, null);
 
@@ -264,7 +274,7 @@ CountryAct extends AppCompatActivity {
     }
 
 
-    private View getInfoLine(String name, Object value){
+    private View getInfoLineView(String name, Object value){
         View result = getLayoutInflater().inflate(R.layout.act_country_item_v2, null);
         ((TextView) result.findViewById(R.id.tvName)).setText(name);
         ((TextView) result.findViewById(R.id.tvValue)).setText(value.toString());
@@ -272,12 +282,12 @@ CountryAct extends AppCompatActivity {
     }
 
     private void showInfo(Parameter parameter){
-        binding.scrollBox.addView(getInfoLine(parameter));
+        binding.scrollBox.addView(getInfoLineView(parameter));
     }
 
 
     private void showInfo(String name, Object value){
-        binding.scrollBox.addView(getInfoLine(name, value));
+        binding.scrollBox.addView(getInfoLineView(name, value));
     }
 
 

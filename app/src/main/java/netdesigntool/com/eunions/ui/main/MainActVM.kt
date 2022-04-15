@@ -8,8 +8,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import netdesigntool.com.eunions.model.Country
-import netdesigntool.com.eunions.local_db.AppDatabase
 import netdesigntool.com.eunions.model.toCountry
+import netdesigntool.com.eunions.repo.local_db.AppDatabase
 import java.util.concurrent.atomic.AtomicBoolean
 import javax.inject.Inject
 

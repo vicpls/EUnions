@@ -4,9 +4,9 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.LiveData
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
-import netdesigntool.com.eunions.local_db.AppDatabase
-import netdesigntool.com.eunions.local_db.CountriesDao
-import netdesigntool.com.eunions.local_db.entities.ParticipialCountries
+import netdesigntool.com.eunions.repo.local_db.AppDatabase
+import netdesigntool.com.eunions.repo.local_db.CountriesDao
+import netdesigntool.com.eunions.repo.local_db.entities.ParticipialCountries
 import netdesigntool.com.eunions.model.Country
 import netdesigntool.com.eunions.model.toCountry
 import netdesigntool.com.eunions.ui.main.MainActVM

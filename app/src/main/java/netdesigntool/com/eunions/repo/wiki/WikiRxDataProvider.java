@@ -1,16 +1,16 @@
-package netdesigntool.com.eunions.wiki;
+package netdesigntool.com.eunions.repo.wiki;
 
 import static netdesigntool.com.eunions.Util.LTAG;
 import static netdesigntool.com.eunions.Util.getIntegerPart;
-import static netdesigntool.com.eunions.wiki.SPARQLquery.AREA_ID;
-import static netdesigntool.com.eunions.wiki.SPARQLquery.BASE_URL;
-import static netdesigntool.com.eunions.wiki.SPARQLquery.CAP_CUR_AREA;
-import static netdesigntool.com.eunions.wiki.SPARQLquery.GDP_PER_CAPITA;
-import static netdesigntool.com.eunions.wiki.SPARQLquery.HUM_DEV_IND;
-import static netdesigntool.com.eunions.wiki.SPARQLquery.ISO_LANG;
-import static netdesigntool.com.eunions.wiki.SPARQLquery.MEMBER;
-import static netdesigntool.com.eunions.wiki.SPARQLquery.POPULATION;
-import static netdesigntool.com.eunions.wiki.SPARQLquery.POP_ID;
+import static netdesigntool.com.eunions.repo.wiki.SPARQLquery.AREA_ID;
+import static netdesigntool.com.eunions.repo.wiki.SPARQLquery.BASE_URL;
+import static netdesigntool.com.eunions.repo.wiki.SPARQLquery.CAP_CUR_AREA;
+import static netdesigntool.com.eunions.repo.wiki.SPARQLquery.GDP_PER_CAPITA;
+import static netdesigntool.com.eunions.repo.wiki.SPARQLquery.HUM_DEV_IND;
+import static netdesigntool.com.eunions.repo.wiki.SPARQLquery.ISO_LANG;
+import static netdesigntool.com.eunions.repo.wiki.SPARQLquery.MEMBER;
+import static netdesigntool.com.eunions.repo.wiki.SPARQLquery.POPULATION;
+import static netdesigntool.com.eunions.repo.wiki.SPARQLquery.POP_ID;
 
 import android.util.Log;
 
@@ -30,7 +30,6 @@ import io.reactivex.annotations.NonNull;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 import netdesigntool.com.eunions.BuildConfig;
-import netdesigntool.com.eunions.Parameter;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
