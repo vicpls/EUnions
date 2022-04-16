@@ -8,9 +8,8 @@ The sources of information are wiki and [World Happiness Report](https://worldha
 <img src="app/src/main/res/mipmap-xxhdpi/eur_union_192.png" width="45">
 </a>
 
-
-
 ## Preview
+<img src="/data_dev/main_ru_n.jpg" height="400">    <img src="/data_dev/country_ru_n.jpg" height="400">
 
 ## Technologies stack
 - Java migrating to Kotlin
