@@ -52,6 +52,8 @@
     <string name="title_rank_whi">Rank in the World Happiness Index</string>
     <string name="whi">Happiness Index</string>
     <string name="other_countries">Other countries</string>
+    <string name="schengen">Schengen</string>
+    <string name="eu">EU</string>
 
 
 </resources>

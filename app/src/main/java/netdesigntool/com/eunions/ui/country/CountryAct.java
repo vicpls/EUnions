@@ -1,6 +1,8 @@
 package netdesigntool.com.eunions.ui.country;
 
 import static netdesigntool.com.eunions.Util.LTAG;
+import static netdesigntool.com.eunions.Util.formatValue;
+import static netdesigntool.com.eunions.Util.getLastKey;
 import static netdesigntool.com.eunions.Util.isConnected;
 
 import android.annotation.SuppressLint;
@@ -21,17 +23,16 @@ import androidx.lifecycle.ViewModelProvider;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.ListIterator;
 import java.util.Map;
 
 import dagger.hilt.android.AndroidEntryPoint;
-import netdesigntool.com.eunions.repo.wiki.Parameter;
 import netdesigntool.com.eunions.R;
 import netdesigntool.com.eunions.Util;
+import netdesigntool.com.eunions.databinding.ActCountryBinding;
+import netdesigntool.com.eunions.repo.wiki.Parameter;
 import netdesigntool.com.eunions.ui.chart.ChartFragment;
 import netdesigntool.com.eunions.ui.chart.ChartVM;
-import netdesigntool.com.eunions.databinding.ActCountryBinding;
 
 /**
  *      Show information for selected country.
@@ -190,37 +191,6 @@ CountryAct extends AppCompatActivity {
                     )
             );
         }
-
-
-        // return the last key in Map
-        private <T> String getLastKey(Map<String, T> mMap){
-            String result="";
-
-            for (String k : mMap.keySet()) {
-                result = k;
-            }
-            return result;
-        }
-
-
-        String formatValue(Number num) {
-            String result;
-
-            if (num instanceof Float) {
-                float f = num.floatValue();
-
-                if (f - (int) f < 0.001) {
-                    result = Integer.toString((int)f);
-                } else {
-                    result = Float.toString(f);
-                }
-
-            } else {
-                result = num.toString();
-            }
-
-            return result;
-        }
     }
 
 
@@ -239,7 +209,7 @@ CountryAct extends AppCompatActivity {
 
             // Create place for fragment
             View chartItem = CountryAct.this.getLayoutInflater()
-                    .inflate(R.layout.act_country_chart, null, false);
+                    .inflate(R.layout.act_country_chart, binding.scrollBox, false);
             binding.scrollBox.addView(chartItem);
 
             FragmentManager frm = CountryAct.this.getSupportFragmentManager();
@@ -255,7 +225,7 @@ CountryAct extends AppCompatActivity {
     @SuppressLint("SetTextI18n")
     private View getInfoLineView(Parameter param){
 
-        View result = getLayoutInflater().inflate(R.layout.act_country_item_v2, null);
+        View result = getLayoutInflater().inflate(R.layout.act_country_item_v2, binding.scrollBox);
 
         ((TextView) result.findViewById(R.id.tvName))
                 .setText(param.pName.substring(0,1).toUpperCase() + param.pName.substring(1)); // Fist letter to Upper case.
@@ -275,11 +245,12 @@ CountryAct extends AppCompatActivity {
 
 
     private View getInfoLineView(String name, Object value){
-        View result = getLayoutInflater().inflate(R.layout.act_country_item_v2, null);
+        View result = getLayoutInflater().inflate(R.layout.act_country_item_v2, binding.scrollBox);
         ((TextView) result.findViewById(R.id.tvName)).setText(name);
         ((TextView) result.findViewById(R.id.tvValue)).setText(value.toString());
         return result;
     }
+
 
     private void showInfo(Parameter parameter){
         binding.scrollBox.addView(getInfoLineView(parameter));

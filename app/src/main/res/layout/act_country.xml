@@ -69,10 +69,10 @@
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:tint="@color/colorAccent"
         app:layout_constraintBottom_toTopOf="@+id/scrollView2"
         app:layout_constraintEnd_toStartOf="@+id/tvLinkToGuide"
         app:layout_constraintTop_toBottomOf="@+id/tvCountryName"
-        app:srcCompat="@drawable/ic_link_variant" />
+        app:srcCompat="@drawable/ic_link_variant"
+        app:tint="@color/colorAccent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

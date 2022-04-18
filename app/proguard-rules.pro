@@ -20,17 +20,6 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
-#-keepclassmembers class **.R$* {
-#    public static <fields>;
-#    }
-#
-#-keep class **.R$*
-
-# Trying to prevent error R8 with compile release for debuging. >>>Don't work.
-#-ignorewarnings
-#-keep class * {
-#    public private *;
-#}
 
 
 # Retrofit does reflection on generic parameters. InnerClasses is required to use Signature and

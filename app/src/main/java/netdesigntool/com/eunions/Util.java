@@ -10,6 +10,7 @@ import android.text.Spanned;
 
 import java.text.DecimalFormatSymbols;
 import java.util.Locale;
+import java.util.Map;
 
 public final class Util {
 
@@ -127,6 +128,40 @@ public final class Util {
         else
             result= context.getResources().getString(R.string.billion);
 
+        return result;
+    }
+
+    /**
+     * Round and transform number to string
+     * @param num Number
+     * @return String with round number
+     */
+    public static String formatValue(Number num) {
+        String result;
+
+        if (num instanceof Float) {
+            float f = num.floatValue();
+
+            if (f - (int) f < 0.001) {
+                result = Integer.toString((int)f);
+            } else {
+                result = Float.toString(f);
+            }
+
+        } else {
+            result = num.toString();
+        }
+
+        return result;
+    }
+
+
+    public static <T> String getLastKey(Map<String, T> mMap){
+        String result="";
+
+        for (String k : mMap.keySet()) {
+            result = k;
+        }
         return result;
     }
 
