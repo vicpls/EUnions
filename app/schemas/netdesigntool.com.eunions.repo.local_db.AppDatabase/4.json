@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 4,
-    "identityHash": "835a85c5364c12849ec3f63f7ac88940",
+    "identityHash": "f9a4e795aaa86f8ae7547e5c85136aaf",
     "entities": [
       {
         "tableName": "Eunions",
@@ -52,16 +52,16 @@
     "views": [
       {
         "viewName": "participial_countries",
-        "createSql": "CREATE VIEW `${VIEW_NAME}` AS SELECT schengen,member,eu, name FROM eunions \n                WHERE schengen<=1 OR eu<=1 ORDER BY case \n                    WHEN ScHENGEN<=1 AND eu>1 THEN 1 \n                    WHEN schengen<=1 AND eu<=1 THEN 2 \n                    WHEN schengen>1 AND eu<=1 THEN 3 END, name"
+        "createSql": "CREATE VIEW `${VIEW_NAME}` AS SELECT schengen,member,eu, name FROM eunions WHERE schengen<=1 OR eu<=1 ORDER BY name"
       },
       {
         "viewName": "other_countries",
-        "createSql": "CREATE VIEW `${VIEW_NAME}` AS SELECT member, name FROM eunions \n                        WHERE schengen>1 AND eu>1 ORDER BY name"
+        "createSql": "CREATE VIEW `${VIEW_NAME}` AS SELECT member, name FROM eunions WHERE schengen>1 AND eu>1 ORDER BY name"
       }
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '835a85c5364c12849ec3f63f7ac88940')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'f9a4e795aaa86f8ae7547e5c85136aaf')"
     ]
   }
 }
