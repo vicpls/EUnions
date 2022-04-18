@@ -2,7 +2,7 @@ package netdesigntool.com.eunions.ui.country;
 
 import static netdesigntool.com.eunions.Util.LTAG;
 import static netdesigntool.com.eunions.Util.formatValue;
-import static netdesigntool.com.eunions.Util.getLastKey;
+import static netdesigntool.com.eunions.Util.getOneKey;
 import static netdesigntool.com.eunions.Util.isConnected;
 
 import android.annotation.SuppressLint;
@@ -178,7 +178,7 @@ CountryAct extends AppCompatActivity {
             }
 
             // Only first element of fbParam shows
-            String year = getLastKey(fbParam);
+            String year = getOneKey(fbParam);
 
             showInfo(
                     new Parameter(""
@@ -225,7 +225,7 @@ CountryAct extends AppCompatActivity {
     @SuppressLint("SetTextI18n")
     private View getInfoLineView(Parameter param){
 
-        View result = getLayoutInflater().inflate(R.layout.act_country_item_v2, binding.scrollBox);
+        View result = getLayoutInflater().inflate(R.layout.act_country_item_v2, binding.scrollBox, false);
 
         ((TextView) result.findViewById(R.id.tvName))
                 .setText(param.pName.substring(0,1).toUpperCase() + param.pName.substring(1)); // Fist letter to Upper case.
@@ -245,7 +245,7 @@ CountryAct extends AppCompatActivity {
 
 
     private View getInfoLineView(String name, Object value){
-        View result = getLayoutInflater().inflate(R.layout.act_country_item_v2, binding.scrollBox);
+        View result = getLayoutInflater().inflate(R.layout.act_country_item_v2, binding.scrollBox, false);
         ((TextView) result.findViewById(R.id.tvName)).setText(name);
         ((TextView) result.findViewById(R.id.tvValue)).setText(value.toString());
         return result;

@@ -1,7 +1,10 @@
 package netdesigntool.com.eunions;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
+
+import static netdesigntool.com.eunions.Util.getOneKey;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -13,6 +16,8 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import java.text.DecimalFormatSymbols;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
@@ -71,6 +76,27 @@ public class UtilTest {
         assertEquals(ths, Util.getPrefixForNumber("123000", mContext));
         assertEquals(m, Util.getPrefixForNumber("123000000", mContext));
         assertEquals(b, Util.getPrefixForNumber("123000000000", mContext));
+    }
+
+    @Test
+    public void test_formatValue(){
+
+        assertEquals("1234", Util.formatValue(1234F));
+        assertEquals("1234.01", Util.formatValue(1234.01F));
+        assertEquals("123", Util.formatValue(123.0004F));
+        assertEquals("1234", Util.formatValue(1234L));
+        assertEquals("1234", Util.formatValue(1234));
+    }
+
+    @Test
+    public void test_getOneKey(){
+
+        Map<String, Integer> mMap = new HashMap<>(3);
+        mMap.put("One", 1);
+        mMap.put("Two",2);
+        mMap.put("Three", 3);
+
+        assertTrue(mMap.containsKey(getOneKey(mMap)));
     }
 
 

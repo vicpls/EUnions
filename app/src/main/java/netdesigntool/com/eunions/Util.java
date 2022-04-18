@@ -132,9 +132,9 @@ public final class Util {
     }
 
     /**
-     * Round and transform number to string
-     * @param num Number
-     * @return String with round number
+     * Trim the small remainder and transform number to string
+     * @param num Number (e.g. 123.0004)
+     * @return String with round number (e.g. "123")
      */
     public static String formatValue(Number num) {
         String result;
@@ -155,13 +155,18 @@ public final class Util {
         return result;
     }
 
-
-    public static <T> String getLastKey(Map<String, T> mMap){
+    /** Return only one key from keys of Map
+     *
+     * @param mMap Map
+     * @return One of the keys of Map
+     */
+    public static <T> String getOneKey(Map<String, T> mMap){
         String result="";
 
         for (String k : mMap.keySet()) {
             result = k;
         }
+
         return result;
     }
 
