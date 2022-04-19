@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">EUnions</string>
+    <string name="app_name" translatable="false">EUnions</string>
 
     <string name="at">Austria</string>
     <string name="ch">Switzerland</string>
@@ -52,8 +52,8 @@
     <string name="title_rank_whi">Rank in the World Happiness Index</string>
     <string name="whi">Happiness Index</string>
     <string name="other_countries">Other countries</string>
-    <string name="schengen">Schengen</string>
-    <string name="eu">EU</string>
+    <string name="schengen" translatable="false">Schengen</string>
+    <string name="eu" translatable="false">EU</string>
 
 
 </resources>

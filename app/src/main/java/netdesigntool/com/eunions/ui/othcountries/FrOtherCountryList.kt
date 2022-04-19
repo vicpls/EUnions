@@ -20,7 +20,8 @@ import androidx.paging.PagingSource
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import dagger.hilt.android.AndroidEntryPoint
-import netdesigntool.com.eunions.model.CommonCountry
+import netdesigntool.com.eunions.R
+import netdesigntool.com.eunions.model.BaseCountry
 import netdesigntool.com.eunions.repo.local_db.AppDatabase
 import netdesigntool.com.eunions.ui.country.CountryAct
 import javax.inject.Inject
@@ -33,8 +34,9 @@ import javax.inject.Inject
 class FrOtherCountryList : Fragment(){
 
     @Inject lateinit var appDB : AppDatabase
-    private lateinit var pager : Pager<Int, CommonCountry>
+    private lateinit var pager : Pager<Int, BaseCountry>
 
+    private var actTitle : CharSequence? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +44,7 @@ class FrOtherCountryList : Fragment(){
         val pConfig = PagingConfig(20, 3, false)
 
         pager = Pager(pConfig, null) {
-            appDB.countriesDao().getOtherCountries() as PagingSource<Int, CommonCountry>
+            appDB.countriesDao().getOtherCountries() as PagingSource<Int, BaseCountry>
             }
     }
 
@@ -51,6 +53,11 @@ class FrOtherCountryList : Fragment(){
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
+        activity?.let { act->
+            actTitle = act.title
+            act.setTitle(R.string.other_countries)
+        }
 
         return ComposeView(requireContext()).apply {
                 // Dispose the Composition when viewLifecycleOwner is destroyed
@@ -72,8 +79,13 @@ class FrOtherCountryList : Fragment(){
         )
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        activity?.title = actTitle
+    }
+
     @Composable
-    fun ShowContent(items: LazyPagingItems<CommonCountry>,
+    fun ShowContent(items: LazyPagingItems<BaseCountry>,
                     onCountryClick: (String, String)->Unit,
                     context: Context){
         Surface(

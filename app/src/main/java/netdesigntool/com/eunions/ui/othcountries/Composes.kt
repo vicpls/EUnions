@@ -20,10 +20,10 @@ import androidx.compose.ui.unit.sp
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.items
 import netdesigntool.com.eunions.R
-import netdesigntool.com.eunions.model.CommonCountry
+import netdesigntool.com.eunions.model.BaseCountry
 
 @Composable
-fun OthCountryLayout(items: LazyPagingItems<CommonCountry>,
+fun OthCountryLayout(items: LazyPagingItems<BaseCountry>,
                      onCountryClick: (String, String)->Unit,
                      context: Context) {
 
@@ -37,7 +37,7 @@ fun OthCountryLayout(items: LazyPagingItems<CommonCountry>,
 }
 
 @Composable
-fun CountryList(items: LazyPagingItems<CommonCountry>,
+fun CountryList(items: LazyPagingItems<BaseCountry>,
                 onCountryClick: (String, String)->Unit,
                 context: Context) {
 

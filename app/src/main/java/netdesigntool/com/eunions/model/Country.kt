@@ -5,7 +5,7 @@ data class Country(
     private val euni: Int,          // 0<= Country is a member of EU
     private val schen: Int,         // 0<= Country is a member of Shengen
     override val name: String
-) : CommonCountry {
+) : BaseCountry() {
 
     val isEU: Boolean
         get() = euni <= 0
