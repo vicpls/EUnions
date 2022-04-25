@@ -8,10 +8,12 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -21,6 +23,19 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.items
 import netdesigntool.com.eunions.R
 import netdesigntool.com.eunions.model.BaseCountry
+
+
+@Composable
+fun ShowContent(items: LazyPagingItems<BaseCountry>,
+                onCountryClick: (String, String)->Unit,
+                context: Context){
+    Surface(
+        modifier = Modifier.fillMaxSize(),
+        color = Color.White
+    ){
+        OthCountryLayout(items, onCountryClick, context)
+    }
+}
 
 @Composable
 fun OthCountryLayout(items: LazyPagingItems<BaseCountry>,

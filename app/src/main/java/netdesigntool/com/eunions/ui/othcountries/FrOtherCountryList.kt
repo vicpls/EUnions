@@ -1,23 +1,16 @@
 package netdesigntool.com.eunions.ui.othcountries
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.Surface
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingSource
-import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import dagger.hilt.android.AndroidEntryPoint
 import netdesigntool.com.eunions.R
@@ -82,18 +75,6 @@ class FrOtherCountryList : Fragment(){
     override fun onDestroyView() {
         super.onDestroyView()
         activity?.title = actTitle
-    }
-
-    @Composable
-    fun ShowContent(items: LazyPagingItems<BaseCountry>,
-                    onCountryClick: (String, String)->Unit,
-                    context: Context){
-        Surface(
-            modifier = Modifier.fillMaxSize(),
-            color = Color.White
-        ){
-            OthCountryLayout(items, onCountryClick, context)
-        }
     }
 
 }
