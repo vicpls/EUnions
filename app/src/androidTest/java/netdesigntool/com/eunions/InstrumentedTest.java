@@ -52,7 +52,8 @@ public class InstrumentedTest {
         Espresso.onView(withText("Credit")).check(matches(isDisplayed()));
     }
 
-    // Calling CountryActivity and getting Info from I
+    // Calling CountryActivity and getting Info from Internet.
+    // It depends on access to Internet.
     @Test
     public void callCountryAct(){
 

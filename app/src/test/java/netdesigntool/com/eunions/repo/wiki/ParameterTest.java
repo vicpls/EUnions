@@ -1,4 +1,4 @@
-package netdesigntool.com.eunions;
+package netdesigntool.com.eunions.repo.wiki;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;

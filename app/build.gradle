@@ -121,7 +121,6 @@ configurations.all {
 //}
 
 
-
 dependencies {
 
     implementation fileTree(include: ['*.jar'], dir: 'libs')
@@ -180,7 +179,7 @@ dependencies {
     // Declare the dependencies for the desired Firebase products without specifying versions
     // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation 'com.google.firebase:firebase-database-ktx'
-    implementation 'com.google.firebase:firebase-appcheck-safetynet:16.0.0-beta05'
+    implementation 'com.google.firebase:firebase-appcheck-safetynet:16.0.0-beta06'
     // ===================================================================
 
 
@@ -225,7 +224,7 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     testImplementation "android.arch.core:core-testing:1.1.1"
     //testImplementation 'androidx.test:core:1.4.0'
-    testImplementation 'org.mockito:mockito-inline:4.4.0'
+    testImplementation 'org.mockito:mockito-inline:4.5.0'
     testImplementation "org.mockito.kotlin:mockito-kotlin:4.0.0"
     testImplementation 'org.robolectric:robolectric:4.7.3'
     testImplementation 'org.awaitility:awaitility:4.2.0'

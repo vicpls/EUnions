@@ -45,6 +45,10 @@ fun CountryList(items: LazyPagingItems<BaseCountry>,
         .height(32.dp)
         .width(32.dp)
 
+    fun getFlagId(iso : String) : Int = context.resources.getIdentifier(
+        "flg_$iso"
+        , "drawable", context.packageName)
+
     LazyColumn (verticalArrangement = Arrangement.spacedBy(6.dp)
         , modifier = Modifier.background(colorResource(R.color.others), RoundedCornerShape(15.dp))
             .padding(start = 60.dp, top =12.dp
@@ -53,12 +57,10 @@ fun CountryList(items: LazyPagingItems<BaseCountry>,
         items(items) { country ->
 
             val iso = country!!.iso
+            val imgFlagId = getFlagId(iso)
 
             Row (Modifier.clickable { onCountryClick(iso, country.name) })
             {
-
-                val imgFlagId = context.resources.getIdentifier("flg_" + iso
-                    , "drawable", context.packageName)
 
                 Image(painter = painterResource(id = imgFlagId)
                     , contentDescription = null
@@ -74,6 +76,8 @@ fun CountryList(items: LazyPagingItems<BaseCountry>,
             }
         }
     }
+
+
 }
 
 
