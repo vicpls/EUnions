@@ -26,20 +26,18 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class FrOtherCountryList : Fragment(){
 
-    @Inject lateinit var appDB : AppDatabase
-    private lateinit var pager : Pager<Int, BaseCountry>
+    @Inject
+    lateinit var appDB: AppDatabase
 
-    private var actTitle : CharSequence? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
+    private val pager: Pager<Int, BaseCountry> by lazy(LazyThreadSafetyMode.NONE) {
         val pConfig = PagingConfig(20, 3, false)
 
-        pager = Pager(pConfig, null) {
+        Pager(pConfig, null) {
             appDB.countriesDao().getOtherCountries() as PagingSource<Int, BaseCountry>
-            }
+        }
     }
+
+    private var actTitle : CharSequence? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
