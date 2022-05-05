@@ -1,6 +1,7 @@
 package netdesigntool.com.eunions.ui.othcountries
 
 import android.content.Context
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -14,55 +15,58 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
+import kotlinx.coroutines.flow.flowOf
 import netdesigntool.com.eunions.R
 import netdesigntool.com.eunions.model.BaseCountry
+import netdesigntool.com.eunions.model.Country
 
 
 @Composable
-fun ShowContent(items: LazyPagingItems<BaseCountry>,
-                onCountryClick: (String, String)->Unit,
-                context: Context){
+fun ShowContent(items: LazyPagingItems<out BaseCountry>,
+                onCountryClick: (String, String)->Unit
+                ){
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = Color.White
     ){
-        OthCountryLayout(items, onCountryClick, context)
+        OthCountryLayout(items, onCountryClick)
     }
 }
 
 @Composable
-fun OthCountryLayout(items: LazyPagingItems<BaseCountry>,
-                     onCountryClick: (String, String)->Unit,
-                     context: Context) {
+fun OthCountryLayout(items: LazyPagingItems<out BaseCountry>,
+                     onCountryClick: (String, String)->Unit
+                     ) {
 
     Card( modifier = Modifier
         .padding(8.dp)
         .fillMaxWidth()
         , shape = RoundedCornerShape(15.dp)
     ) {
-        CountryList(items, onCountryClick, context)
+        CountryList(items, onCountryClick)
     }
 }
 
+private inline fun getFlagId(iso : String, context: Context) : Int =
+    context.resources.getIdentifier(
+    "flg_$iso"
+    , "drawable", context.packageName)
+
+
 @Composable
-fun CountryList(items: LazyPagingItems<BaseCountry>,
-                onCountryClick: (String, String)->Unit,
-                context: Context) {
-
-    val flgModifier = Modifier
-        .height(32.dp)
-        .width(32.dp)
-
-    fun getFlagId(iso : String) : Int = context.resources.getIdentifier(
-        "flg_$iso"
-        , "drawable", context.packageName)
+fun CountryList(items: LazyPagingItems<out BaseCountry>,
+                onCountryClick: (String, String)->Unit
+    ) {
 
     LazyColumn (verticalArrangement = Arrangement.spacedBy(6.dp)
         , modifier = Modifier.background(colorResource(R.color.others), RoundedCornerShape(15.dp))
@@ -70,35 +74,41 @@ fun CountryList(items: LazyPagingItems<BaseCountry>,
                 , end = 5.dp, bottom = 12.dp )
     ){
         items(items) { country ->
-
-            val iso = country!!.iso
-            val imgFlagId = getFlagId(iso)
-
-            Row (Modifier.clickable { onCountryClick(iso, country.name) })
-            {
-
-                Image(painter = painterResource(id = imgFlagId)
-                    , contentDescription = null
-                    , modifier = flgModifier
-                )
-
-                Text("    ${country.name}"
-                    , fontSize = 16.sp
-                    , modifier = Modifier
-                        .padding(start = 20.dp)
-                        .align(Alignment.CenterVertically)
-                )
-            }
+            CountryItem(country, onCountryClick, getFlagId(country!!.iso, LocalContext.current))
         }
     }
+}
 
+@Composable
+private fun CountryItem(
+    country: BaseCountry?,
+    onCountryClick: (String, String) -> Unit,
+    @DrawableRes imgFlagId: Int
+) {
+    Row(Modifier.clickable { onCountryClick(country!!.iso, country.name) })
+    {
+        Image(
+            painter = painterResource(id = imgFlagId),
+            contentDescription = null,
+            modifier = Modifier
+                .height(32.dp)
+                .width(32.dp)
+        )
 
+        Text(
+            "    ${country!!.name}",
+            fontSize = 16.sp,
+            modifier = Modifier
+                .padding(start = 20.dp)
+                .align(Alignment.CenterVertically)
+        )
+    }
 }
 
 
-@Preview(showBackground = true)
+//@Preview(showBackground = true)
 @Composable
-fun DefaultPreview() {
+fun DefaultPreview_old() {
 
     val flgModifier = Modifier
         .height(32.dp)
@@ -151,4 +161,18 @@ fun DefaultPreview() {
             }
         }
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun DefaultPreview() {
+
+    val countryList = listOf(
+        Country("at",1, 1, "This_is_name_of_Country1"),
+        Country("de", 1, 1, "This_is_name_of_Country2")
+    )
+
+    ShowContent(
+        flowOf(PagingData.from(countryList)).collectAsLazyPagingItems()
+    ) { _, _ -> }
 }
