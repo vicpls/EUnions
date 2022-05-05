@@ -57,7 +57,7 @@ class FrOtherCountryList : Fragment(){
                 )
                 setContent {
                     val lazyPagingItems = pager.flow.collectAsLazyPagingItems()
-                    ShowContent(lazyPagingItems, ::onCountryClick, context)
+                    ShowContent(lazyPagingItems, ::onCountryClick)
                 }
             }
     }

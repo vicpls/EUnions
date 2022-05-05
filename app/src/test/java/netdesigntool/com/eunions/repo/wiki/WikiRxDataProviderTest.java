@@ -30,6 +30,7 @@ public class WikiRxDataProviderTest {
         assertEquals(
                 ""
                 ,WikiRxDataProvider.getRespValue(otterMap,"PP2"));
+        // In the Log appears:    ERROR: EUnions: Cannot parse the value for param=PP2
 
     }
 }
