@@ -2,7 +2,6 @@ package netdesigntool.com.eunions.ui.main;
 
 import static netdesigntool.com.eunions.Util.LTAG;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -26,7 +25,6 @@ import netdesigntool.com.eunions.R;
 import netdesigntool.com.eunions.databinding.ActMainBinding;
 import netdesigntool.com.eunions.model.Country;
 import netdesigntool.com.eunions.ui.AboutAct;
-import netdesigntool.com.eunions.ui.country.CountryAct;
 import netdesigntool.com.eunions.ui.othcountries.FrOtherCountryList;
 
 @AndroidEntryPoint
@@ -35,6 +33,7 @@ public class MainActivity extends AppCompatActivity
 {
     private ActMainBinding binding;
 
+    private MainActVM mainActVM;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +42,7 @@ public class MainActivity extends AppCompatActivity
         binding = ActMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        MainActVM mainActVM = new ViewModelProvider(this).get(MainActVM.class);
+        mainActVM = new ViewModelProvider(this).get(MainActVM.class);
 
         observeViewModel(mainActVM);
 
@@ -54,10 +53,17 @@ public class MainActivity extends AppCompatActivity
         LiveData<List<Country>> countryEU = vm.getLdEu();
         LiveData<List<Country>> countrySchEu = vm.getLdSchAndEu();
         LiveData<List<Country>> countrySch = vm.getLdSchen();
+        LiveData<MainActVM.Desc> showDesc = vm.getLdShowDesc();
 
         countryEU.observe(this, this::fillUpFbTop);
         countrySchEu.observe(this, this::fillUpFbMiddle);
         countrySch.observe(this, this::fillUpFbBottom);
+        showDesc.observe(this, this::showDesc);
+
+    }
+
+    private void showDesc(MainActVM.Desc desc) {
+        //TODO: показать оипсание
     }
 
 
@@ -102,13 +108,8 @@ public class MainActivity extends AppCompatActivity
         String country = view.getTag().toString();
         Log.d(LTAG,"Click on Country="+ country +";");
 
-        // Start Activity with detail about selected country
-        Intent intent = new Intent(this, CountryAct.class);
-        intent.putExtra(CountryAct.COUNTRY_ISO, view.getTag().toString());
-        startActivity(intent);
+        mainActVM.onCountryClick(country);
     }
-
-
 
     class OnOtherCountryClickFr implements View.OnClickListener{
         @Override
