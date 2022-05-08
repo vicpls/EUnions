@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
@@ -25,6 +26,7 @@ import netdesigntool.com.eunions.R;
 import netdesigntool.com.eunions.databinding.ActMainBinding;
 import netdesigntool.com.eunions.model.Country;
 import netdesigntool.com.eunions.ui.AboutAct;
+import netdesigntool.com.eunions.ui.description.DescFrag;
 import netdesigntool.com.eunions.ui.othcountries.FrOtherCountryList;
 
 @AndroidEntryPoint
@@ -63,7 +65,26 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void showDesc(MainActVM.Desc desc) {
-        //TODO: показать оипсание
+
+        FragmentManager fm = getSupportFragmentManager();
+
+        int placeId = binding.lfDescPlace.getId();
+        Fragment descFrag = fm.findFragmentById(placeId);
+
+        if (descFrag == null) descFrag = DescFrag.newInstance(desc.getDesc());
+
+        if ( ! descFrag.isVisible() ) {
+            fm.beginTransaction()
+                .add(placeId, descFrag)
+                //.setCustomAnimations(R.anim.to_right_out, R.anim.to_right_in)
+                .addToBackStack(null)
+                .commit();
+        } else {
+            fm.beginTransaction()
+                    .remove(descFrag)
+                    //.setCustomAnimations(R.anim.to_right_out, R.anim.to_right_in)
+                    .commit();
+        }
     }
 
 
