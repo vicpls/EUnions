@@ -37,6 +37,7 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.moshi.MoshiConverterFactory;
 
 
+@SuppressWarnings("rawtypes")
 public class WikiRxDataProvider {
 
     WikiRxService wikiRxService;

@@ -187,7 +187,7 @@ dependencies {
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 
     //   =============== Jetpack Compose ====================
-    implementation "androidx.compose.compiler:compiler:1.2.0-alpha07"
+    implementation 'androidx.compose.compiler:compiler:1.2.0-alpha08'
     // Integration with activities
     implementation 'androidx.activity:activity-compose:1.4.0'
     // Compose Material Design
@@ -197,7 +197,7 @@ dependencies {
     // Tooling support (Previews, etc.)
     implementation 'androidx.compose.ui:ui-tooling:1.1.1'
     // Integration with ViewModels
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.5.0-alpha06'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.5.0-beta01'
     implementation "com.google.accompanist:accompanist-appcompat-theme:0.16.0"
     // UI Tests
     //androidTestImplementation 'androidx.compose.ui:ui-test-junit4:1.0.5'
@@ -224,9 +224,9 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     testImplementation "android.arch.core:core-testing:1.1.1"
     //testImplementation 'androidx.test:core:1.4.0'
-    testImplementation 'org.mockito:mockito-inline:4.5.0'
+    testImplementation 'org.mockito:mockito-inline:4.5.1'
     testImplementation "org.mockito.kotlin:mockito-kotlin:4.0.0"
-    testImplementation 'org.robolectric:robolectric:4.7.3'
+    testImplementation 'org.robolectric:robolectric:4.8'
     testImplementation 'org.awaitility:awaitility:4.2.0'
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVer"
 
