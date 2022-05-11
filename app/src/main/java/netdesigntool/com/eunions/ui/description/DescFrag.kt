@@ -46,7 +46,7 @@ class DescFrag : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         return ComposeView(requireContext()).apply {
             // Dispose the Composition when viewLifecycleOwner is destroyed
             setViewCompositionStrategy(
@@ -61,10 +61,12 @@ class DescFrag : Fragment() {
 
             companion object {
             /**
-             * Use this factory method to create a new instance of
+             * Factory method to create a new instance of
              * this fragment using the provided parameters.
              *
-             * @param desc Id of String of description.
+             * @param desc Id of String resource of description.
+             * @param backColor Color of background, not Id resource
+             * @param txtColor Color of text of description, not Id resource
              * @return A new instance of fragment DescFrag.
              */
             @JvmStatic

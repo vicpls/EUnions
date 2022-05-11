@@ -17,7 +17,7 @@ import netdesigntool.com.eunions.R
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun ShowContent(@StringRes descId: Int, bgColor: Color, txtColor: Color, onClick: ()->Unit) {
+fun ShowCard(@StringRes descId: Int, bgColor: Color, txtColor: Color, onClick: ()->Unit) {
 
     Card(
         modifier = Modifier.padding(8.dp),
@@ -35,6 +35,17 @@ fun ShowContent(@StringRes descId: Int, bgColor: Color, txtColor: Color, onClick
     }
 }
 
+@Composable
+fun ShowContent(@StringRes descId: Int, bgColor: Color, txtColor: Color, onClick: ()->Unit) {
+
+    /*var visible by remember { mutableStateOf(true) }
+    AnimatedVisibility(
+        visible = visible,
+        enter = slideInHorizontally {-it}
+        ){ ShowCard(descId, bgColor, txtColor, onClick) }*/ //Animation doesn't work.
+
+    ShowCard(descId, bgColor, txtColor, onClick)
+}
 
 @Preview
 @Composable
