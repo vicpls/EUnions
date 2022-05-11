@@ -24,7 +24,6 @@
             android:id="@+id/flLeft"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginLeft="8dp"
             android:layout_marginStart="8dp"
             android:background="@drawable/rounded_eu"
             android:gravity="left"
@@ -40,12 +39,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="12dp"
                 android:layout_marginTop="12dp"
+                android:clickable="true"
+                android:onClick="onClick"
+                android:tag="@string/eu"
                 android:text="@string/eu"
                 android:textColor="@android:color/black"
                 android:textSize="18sp"
                 android:textStyle="bold|italic"
-                tools:text="EU"
-                app:drawableBottomCompat="@drawable/flg_eu" />
+                app:drawableBottomCompat="@drawable/flg_eu"
+                tools:text="EU" />
 
         </LinearLayout>
 
@@ -66,14 +68,17 @@
                 android:id="@+id/tvRightCap"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="12dp"
                 android:layout_marginTop="12dp"
+                android:layout_marginRight="12dp"
+                android:clickable="true"
                 android:drawablePadding="10dp"
+                android:onClick="onClick"
+                android:tag="@string/schengen"
                 android:text="@string/schengen"
                 android:textColor="@android:color/black"
                 android:textStyle="bold|italic"
-                tools:text="Schengen"
-                app:drawableBottomCompat="@drawable/flg_eu" />
+                app:drawableBottomCompat="@drawable/flg_eu"
+                tools:text="Schengen" />
 
         </LinearLayout>
 
@@ -152,6 +157,24 @@
                 android:text="@string/other_countries"
                 android:textSize="16sp" />
         </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/lfDescPlace"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="80dp"
+            app:layout_constraintEnd_toEndOf="@id/glRight70"
+            app:layout_constraintStart_toStartOf="@+id/flLeft"
+            app:layout_constraintTop_toTopOf="@+id/flLeft" />
+
+        <FrameLayout
+            android:id="@+id/rtDescPlace"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="80dp"
+            app:layout_constraintEnd_toEndOf="@id/flRight"
+            app:layout_constraintStart_toStartOf="@id/glLeft30"
+            app:layout_constraintTop_toTopOf="@id/flRight" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

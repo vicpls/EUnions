@@ -1,20 +1,27 @@
 package netdesigntool.com.eunions.ui.main
 
+import android.app.Activity
+import android.app.Application
+import android.content.Intent
+import androidx.annotation.StringRes
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import netdesigntool.com.eunions.R
 import netdesigntool.com.eunions.model.Country
 import netdesigntool.com.eunions.model.toCountry
 import netdesigntool.com.eunions.repo.local_db.AppDatabase
+import netdesigntool.com.eunions.ui.country.CountryAct
 import java.util.concurrent.atomic.AtomicBoolean
 import javax.inject.Inject
 
 @HiltViewModel
-class MainActVM @Inject constructor(val appDb : AppDatabase) : ViewModel() {
+class MainActVM @Inject constructor(val appDb : AppDatabase, app: Application) :
+    AndroidViewModel( app ) {
 
     val ldSchAndEu : LiveData<List<Country>>
         get() = _ldSchAndEu
@@ -31,8 +38,46 @@ class MainActVM @Inject constructor(val appDb : AppDatabase) : ViewModel() {
     private val _ldEu = MutableLiveData<List<Country>>()
         get() = field.also{startFetchLdCountries()}
 
-
     private val isFetched = AtomicBoolean(false)
+
+
+    sealed class Desc{
+        abstract val descr: Int
+
+        class EU() : Desc(){
+            @StringRes override val descr = R.string.eu_desc
+        }
+
+        class Schengen() : Desc(){
+            @StringRes override val descr = R.string.schengen_desc
+        }
+    }
+
+    val ldShowDesc : LiveData<Desc> by this::_ldShowDesc
+    private val _ldShowDesc = MutableLiveData<Desc>()
+
+
+    private val app = getApplication<Application>()
+    private val myResource = app.resources
+    private val eu by lazy {myResource.getString(R.string.eu)}
+    private val sch by lazy {myResource.getString(R.string.schengen)}
+
+
+    fun onCountryClick(iso: String, act: Activity) {
+
+        when (iso) {
+            eu -> _ldShowDesc.value = Desc.EU()
+            sch -> _ldShowDesc.value = Desc.Schengen()
+            else -> {
+                // Start Activity with detail about selected country
+                val intent = Intent(app, CountryAct::class.java)
+                    .also { it.putExtra(CountryAct.COUNTRY_ISO, iso) }
+
+                act.startActivity(intent)
+            }
+        }
+    }
+
 
 
     private fun startFetchLdCountries(){

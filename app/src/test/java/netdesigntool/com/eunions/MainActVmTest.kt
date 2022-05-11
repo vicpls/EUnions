@@ -1,5 +1,6 @@
 package netdesigntool.com.eunions
 
+import android.app.Application
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.LiveData
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -23,6 +24,9 @@ import java.util.concurrent.TimeUnit
 class MainActVmTest {
 
     @Mock
+    lateinit var app: Application
+
+    @Mock
     lateinit var dataRep: AppDatabase
 
     @Mock
@@ -43,7 +47,9 @@ class MainActVmTest {
     @Before
     fun testInit() {
 
-        _model = MainActVM(dataRep)
+        _model = MainActVM(dataRep, app)
+
+        TODO("намокать обращение к ресурсам")
 
         `when`(dataRep.countriesDao()).thenReturn(cntDAO)
 

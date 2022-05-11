@@ -2,7 +2,7 @@ package netdesigntool.com.eunions.ui.main;
 
 import static netdesigntool.com.eunions.Util.LTAG;
 
-import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -11,8 +11,12 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.util.Pair;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
@@ -26,7 +30,7 @@ import netdesigntool.com.eunions.R;
 import netdesigntool.com.eunions.databinding.ActMainBinding;
 import netdesigntool.com.eunions.model.Country;
 import netdesigntool.com.eunions.ui.AboutAct;
-import netdesigntool.com.eunions.ui.country.CountryAct;
+import netdesigntool.com.eunions.ui.description.DescFrag;
 import netdesigntool.com.eunions.ui.othcountries.FrOtherCountryList;
 
 @AndroidEntryPoint
@@ -35,6 +39,7 @@ public class MainActivity extends AppCompatActivity
 {
     private ActMainBinding binding;
 
+    private MainActVM mainActVM;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +48,7 @@ public class MainActivity extends AppCompatActivity
         binding = ActMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        MainActVM mainActVM = new ViewModelProvider(this).get(MainActVM.class);
+        mainActVM = new ViewModelProvider(this).get(MainActVM.class);
 
         observeViewModel(mainActVM);
 
@@ -54,11 +59,106 @@ public class MainActivity extends AppCompatActivity
         LiveData<List<Country>> countryEU = vm.getLdEu();
         LiveData<List<Country>> countrySchEu = vm.getLdSchAndEu();
         LiveData<List<Country>> countrySch = vm.getLdSchen();
+        LiveData<MainActVM.Desc> showDesc = vm.getLdShowDesc();
 
         countryEU.observe(this, this::fillUpFbTop);
         countrySchEu.observe(this, this::fillUpFbMiddle);
         countrySch.observe(this, this::fillUpFbBottom);
+        showDesc.observe(this, this::showDesc);
+
     }
+
+
+    //=============================================================================================
+
+    private void showDesc(MainActVM.Desc desc) {
+
+        Fragment fr = getFragment(desc);
+
+        if ( fr !=null && fr.isVisible()) {
+            removeFragmentTrans(fr);
+            return;
+        } else addFragmentTrans(getPlaceId(desc), fr);
+
+        Fragment anotherFr = getAnotherFr(desc);
+        if ( anotherFr !=null && anotherFr.isVisible()) removeFragmentTrans(anotherFr);
+    }
+
+    @Nullable
+    private Fragment getAnotherFr(MainActVM.Desc desc){
+
+        Pair<Fragment, Fragment> frags = findDescFragments();
+        Fragment result = null;
+
+        if (desc.getClass() == MainActVM.Desc.EU.class) result = frags.second;
+        if (desc.getClass() == MainActVM.Desc.Schengen.class) result = frags.first;
+
+        return result;
+    }
+
+    private int getPlaceId(MainActVM.Desc desc){
+        int result = 0;
+        if (desc.getClass() == MainActVM.Desc.EU.class) result = R.id.lfDescPlace;
+        if (desc.getClass() == MainActVM.Desc.Schengen.class) result = R.id.rtDescPlace;
+        return result;
+    }
+
+    // Return an appropriate fragment for showing description text. Create it if it not exist.
+    @Nullable
+    private Fragment getFragment(MainActVM.Desc desc){
+
+        Pair<Fragment, Fragment> frags = findDescFragments();
+        Fragment result = null;
+
+        // For EU - "left" fragment
+        if (desc.getClass() == MainActVM.Desc.EU.class)
+            result = (frags.first !=null) ? frags.first
+                    : DescFrag.newInstance(desc.getDescr()
+                    , getResources().getColor(R.color.euroUnionNoA)
+                    , Color.WHITE);
+
+        // For Schengen - "right" fragment
+        if (desc.getClass() == MainActVM.Desc.Schengen.class)
+            result = (frags.second !=null) ? frags.second
+                    : DescFrag.newInstance(desc.getDescr()
+                    , getResources().getColor(R.color.schengenNoA)
+                    , Color.BLACK);
+
+        return result;
+    }
+
+    private void addFragmentTrans(@IdRes int placeId, Fragment fr){
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(placeId, fr)
+                .addToBackStack(null)
+                //.setCustomAnimations(R.anim.to_left_in, R.anim.to_left_out, R.anim.to_right_in, R.anim.to_right_out)
+                .commit();
+    }
+
+    private void removeFragmentTrans(Fragment fr){
+        getSupportFragmentManager()
+                .beginTransaction()
+                .remove(fr)
+                //.setCustomAnimations(R.anim.to_left_in, R.anim.to_left_out, R.anim.to_right_in, R.anim.to_right_out)
+                .commit();
+    }
+
+    // Find left and right existing fragments for showing description text.
+    private Pair<Fragment, Fragment> findDescFragments(){
+
+        Fragment left, right;
+        FragmentManager fm = getSupportFragmentManager();
+
+        int placeId = binding.lfDescPlace.getId();
+        left = fm.findFragmentById(placeId);
+
+        placeId = binding.rtDescPlace.getId();
+        right = fm.findFragmentById(placeId);
+
+        return new Pair<>(left,right);
+    }
+    // =============================================================================================
 
 
     private void fillUpFbTop(List<Country> countries) {
@@ -102,13 +202,8 @@ public class MainActivity extends AppCompatActivity
         String country = view.getTag().toString();
         Log.d(LTAG,"Click on Country="+ country +";");
 
-        // Start Activity with detail about selected country
-        Intent intent = new Intent(this, CountryAct.class);
-        intent.putExtra(CountryAct.COUNTRY_ISO, view.getTag().toString());
-        startActivity(intent);
+        mainActVM.onCountryClick(country, this);
     }
-
-
 
     class OnOtherCountryClickFr implements View.OnClickListener{
         @Override

@@ -5,9 +5,13 @@
     <color name="colorAccent">#FF4081</color>
 
     <color name="euroUnion">#780d05fa</color>
+    <color name="euroUnionNoA">#362FF0</color>
     <color name="schengen">#78faf605</color>
+    <color name="schengenNoA">#FFFF00</color>
+
     <color name="others">#7800B8CC</color>
 
     <color name="text">@android:color/tertiary_text_dark</color>
+
 
 </resources>
