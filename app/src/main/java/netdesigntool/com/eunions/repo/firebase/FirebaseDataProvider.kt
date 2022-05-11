@@ -2,7 +2,6 @@ package netdesigntool.com.eunions.repo.firebase
 
 import android.content.Context
 import android.util.Log
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.FirebaseApp
 import com.google.firebase.appcheck.FirebaseAppCheck
@@ -36,41 +35,27 @@ class FirebaseDataProvider @Inject constructor(
     private val baseRef = Firebase.database.getReferenceFromUrl(fbAttrib.URL_REF)
 
 
-
-    /**
-     * Rank of country in the list of World Happiness Index.
-     * Map of <year, value> where year as String
-     */
-    val ldRankWHI : LiveData<Map<String, Number>> by this::_ldRankWHI
-    private val _ldRankWHI : MutableLiveData<Map<String, Number>> = MutableLiveData(HashMap())
-
-
-    /**
-     * Values of World Happiness Index
-     * Map of <year, value> where year as String
-     */
-    val ldWHI : LiveData<Map<String, Number>> by this::_ldWHI
-    private val _ldWHI : MutableLiveData<Map<String, Number>> = MutableLiveData(HashMap())
-
     /**
      * Launch request to the countries' base for WHI values.
      */
-    fun requestWHI(isoCountryCode :String, title: String) {
+    fun requestWHI(isoCountryCode :String,
+                   title: String,
+                   result: MutableLiveData<Map<String, Number>>) {
 
         val request = createRequest(isoCountryCode, "whi")
-
-        launchRequest(request, _ldWHI, title)
+        launchRequest(request, result, title)
     }
 
 
     /**
      * Launch request to the country base for the rank in WHI listing.
      */
-    fun requestRankWHI(isoCountryCode :String, title: String) {
+    fun requestRankWHI(isoCountryCode :String,
+                       title: String,
+                       result: MutableLiveData<Map<String, Number>>) {
 
         val request =  createRequest(isoCountryCode,"whiRank")
-
-        launchRequest(request, _ldRankWHI  , title)
+        launchRequest(request, result, title)
     }
 
 
