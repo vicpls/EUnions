@@ -1,5 +1,6 @@
 package netdesigntool.com.eunions.ui.main
 
+import android.app.Activity
 import android.app.Application
 import android.content.Intent
 import androidx.annotation.StringRes
@@ -40,7 +41,17 @@ class MainActVM @Inject constructor(val appDb : AppDatabase, app: Application) :
     private val isFetched = AtomicBoolean(false)
 
 
-    class Desc(@StringRes val desc: Int)
+    sealed class Desc{
+        abstract val descr: Int
+
+        class EU() : Desc(){
+            @StringRes override val descr = R.string.eu_desc
+        }
+
+        class Schengen() : Desc(){
+            @StringRes override val descr = R.string.schengen_desc
+        }
+    }
 
     val ldShowDesc : LiveData<Desc> by this::_ldShowDesc
     private val _ldShowDesc = MutableLiveData<Desc>()
@@ -52,17 +63,17 @@ class MainActVM @Inject constructor(val appDb : AppDatabase, app: Application) :
     private val sch by lazy {myResource.getString(R.string.schengen)}
 
 
-    fun onCountryClick(iso: String) {
+    fun onCountryClick(iso: String, act: Activity) {
 
         when (iso) {
-            eu -> _ldShowDesc.value = Desc(R.string.eu_desc)
-            sch -> _ldShowDesc.value = Desc(R.string.schengen_desc)
+            eu -> _ldShowDesc.value = Desc.EU()
+            sch -> _ldShowDesc.value = Desc.Schengen()
             else -> {
                 // Start Activity with detail about selected country
                 val intent = Intent(app, CountryAct::class.java)
                     .also { it.putExtra(CountryAct.COUNTRY_ISO, iso) }
 
-                app.startActivity(intent)
+                act.startActivity(intent)
             }
         }
     }

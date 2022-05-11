@@ -84,6 +84,7 @@ android {
     lint {
         abortOnError false
     }
+    namespace 'netdesigntool.com.eunions'
 }
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {

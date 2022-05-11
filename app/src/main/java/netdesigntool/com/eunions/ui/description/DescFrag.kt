@@ -5,11 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.StringRes
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
 
 private const val ARG_DESC = "Desc"
+private const val ARG_BGCOLOR = "BgClr"
+private const val ARG_TXTCOLOR = "TxtClr"
 
 /**
  * A simple [Fragment] subclass.
@@ -18,11 +21,15 @@ private const val ARG_DESC = "Desc"
  */
 class DescFrag : Fragment() {
     private var descId: Int? = null
+    private var bgColor: Int = 0x362FF0
+    private var txtColor: Int = 0xFFFFFF
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             descId = it.getInt(ARG_DESC)
+            bgColor = it.getInt(ARG_BGCOLOR)
+            txtColor = it.getInt(ARG_TXTCOLOR)
         }
     }
 
@@ -47,7 +54,7 @@ class DescFrag : Fragment() {
             )
             setContent { descId?.let {
                 val closeMe: ()->Unit  = { activity?.supportFragmentManager?.beginTransaction()?.remove(this@DescFrag)?.commit() }
-                ShowContent(descId!!, closeMe)
+                ShowContent(descId!!, Color(bgColor), Color(txtColor), closeMe)
             } }
         }
     }
@@ -61,10 +68,12 @@ class DescFrag : Fragment() {
              * @return A new instance of fragment DescFrag.
              */
             @JvmStatic
-            fun newInstance(@StringRes desc: Int) =
+            fun newInstance(@StringRes desc: Int, backColor: Int, txtColor: Int) =
                 DescFrag().apply {
                     arguments = Bundle().apply {
                         putInt(ARG_DESC, desc)
+                        putInt(ARG_BGCOLOR, backColor)
+                        putInt(ARG_TXTCOLOR, txtColor)
                     }
                 }
         }
