@@ -2,7 +2,6 @@ package netdesigntool.com.eunions.repo.firebase
 
 import android.content.Context
 import android.util.Log
-import androidx.lifecycle.MutableLiveData
 import com.google.firebase.FirebaseApp
 import com.google.firebase.appcheck.FirebaseAppCheck
 import com.google.firebase.appcheck.safetynet.SafetyNetAppCheckProviderFactory
@@ -37,26 +36,33 @@ class FirebaseDataProvider @Inject constructor(
 
     /**
      * Launch request to the countries' base for WHI values.
+     * @param isoCountryCode Two alphabet ISO code of country
+     * @param title Title for result of requested
+     * @param onResult Call on result. It can be called not on UI thread.
      */
     fun requestWHI(isoCountryCode :String,
                    title: String,
-                   result: MutableLiveData<Map<String, Number>>) {
-
-        val request = createRequest(isoCountryCode, "whi")
-        launchRequest(request, result, title)
+                   onResult: (Map<String, Number>)->Unit)
+    {
+            val request = createRequest(isoCountryCode, "whi")
+            launchRequest(request, title, onResult)
     }
 
-
     /**
-     * Launch request to the country base for the rank in WHI listing.
+     *  Launch request to the country base for the rank in WHI listing.
+     *  @param isoCountryCode Two alphabet ISO code of country
+     *  @param title Title for result of requested
+     *  @param onResult Call on result. It can be called not on UI thread.
      */
     fun requestRankWHI(isoCountryCode :String,
                        title: String,
-                       result: MutableLiveData<Map<String, Number>>) {
-
-        val request =  createRequest(isoCountryCode,"whiRank")
-        launchRequest(request, result, title)
+                       onResult: (Map<String, Number>)->Unit)
+    {
+            val request = createRequest(isoCountryCode, "whiRank")
+            launchRequest(request, title, onResult)
     }
+
+
 
 
     private fun fbAppInit(cont: Context) {
@@ -89,8 +95,8 @@ class FirebaseDataProvider @Inject constructor(
     // Start the parametrised request to Firebase. Fetch result.
     private fun launchRequest(
         dbRef: DatabaseReference,
-        result: MutableLiveData<Map<String, Number>>,
-        title: String
+        title: String,
+        onResult: (Map<String, Number>)->Unit
     ) {
         val previousJob = providerJob
 
@@ -100,7 +106,7 @@ class FirebaseDataProvider @Inject constructor(
 
             dbRef.get()
                 .addOnSuccessListener {
-                    responseProcessing(it, result, title, dbRef)
+                    responseProcessing(it, title, dbRef, onResult)
                 }
                 .addOnFailureListener { Log.e(LTAG, "Error getting data from firebase.", it) }
         }
@@ -109,18 +115,17 @@ class FirebaseDataProvider @Inject constructor(
 
     private fun responseProcessing(
         ds: DataSnapshot,
-        result: MutableLiveData<Map<String, Number>>,
         title: String,
-        dbRef: DatabaseReference
+        dbRef: DatabaseReference,
+        onResult: (Map<String, Number>) -> Unit
     ) {
         if (ds.value != null) {
             Log.d(LTAG, "Return=${ds.value}")
-            result.value = fbAnswerAdapter(ds.value, title)
+            onResult.invoke(fbAnswerAdapter(ds.value, title))
         } else {
             Log.d(LTAG, "No WHI data for request=${dbRef}")
         }
     }
-
 
     // Process of the subset, valued for this app only of the all possible answers
     private fun fbAnswerAdapter(answer: Any?, title: String) : Map<String, Float> {

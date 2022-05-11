@@ -76,8 +76,7 @@ android {
     }
 
     composeOptions {
-        //kotlinCompilerExtensionVersion '1.1.1'
-        kotlinCompilerExtensionVersion="1.2.0-alpha07"
+        kotlinCompilerExtensionVersion="1.2.0-beta01"
     }
 
     testOptions {
@@ -128,7 +127,7 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
     //
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
-    implementation 'com.google.android.material:material:1.5.0'
+    implementation 'com.google.android.material:material:1.6.0'
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.4.1'
     implementation 'com.google.android.flexbox:flexbox:3.0.0'
 
@@ -179,7 +178,7 @@ dependencies {
     // Declare the dependencies for the desired Firebase products without specifying versions
     // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation 'com.google.firebase:firebase-database-ktx'
-    implementation 'com.google.firebase:firebase-appcheck-safetynet:16.0.0-beta06'
+    implementation 'com.google.firebase:firebase-appcheck-safetynet:16.0.0'
     // ===================================================================
 
 
@@ -187,7 +186,7 @@ dependencies {
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 
     //   =============== Jetpack Compose ====================
-    implementation 'androidx.compose.compiler:compiler:1.2.0-alpha08'
+    implementation 'androidx.compose.compiler:compiler:1.2.0-beta01'
     // Integration with activities
     implementation 'androidx.activity:activity-compose:1.4.0'
     // Compose Material Design
@@ -197,7 +196,7 @@ dependencies {
     // Tooling support (Previews, etc.)
     implementation 'androidx.compose.ui:ui-tooling:1.1.1'
     // Integration with ViewModels
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.5.0-beta01'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.5.0-rc01'
     implementation "com.google.accompanist:accompanist-appcompat-theme:0.16.0"
     // UI Tests
     //androidTestImplementation 'androidx.compose.ui:ui-test-junit4:1.0.5'

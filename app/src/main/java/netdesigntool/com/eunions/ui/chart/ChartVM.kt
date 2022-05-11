@@ -26,12 +26,13 @@ class ChartVM @Inject constructor(
     val ldRankWHI: LiveData<Map<String, Number>> by this::_ldRankWHI
     private val _ldRankWHI : MutableLiveData<Map<String, Number>> = MutableLiveData(HashMap())
 
+
     fun requestWHI(isoCountryCode: String, title: String ="WHI"){
-        fbProv.requestWHI(isoCountryCode, title, _ldWHI)
+        fbProv.requestWHI(isoCountryCode, title){ whi->_ldWHI.postValue(whi) }
     }
 
     fun requestRankWHI(isoCountryCode: String, title: String = "Rank of country in the WHI"){
-        fbProv.requestRankWHI(isoCountryCode, title, _ldRankWHI)
+        fbProv.requestRankWHI(isoCountryCode, title){ rankWhi -> _ldRankWHI.postValue(rankWhi) }
     }
 
 }
