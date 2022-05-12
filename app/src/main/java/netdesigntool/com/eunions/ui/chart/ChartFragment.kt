@@ -1,7 +1,6 @@
 package netdesigntool.com.eunions.ui.chart
 
 import android.graphics.Paint
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -17,6 +16,7 @@ import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.ValueFormatter
 import netdesigntool.com.eunions.R
+import netdesigntool.com.eunions.Util.getColorAnyWay
 
 /**
  *   Draw a Chart.
@@ -79,7 +79,7 @@ class ChartFragment : Fragment() {
         val xAx: XAxis = c.xAxis
         xAx.position = XAxis.XAxisPosition.BOTTOM
         xAx.textSize = 10f
-        xAx.textColor = getColorAnyWay(R.color.colorPrimaryDark)
+        xAx.textColor = getColorAnyWay(R.color.colorPrimaryDark, context, null)
         //xAxis.setDrawLabels(true)
         xAx.setDrawAxisLine(true)
         xAx.axisMinimum=2010f
@@ -97,7 +97,7 @@ class ChartFragment : Fragment() {
         c.description.setPosition(0f, 30f)
         c.description.textSize = 14f
         c.description.textAlign = Paint.Align.LEFT
-        c.description.textColor = getColorAnyWay( R.color.text)
+        c.description.textColor = getColorAnyWay( R.color.text, context, null)
 
         c.axisLeft.setDrawLabels(false)
         c.axisRight.isEnabled=false
@@ -105,24 +105,13 @@ class ChartFragment : Fragment() {
         //c.axisRight.
     }
 
-
-    private fun getColorAnyWay(colorId: Int): Int {
-
-        return if (Build.VERSION.SDK_INT < 23)
-                @Suppress("DEPRECATION")
-                resources.getColor(colorId)
-            else
-                resources.getColor(colorId, null)
-    }
-
     private fun styleDataSet(dataset: DataSet<Entry>): DataSet<Entry>{
 
-        dataset.color = getColorAnyWay(R.color.colorPrimaryDark)
-        //dataset.
+        dataset.color = getColorAnyWay(R.color.colorPrimaryDark, context, null)
 
         if (dataset is LineDataSet) {
             dataset.setDrawFilled(true)
-            dataset.fillColor = getColorAnyWay(R.color.colorPrimary)
+            dataset.fillColor = getColorAnyWay(R.color.colorPrimary, context, null)
             dataset.mode = LineDataSet.Mode.CUBIC_BEZIER
         }
         return dataset

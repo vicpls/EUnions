@@ -1,6 +1,7 @@
 package netdesigntool.com.eunions;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
@@ -168,6 +169,20 @@ public final class Util {
         }
 
         return result;
+    }
+
+    /** Return color for given id.
+     *
+     * @param colorId id
+     * @param context context
+     * @param theme theme or null
+     * @return color
+     */
+    public static int getColorAnyWay(int colorId, Context context, Resources.Theme theme)
+    {
+        return (Build.VERSION.SDK_INT < 23) ?
+                context.getResources().getColor(colorId) :
+                context.getResources().getColor(colorId, theme);
     }
 
 }
