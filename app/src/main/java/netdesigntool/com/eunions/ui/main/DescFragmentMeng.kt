@@ -2,18 +2,18 @@ package netdesigntool.com.eunions.ui.main
 
 import android.graphics.Color
 import androidx.annotation.IdRes
-import androidx.core.util.Pair
 import androidx.fragment.app.Fragment
 import netdesigntool.com.eunions.R
 import netdesigntool.com.eunions.Util.getColorAnyWay
 import netdesigntool.com.eunions.ui.description.DescFrag.Companion.newInstance
-import netdesigntool.com.eunions.ui.main.MainActVM.Desc
-import netdesigntool.com.eunions.ui.main.MainActVM.Desc.EU
-import netdesigntool.com.eunions.ui.main.MainActVM.Desc.Schengen
+
+
 
 internal interface DescriptionFragmentManager{
     fun showDesc(desc: Desc)
 }
+
+
 
 /**
  *  Support class for managing fragments with description of organization EU and Schengen
@@ -26,7 +26,6 @@ internal interface DescriptionFragmentManager{
  */
 internal class DescFragmentMeng(private val mainActivity: MainActivity): DescriptionFragmentManager
 {
-
     override fun showDesc(desc: Desc) {
         val fr = getFragment(desc)
         if (fr.isVisible) {
@@ -34,39 +33,39 @@ internal class DescFragmentMeng(private val mainActivity: MainActivity): Descrip
             return
         } else addFragmentTrans(mainActivity.getPlaceId(desc), fr)
 
-        val anotherFr = getAnotherFr(desc)
+        val anotherFr = findAnotherFr(desc)
         if (anotherFr != null && anotherFr.isVisible) removeFragmentTrans(anotherFr)
     }
 
-    private fun getAnotherFr(desc: Desc): Fragment? {
-        val frags = findDescFragments()
-
-        return when (desc) {
-            is EU -> frags.second
-            is Schengen -> frags.first
+    private fun findAnotherFr(desc: Desc): Fragment? =
+        when (desc) {
+            is Desc.EU -> finDescFrag(Desc.Schengen())
+            is Desc.Schengen -> finDescFrag(Desc.EU())
         }
-    }
+
 
     // Return an appropriate fragment for showing description text. Create it if it not exist.
-    private fun getFragment(desc: Desc): Fragment {
+    private fun getFragment(desc: Desc): Fragment =
+        finDescFrag(desc) ?:
+            newInstance(
+                desc.descr,
+                getColorAnyWay(
+                    getBackgColor(desc),
+                    mainActivity,
+                    null
+                ),
+                getTxtColor(desc)
+            )
 
-        val frags = findDescFragments()
+    private fun getTxtColor(desc: Desc): Int =
+        if (desc is Desc.EU) Color.WHITE else Color.BLACK
 
-        return when(desc){
+    private fun getBackgColor(desc: Desc): Int =
+        if (desc is Desc.EU) R.color.euroUnionNoA else R.color.schengenNoA
 
-            // For EU - "left" fragment
-            is EU -> (if (frags.first != null) frags.first else newInstance(
-                desc.descr, getColorAnyWay(R.color.euroUnionNoA, mainActivity, null), Color.WHITE
-            ))!!
 
-            // For Schengen "right" fragment
-            is Schengen -> (if (frags.second != null) frags.second else newInstance(
-                desc.descr, getColorAnyWay(R.color.schengenNoA, mainActivity, null), Color.BLACK
-            ))!!
-        }
-    }
-
-    private fun addFragmentTrans(@IdRes placeId: Int, fr: Fragment?) {
+    private fun addFragmentTrans(@IdRes placeId: Int, fr: Fragment?)
+    {
         mainActivity.supportFragmentManager
             .beginTransaction()
             .add(placeId, fr!!)
@@ -76,7 +75,8 @@ internal class DescFragmentMeng(private val mainActivity: MainActivity): Descrip
             .commit()
     }
 
-    private fun removeFragmentTrans(fr: Fragment) {
+    private fun removeFragmentTrans(fr: Fragment)
+    {
         mainActivity.supportFragmentManager
             .beginTransaction()
             .remove(fr)
@@ -85,17 +85,9 @@ internal class DescFragmentMeng(private val mainActivity: MainActivity): Descrip
             .commit()
     }
 
-    // Find left and right existing fragments for showing description text.
-    private fun findDescFragments(): Pair<Fragment?, Fragment?> {
-        val left: Fragment?
-        val right: Fragment?
-        val fm = mainActivity.supportFragmentManager
-        //var placeId = mainActivity.binding.lfDescPlace.id
-        var placeId = mainActivity.getPlaceId(EU())
-        left = fm.findFragmentById(placeId)
-        //placeId = mainActivity.binding.rtDescPlace.id
-        placeId =  mainActivity.getPlaceId(Schengen())
-        right = fm.findFragmentById(placeId)
-        return Pair(left, right)
-    }
+    // Find existing fragments for showing description text.
+    private fun finDescFrag(desc: Desc): Fragment? =
+        mainActivity.supportFragmentManager.findFragmentById(mainActivity.getPlaceId(desc))
+
+
 }

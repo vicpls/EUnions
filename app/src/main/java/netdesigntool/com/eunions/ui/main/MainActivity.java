@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity
         LiveData<List<Country>> countryEU = vm.getLdEu();
         LiveData<List<Country>> countrySchEu = vm.getLdSchAndEu();
         LiveData<List<Country>> countrySch = vm.getLdSchen();
-        LiveData<MainActVM.Desc> showDesc = vm.getLdShowDesc();
+        LiveData<Desc> showDesc = vm.getLdShowDesc();
 
         countryEU.observe(this, this::fillUpFbTop);
         countrySchEu.observe(this, this::fillUpFbMiddle);
@@ -66,10 +66,10 @@ public class MainActivity extends AppCompatActivity
 
 
     @IdRes
-    int getPlaceId(MainActVM.Desc desc) {
+    int getPlaceId(Desc desc) {
         int result = 0;
-        if (desc.getClass() == MainActVM.Desc.EU.class) result = R.id.lfDescPlace;
-        if (desc.getClass() == MainActVM.Desc.Schengen.class) result = R.id.rtDescPlace;
+        if (desc.getClass() == Desc.EU.class) result = R.id.lfDescPlace;
+        if (desc.getClass() == Desc.Schengen.class) result = R.id.rtDescPlace;
         return result;
     }
 
@@ -93,8 +93,8 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-    private View createViewForCountry(Country country){
-
+    private View createViewForCountry(Country country)
+    {
         View vFlexBoxItem = this.getLayoutInflater().inflate(R.layout.item, null);
         vFlexBoxItem.setOnClickListener(this);
 
@@ -118,7 +118,8 @@ public class MainActivity extends AppCompatActivity
         mainActVM.onCountryClick(country, this);
     }
 
-    class OnOtherCountryClickFr implements View.OnClickListener{
+    class OnOtherCountryClickFr implements View.OnClickListener
+    {
         @Override
         public void onClick(View v) {
 
@@ -131,16 +132,16 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public boolean onCreateOptionsMenu(@NonNull Menu menu) {
-
+    public boolean onCreateOptionsMenu(@NonNull Menu menu)
+    {
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
         if (item.getItemId() ==R.id.about){
             new AboutAct().startAboutAct(this);
             return true;

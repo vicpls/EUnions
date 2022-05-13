@@ -19,10 +19,24 @@ import netdesigntool.com.eunions.ui.country.CountryAct
 import java.util.concurrent.atomic.AtomicBoolean
 import javax.inject.Inject
 
-@HiltViewModel
-class MainActVM @Inject constructor(val appDb : AppDatabase, app: Application) :
-    AndroidViewModel( app ) {
 
+sealed class Desc {
+    abstract val descr: Int
+
+    class EU : Desc(){
+        @StringRes override val descr = R.string.eu_desc
+    }
+    class Schengen : Desc(){
+        @StringRes override val descr = R.string.schengen_desc
+    }
+}
+
+
+
+@HiltViewModel
+class MainActVM @Inject constructor(val appDb : AppDatabase, app: Application)
+    : AndroidViewModel( app )
+{
     val ldSchAndEu : LiveData<List<Country>>
         get() = _ldSchAndEu
     private val _ldSchAndEu = MutableLiveData<List<Country>>()
@@ -40,31 +54,18 @@ class MainActVM @Inject constructor(val appDb : AppDatabase, app: Application) :
 
     private val isFetched = AtomicBoolean(false)
 
-
-    sealed class Desc{
-        abstract val descr: Int
-
-        class EU() : Desc(){
-            @StringRes override val descr = R.string.eu_desc
-        }
-
-        class Schengen() : Desc(){
-            @StringRes override val descr = R.string.schengen_desc
-        }
-    }
-
     val ldShowDesc : LiveData<Desc> by this::_ldShowDesc
     private val _ldShowDesc = MutableLiveData<Desc>()
 
 
-    private val app = getApplication<Application>()
-    private val myResource = app.resources
-    private val eu by lazy {myResource.getString(R.string.eu)}
-    private val sch by lazy {myResource.getString(R.string.schengen)}
+    private val app by lazy(LazyThreadSafetyMode.NONE) {getApplication<Application>()}
+    private val myResource by lazy(LazyThreadSafetyMode.NONE) {app.resources}
+    private val eu by lazy(LazyThreadSafetyMode.NONE) {myResource.getString(R.string.eu)}
+    private val sch by lazy(LazyThreadSafetyMode.NONE) {myResource.getString(R.string.schengen)}
 
 
-    fun onCountryClick(iso: String, act: Activity) {
-
+    fun onCountryClick(iso: String, act: Activity)
+    {
         when (iso) {
             eu -> _ldShowDesc.value = Desc.EU()
             sch -> _ldShowDesc.value = Desc.Schengen()
@@ -78,10 +79,8 @@ class MainActVM @Inject constructor(val appDb : AppDatabase, app: Application) :
         }
     }
 
-
-
-    private fun startFetchLdCountries(){
-
+    private fun startFetchLdCountries()
+    {
         if ( isFetched.compareAndSet(false, true)) {
             CoroutineScope(Dispatchers.IO).launch {
                 fetchLdCountries()
@@ -89,9 +88,8 @@ class MainActVM @Inject constructor(val appDb : AppDatabase, app: Application) :
         }
     }
 
-
-    private suspend fun fetchLdCountries(){
-
+    private suspend fun fetchLdCountries()
+    {
         val eu = mutableListOf<Country>()       // EU only
         val schen = mutableListOf<Country>()    // Shengen only
         val schAndEu = mutableListOf<Country>() // Shengen + EU
