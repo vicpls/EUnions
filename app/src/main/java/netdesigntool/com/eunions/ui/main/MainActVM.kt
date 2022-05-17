@@ -1,9 +1,9 @@
 package netdesigntool.com.eunions.ui.main
 
-import android.app.Activity
 import android.app.Application
 import android.content.Intent
 import androidx.annotation.StringRes
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -22,11 +22,12 @@ import javax.inject.Inject
 
 sealed class Desc {
     abstract val descr: Int
+    var show : Boolean = false
 
-    class EU : Desc(){
+    object EU : Desc(){
         @StringRes override val descr = R.string.eu_desc
     }
-    class Schengen : Desc(){
+    object Schengen : Desc(){
         @StringRes override val descr = R.string.schengen_desc
     }
 }
@@ -63,12 +64,28 @@ class MainActVM @Inject constructor(val appDb : AppDatabase, app: Application)
     private val eu by lazy(LazyThreadSafetyMode.NONE) {myResource.getString(R.string.eu)}
     private val sch by lazy(LazyThreadSafetyMode.NONE) {myResource.getString(R.string.schengen)}
 
+    private var currentDesc : Desc = Desc.EU
 
-    fun onCountryClick(iso: String, act: Activity)
+
+    fun onOrganizationClick(desc : Desc)
+    {
+        if (currentDesc.show) _ldShowDesc.value = currentDesc.apply { show = !show }
+
+        //if (currentDesc == desc && )
+
+        if (currentDesc != desc) _ldShowDesc.value =
+            desc.apply {
+                        show=true
+                        currentDesc = desc
+                        }
+    }
+
+
+    fun onCountryClick(iso: String, act: AppCompatActivity)
     {
         when (iso) {
-            eu -> _ldShowDesc.value = Desc.EU()
-            sch -> _ldShowDesc.value = Desc.Schengen()
+            eu -> onOrganizationClick(Desc.EU)
+            sch -> onOrganizationClick(Desc.Schengen)
             else -> {
                 // Start Activity with detail about selected country
                 val intent = Intent(app, CountryAct::class.java)

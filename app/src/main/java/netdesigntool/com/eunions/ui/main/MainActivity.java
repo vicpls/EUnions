@@ -13,6 +13,7 @@ import android.widget.TextView;
 import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
@@ -30,7 +31,7 @@ import netdesigntool.com.eunions.ui.othcountries.FrOtherCountryList;
 
 @AndroidEntryPoint
 public class MainActivity extends AppCompatActivity
-                            implements View.OnClickListener
+                            implements View.OnClickListener, EuFragDesc
 {
     ActMainBinding binding;
 
@@ -66,11 +67,18 @@ public class MainActivity extends AppCompatActivity
 
 
     @IdRes
-    int getPlaceId(Desc desc) {
+    public int getPlaceId(Desc desc)
+    {
         int result = 0;
         if (desc.getClass() == Desc.EU.class) result = R.id.lfDescPlace;
         if (desc.getClass() == Desc.Schengen.class) result = R.id.rtDescPlace;
         return result;
+    }
+
+    public void onFragClick(@NonNull String frDesc)
+    {
+        if ("EU".equals(frDesc)) mainActVM.onOrganizationClick(Desc.EU);
+        else if ("SC".equals(frDesc)) mainActVM.onOrganizationClick(Desc.Schengen);
     }
 
 
@@ -149,5 +157,4 @@ public class MainActivity extends AppCompatActivity
 
         return super.onOptionsItemSelected(item);
     }
-
 }

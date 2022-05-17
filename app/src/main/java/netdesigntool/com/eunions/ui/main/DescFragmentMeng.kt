@@ -26,36 +26,31 @@ internal interface DescriptionFragmentManager{
  */
 internal class DescFragmentMeng(private val mainActivity: MainActivity): DescriptionFragmentManager
 {
-    override fun showDesc(desc: Desc) {
-        val fr = getFragment(desc)
-        if (fr.isVisible) {
-            removeFragmentTrans(fr)
-            return
-        } else addFragmentTrans(mainActivity.getPlaceId(desc), fr)
 
-        val anotherFr = findAnotherFr(desc)
-        if (anotherFr != null && anotherFr.isVisible) removeFragmentTrans(anotherFr)
+    private var isStacked : Boolean = false
+
+    override fun showDesc(desc: Desc)
+    {
+        val fr = finDescFrag(desc)
+
+        if (desc.show) {
+            showFragmentTrans(mainActivity.getPlaceId(desc), fr ?: createFragment(desc))
+        } else {
+            fr?.let{ removeFragmentTrans(fr)}
+        }
     }
 
-    private fun findAnotherFr(desc: Desc): Fragment? =
-        when (desc) {
-            is Desc.EU -> finDescFrag(Desc.Schengen())
-            is Desc.Schengen -> finDescFrag(Desc.EU())
-        }
 
-
-    // Return an appropriate fragment for showing description text. Create it if it not exist.
-    private fun getFragment(desc: Desc): Fragment =
-        finDescFrag(desc) ?:
-            newInstance(
-                desc.descr,
-                getColorAnyWay(
-                    getBackgColor(desc),
-                    mainActivity,
-                    null
-                ),
-                getTxtColor(desc)
-            )
+    private fun createFragment(desc: Desc): Fragment =
+        newInstance(
+            desc.descr,
+            getColorAnyWay(
+                getBackgColor(desc),
+                mainActivity,
+                null
+            ),
+            getTxtColor(desc)
+        )
 
     private fun getTxtColor(desc: Desc): Int =
         if (desc is Desc.EU) Color.WHITE else Color.BLACK
@@ -64,12 +59,16 @@ internal class DescFragmentMeng(private val mainActivity: MainActivity): Descrip
         if (desc is Desc.EU) R.color.euroUnionNoA else R.color.schengenNoA
 
 
-    private fun addFragmentTrans(@IdRes placeId: Int, fr: Fragment?)
+    private fun showFragmentTrans(@IdRes placeId: Int, fr: Fragment?)
     {
         mainActivity.supportFragmentManager
             .beginTransaction()
-            .add(placeId, fr!!)
-            .addToBackStack(null)
+            .replace(placeId, fr!!)
+            .apply{
+                if (!isStacked) {
+                addToBackStack(null)
+                isStacked=true
+            }}
             //.setCustomAnimations(R.anim.to_left_in, R.anim.to_left_out
             // , R.anim.to_right_in, R.anim.to_right_out)
             .commit()
@@ -78,6 +77,7 @@ internal class DescFragmentMeng(private val mainActivity: MainActivity): Descrip
     private fun removeFragmentTrans(fr: Fragment)
     {
         mainActivity.supportFragmentManager
+            .apply{popBackStack()}
             .beginTransaction()
             .remove(fr)
             //.setCustomAnimations(R.anim.to_left_in, R.anim.to_left_out
@@ -88,6 +88,5 @@ internal class DescFragmentMeng(private val mainActivity: MainActivity): Descrip
     // Find existing fragments for showing description text.
     private fun finDescFrag(desc: Desc): Fragment? =
         mainActivity.supportFragmentManager.findFragmentById(mainActivity.getPlaceId(desc))
-
 
 }

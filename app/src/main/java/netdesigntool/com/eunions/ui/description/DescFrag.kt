@@ -9,10 +9,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
+import netdesigntool.com.eunions.ui.main.EuFragDesc
 
-private const val ARG_DESC = "Desc"
+private const val ARG_DESC = "Desc"     // Tag: 'EU' or 'SC'
 private const val ARG_BGCOLOR = "BgClr"
 private const val ARG_TXTCOLOR = "TxtClr"
+private const val ARG_TXTDESC = "TxtDesc"
 
 /**
  * A simple [Fragment] subclass.
@@ -23,13 +25,15 @@ class DescFrag : Fragment() {
     private var descId: Int? = null
     private var bgColor: Int = 0x362FF0
     private var txtColor: Int = 0xFFFFFF
+    private var desc: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            descId = it.getInt(ARG_DESC)
-            bgColor = it.getInt(ARG_BGCOLOR)
-            txtColor = it.getInt(ARG_TXTCOLOR)
+        arguments?.run {
+            descId = getInt(ARG_DESC)
+            bgColor = getInt(ARG_BGCOLOR)
+            txtColor = getInt(ARG_TXTCOLOR)
+            desc = getString(ARG_DESC) ?: ""
         }
     }
 
@@ -52,10 +56,23 @@ class DescFrag : Fragment() {
             setViewCompositionStrategy(
                 ViewCompositionStrategy.DisposeOnLifecycleDestroyed(viewLifecycleOwner)
             )
-            setContent { descId?.let {
-                val closeMe: ()->Unit  = { activity?.supportFragmentManager?.beginTransaction()?.remove(this@DescFrag)?.commit() }
-                ShowContent(descId!!, Color(bgColor), Color(txtColor), closeMe)
-            } }
+            setContent { descId?.
+                let {
+                    val closeMe: ()->Unit  =
+                        {
+                        /*activity?.supportFragmentManager?.
+                        beginTransaction()?.
+                        remove(this@DescFrag)?.
+                        commit()*/
+
+                        if ( activity is EuFragDesc){
+                            (activity as EuFragDesc).onFragClick(desc)
+                        }
+                        }
+
+                    ShowContent(descId!!, Color(bgColor), Color(txtColor), closeMe)
+                }
+            }
         }
     }
 
@@ -70,12 +87,13 @@ class DescFrag : Fragment() {
              * @return A new instance of fragment DescFrag.
              */
             @JvmStatic
-            fun newInstance(@StringRes desc: Int, backColor: Int, txtColor: Int) =
+            fun newInstance(desc: String, @StringRes txtDesc: Int, backColor: Int, txtColor: Int) =
                 DescFrag().apply {
                     arguments = Bundle().apply {
-                        putInt(ARG_DESC, desc)
+                        putString(ARG_DESC, desc)
                         putInt(ARG_BGCOLOR, backColor)
                         putInt(ARG_TXTCOLOR, txtColor)
+                        putInt(ARG_TXTDESC, txtDesc)
                     }
                 }
         }
