@@ -13,7 +13,6 @@ import android.widget.TextView;
 import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
@@ -77,8 +76,14 @@ public class MainActivity extends AppCompatActivity
 
     public void onFragClick(@NonNull String frDesc)
     {
-        if ("EU".equals(frDesc)) mainActVM.onOrganizationClick(Desc.EU);
-        else if ("SC".equals(frDesc)) mainActVM.onOrganizationClick(Desc.Schengen);
+        if (Desc.EU.INSTANCE.getMark().equals(frDesc)) {
+            mainActVM.onOrganizationClick(Desc.EU.INSTANCE);
+        } else if (Desc.Schengen.INSTANCE.getMark().equals(frDesc)) {
+            mainActVM.onOrganizationClick(Desc.Schengen.INSTANCE);
+        } else {
+            Log.e(LTAG,
+            getClass().getSimpleName() + ".onFragClick(" + frDesc + ") - Unresolved name");
+        }
     }
 
 

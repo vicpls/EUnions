@@ -22,13 +22,18 @@ import javax.inject.Inject
 
 sealed class Desc {
     abstract val descr: Int
+    abstract val mark: String
     var show : Boolean = false
 
     object EU : Desc(){
         @StringRes override val descr = R.string.eu_desc
+        override val mark
+            get() = "EU"
     }
     object Schengen : Desc(){
         @StringRes override val descr = R.string.schengen_desc
+        override val mark
+            get() = "SC"
     }
 }
 
@@ -69,15 +74,21 @@ class MainActVM @Inject constructor(val appDb : AppDatabase, app: Application)
 
     fun onOrganizationClick(desc : Desc)
     {
-        if (currentDesc.show) _ldShowDesc.value = currentDesc.apply { show = !show }
+        if (currentDesc != desc) {
 
-        //if (currentDesc == desc && )
+            // If the other fragment visible then remove it.
+            if (currentDesc.show){
+                currentDesc.show = false
+                _ldShowDesc.value = currentDesc
+            }
 
-        if (currentDesc != desc) _ldShowDesc.value =
-            desc.apply {
-                        show=true
-                        currentDesc = desc
-                        }
+            _ldShowDesc.value =
+                desc.apply {
+                    show = true
+                    currentDesc = desc
+                }
+        } else
+            _ldShowDesc.value = currentDesc.apply { show = !show }
     }
 
 

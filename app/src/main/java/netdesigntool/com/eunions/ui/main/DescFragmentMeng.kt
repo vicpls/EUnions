@@ -43,6 +43,7 @@ internal class DescFragmentMeng(private val mainActivity: MainActivity): Descrip
 
     private fun createFragment(desc: Desc): Fragment =
         newInstance(
+            desc.mark,
             desc.descr,
             getColorAnyWay(
                 getBackgColor(desc),
@@ -77,7 +78,9 @@ internal class DescFragmentMeng(private val mainActivity: MainActivity): Descrip
     private fun removeFragmentTrans(fr: Fragment)
     {
         mainActivity.supportFragmentManager
-            .apply{popBackStack()}
+            .apply{ popBackStack()
+                    isStacked = false
+                  }
             .beginTransaction()
             .remove(fr)
             //.setCustomAnimations(R.anim.to_left_in, R.anim.to_left_out

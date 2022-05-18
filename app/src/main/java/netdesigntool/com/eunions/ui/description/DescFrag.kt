@@ -1,6 +1,7 @@
 package netdesigntool.com.eunions.ui.description
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
+import netdesigntool.com.eunions.Util.LTAG
 import netdesigntool.com.eunions.ui.main.EuFragDesc
 
 private const val ARG_DESC = "Desc"     // Tag: 'EU' or 'SC'
@@ -30,7 +32,7 @@ class DescFrag : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.run {
-            descId = getInt(ARG_DESC)
+            descId = getInt(ARG_TXTDESC)
             bgColor = getInt(ARG_BGCOLOR)
             txtColor = getInt(ARG_TXTCOLOR)
             desc = getString(ARG_DESC) ?: ""
@@ -58,19 +60,16 @@ class DescFrag : Fragment() {
             )
             setContent { descId?.
                 let {
-                    val closeMe: ()->Unit  =
-                        {
-                        /*activity?.supportFragmentManager?.
-                        beginTransaction()?.
-                        remove(this@DescFrag)?.
-                        commit()*/
-
-                        if ( activity is EuFragDesc){
-                            (activity as EuFragDesc).onFragClick(desc)
+                    val clickHandler: ()->Unit  =
+                        if ( activity is EuFragDesc) {
+                            {(activity as EuFragDesc).onFragClick(desc)}
+                        } else {
+                            { Log.e(LTAG,
+                                """Host activity for
+                                    ${this::class.simpleName}
+                                    must be ${EuFragDesc::class.simpleName}""")}
                         }
-                        }
-
-                    ShowContent(descId!!, Color(bgColor), Color(txtColor), closeMe)
+                    ShowContent(descId!!, Color(bgColor), Color(txtColor), clickHandler)
                 }
             }
         }
@@ -81,19 +80,20 @@ class DescFrag : Fragment() {
              * Factory method to create a new instance of
              * this fragment using the provided parameters.
              *
-             * @param desc Id of String resource of description.
+             * @param desc Mark for fragment.
              * @param backColor Color of background, not Id resource
              * @param txtColor Color of text of description, not Id resource
+             * @param descId Id of String resource of description
              * @return A new instance of fragment DescFrag.
              */
             @JvmStatic
-            fun newInstance(desc: String, @StringRes txtDesc: Int, backColor: Int, txtColor: Int) =
+            fun newInstance(desc: String, @StringRes descId: Int, backColor: Int, txtColor: Int) =
                 DescFrag().apply {
                     arguments = Bundle().apply {
                         putString(ARG_DESC, desc)
                         putInt(ARG_BGCOLOR, backColor)
                         putInt(ARG_TXTCOLOR, txtColor)
-                        putInt(ARG_TXTDESC, txtDesc)
+                        putInt(ARG_TXTDESC, descId)
                     }
                 }
         }
