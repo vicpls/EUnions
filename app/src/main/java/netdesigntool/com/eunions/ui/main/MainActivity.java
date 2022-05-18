@@ -30,7 +30,7 @@ import netdesigntool.com.eunions.ui.othcountries.FrOtherCountryList;
 
 @AndroidEntryPoint
 public class MainActivity extends AppCompatActivity
-                            implements View.OnClickListener
+                            implements View.OnClickListener, EuFragDesc
 {
     ActMainBinding binding;
 
@@ -66,11 +66,24 @@ public class MainActivity extends AppCompatActivity
 
 
     @IdRes
-    int getPlaceId(Desc desc) {
+    public int getPlaceId(Desc desc)
+    {
         int result = 0;
         if (desc.getClass() == Desc.EU.class) result = R.id.lfDescPlace;
         if (desc.getClass() == Desc.Schengen.class) result = R.id.rtDescPlace;
         return result;
+    }
+
+    public void onFragClick(@NonNull String frDesc)
+    {
+        if (Desc.EU.INSTANCE.getMark().equals(frDesc)) {
+            mainActVM.onOrganizationClick(Desc.EU.INSTANCE);
+        } else if (Desc.Schengen.INSTANCE.getMark().equals(frDesc)) {
+            mainActVM.onOrganizationClick(Desc.Schengen.INSTANCE);
+        } else {
+            Log.e(LTAG,
+            getClass().getSimpleName() + ".onFragClick(" + frDesc + ") - Unresolved name");
+        }
     }
 
 
@@ -149,5 +162,4 @@ public class MainActivity extends AppCompatActivity
 
         return super.onOptionsItemSelected(item);
     }
-
 }

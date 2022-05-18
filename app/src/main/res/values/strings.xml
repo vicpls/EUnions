@@ -56,8 +56,6 @@
     <string name="eu" translatable="false">EU</string>
     <string name="eu_desc">The European Union (EU) is a political and economic union of 27 member states that are located primarily in Europe.</string>
     <string name="schengen_desc">The Schengen Area is an area comprising 26 European countries that have officially abolished all passport and all other types of border control at their mutual borders. The area mostly functions as a single jurisdiction for international travel purposes, with a common visa policy. The area is named after the 1985 Schengen Agreement signed in Schengen, Luxembourg.</string>
-    <!-- TODO: Remove or change this placeholder text -->
-
 
 
 </resources>
