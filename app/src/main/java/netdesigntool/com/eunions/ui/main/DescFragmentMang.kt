@@ -1,5 +1,6 @@
 package netdesigntool.com.eunions.ui.main
 
+import android.app.Activity
 import android.graphics.Color
 import androidx.annotation.IdRes
 import androidx.fragment.app.Fragment
@@ -8,8 +9,7 @@ import netdesigntool.com.eunions.Util.getColorAnyWay
 import netdesigntool.com.eunions.ui.description.DescFrag.Companion.newInstance
 
 
-
-internal interface DescriptionFragmentManager{
+interface DescriptionFragmentManager{
     fun showDesc(desc: Desc)
 }
 
@@ -24,8 +24,15 @@ internal interface DescriptionFragmentManager{
  *  If the same fragment is called again, it is removed.
  *  When calling another fragment, the first visible one will be removed.
  */
-internal class DescFragmentMeng(private val mainActivity: MainActivity): DescriptionFragmentManager
+internal class DescFragmentMang(private val activity: Activity): DescriptionFragmentManager
 {
+
+    init{
+        if (activity !is MainActivity)
+            throw Exception("""${javaClass.simpleName} must be injected into 
+                               ${MainActivity::class.simpleName} only.""")
+    }
+
 
     private var isStacked : Boolean = false
 
@@ -34,7 +41,7 @@ internal class DescFragmentMeng(private val mainActivity: MainActivity): Descrip
         val fr = finDescFrag(desc)
 
         if (desc.show) {
-            showFragmentTrans(mainActivity.getPlaceId(desc), fr ?: createFragment(desc))
+            showFragmentTrans((activity as MainActivity).getPlaceId(desc), fr ?: createFragment(desc))
         } else {
             fr?.let{ removeFragmentTrans(fr)}
         }
@@ -47,7 +54,7 @@ internal class DescFragmentMeng(private val mainActivity: MainActivity): Descrip
             desc.descr,
             getColorAnyWay(
                 getBackgColor(desc),
-                mainActivity,
+                activity,
                 null
             ),
             getTxtColor(desc)
@@ -62,7 +69,7 @@ internal class DescFragmentMeng(private val mainActivity: MainActivity): Descrip
 
     private fun showFragmentTrans(@IdRes placeId: Int, fr: Fragment?)
     {
-        mainActivity.supportFragmentManager
+        (activity as MainActivity).supportFragmentManager
             .beginTransaction()
             .replace(placeId, fr!!)
             .apply{
@@ -77,7 +84,7 @@ internal class DescFragmentMeng(private val mainActivity: MainActivity): Descrip
 
     private fun removeFragmentTrans(fr: Fragment)
     {
-        mainActivity.supportFragmentManager
+        (activity as MainActivity).supportFragmentManager
             .apply{ popBackStack()
                     isStacked = false
                   }
@@ -90,6 +97,7 @@ internal class DescFragmentMeng(private val mainActivity: MainActivity): Descrip
 
     // Find existing fragments for showing description text.
     private fun finDescFrag(desc: Desc): Fragment? =
-        mainActivity.supportFragmentManager.findFragmentById(mainActivity.getPlaceId(desc))
+        (activity as MainActivity)
+            .supportFragmentManager.findFragmentById(activity.getPlaceId(desc))
 
 }

@@ -98,6 +98,12 @@ class MainActVM @Inject constructor(val appDb : AppDatabase, app: Application)
             eu -> onOrganizationClick(Desc.EU)
             sch -> onOrganizationClick(Desc.Schengen)
             else -> {
+                // Remove fragment if it showing.
+                if (currentDesc.show){
+                    currentDesc.show = false
+                    _ldShowDesc.value = currentDesc
+                }
+
                 // Start Activity with detail about selected country
                 val intent = Intent(app, CountryAct::class.java)
                     .also { it.putExtra(CountryAct.COUNTRY_ISO, iso) }

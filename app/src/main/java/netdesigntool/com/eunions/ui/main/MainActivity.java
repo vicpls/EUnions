@@ -21,6 +21,8 @@ import com.google.android.flexbox.FlexboxLayout;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import dagger.hilt.android.AndroidEntryPoint;
 import netdesigntool.com.eunions.R;
 import netdesigntool.com.eunions.databinding.ActMainBinding;
@@ -30,11 +32,14 @@ import netdesigntool.com.eunions.ui.othcountries.FrOtherCountryList;
 
 @AndroidEntryPoint
 public class MainActivity extends AppCompatActivity
-                            implements View.OnClickListener, EuFragDesc
+                          implements View.OnClickListener, EuFragDesc
 {
     ActMainBinding binding;
 
     private MainActVM mainActVM;
+
+    @Inject
+    DescriptionFragmentManager descFrMeng;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +65,6 @@ public class MainActivity extends AppCompatActivity
         countrySchEu.observe(this, this::fillUpFbMiddle);
         countrySch.observe(this, this::fillUpFbBottom);
 
-        DescriptionFragmentManager descFrMeng = new DescFragmentMeng(this);
         showDesc.observe(this, descFrMeng::showDesc);
     }
 
