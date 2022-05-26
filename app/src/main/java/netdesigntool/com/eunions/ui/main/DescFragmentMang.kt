@@ -4,6 +4,7 @@ import android.app.Activity
 import android.graphics.Color
 import androidx.annotation.IdRes
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import netdesigntool.com.eunions.R
 import netdesigntool.com.eunions.Util.getColorAnyWay
 import netdesigntool.com.eunions.ui.description.DescFrag.Companion.newInstance
@@ -17,7 +18,9 @@ interface DescriptionFragmentManager{
 
 /**
  *  Support class for managing fragments with description of organization EU and Schengen
- *  into the MainActivity only.
+ *  into the MainActivity.
+ *
+ *  @param activity must be extended [FragmentActivity] and implements [EuFragDesc]
  *
  *  The principle - only one fragment in a moment can be present to user.
  *
@@ -28,9 +31,10 @@ internal class DescFragmentMang(private val activity: Activity): DescriptionFrag
 {
 
     init{
-        if (activity !is MainActivity)
-            throw Exception("""${javaClass.simpleName} must be injected into 
-                               ${MainActivity::class.simpleName} only.""")
+        if (activity !is EuFragDesc || activity !is FragmentActivity)
+            throw Exception("""${javaClass.simpleName} must be implemented  
+                               ${EuFragDesc::class.simpleName} and extend 
+                               ${FragmentActivity::class.simpleName}""")
     }
 
 
@@ -41,7 +45,7 @@ internal class DescFragmentMang(private val activity: Activity): DescriptionFrag
         val fr = finDescFrag(desc)
 
         if (desc.show) {
-            showFragmentTrans((activity as MainActivity).getPlaceId(desc), fr ?: createFragment(desc))
+            showFragmentTrans((activity as EuFragDesc).getPlaceId(desc), fr ?: createFragment(desc))
         } else {
             fr?.let{ removeFragmentTrans(fr)}
         }
@@ -69,7 +73,7 @@ internal class DescFragmentMang(private val activity: Activity): DescriptionFrag
 
     private fun showFragmentTrans(@IdRes placeId: Int, fr: Fragment?)
     {
-        (activity as MainActivity).supportFragmentManager
+        (activity as FragmentActivity).supportFragmentManager
             .beginTransaction()
             .replace(placeId, fr!!)
             .apply{
@@ -84,7 +88,7 @@ internal class DescFragmentMang(private val activity: Activity): DescriptionFrag
 
     private fun removeFragmentTrans(fr: Fragment)
     {
-        (activity as MainActivity).supportFragmentManager
+        (activity as FragmentActivity).supportFragmentManager
             .apply{ popBackStack()
                     isStacked = false
                   }
