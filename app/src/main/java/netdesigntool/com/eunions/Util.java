@@ -171,7 +171,7 @@ public final class Util {
         return result;
     }
 
-    /** Return color for given id.
+    /** Return color for given id regardless of the API version
      *
      * @param colorId id
      * @param context context
