@@ -11,10 +11,7 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import netdesigntool.com.eunions.Util.LTAG
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -33,7 +30,7 @@ class FirebaseDataProvider @Inject constructor(
         Log.e(LTAG, "${this::class.simpleName} CoroutineException throw $throwable")
     }
 
-    private val providerScope = CoroutineScope(Dispatchers.IO + cExpHandler)
+    private val providerScope = CoroutineScope(SupervisorJob() + Dispatchers.IO + cExpHandler)
     private var providerJob = providerScope.launch { fbAppInit(app) }
 
     private val baseRef = Firebase.database.getReferenceFromUrl(fbAttrib.URL_REF)
