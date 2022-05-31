@@ -14,8 +14,8 @@ import androidx.paging.PagingSource
 import androidx.paging.compose.collectAsLazyPagingItems
 import dagger.hilt.android.AndroidEntryPoint
 import netdesigntool.com.eunions.R
-import netdesigntool.com.eunions.model.BaseCountry
-import netdesigntool.com.eunions.repo.local_db.AppDatabase
+import com.hh.data.model.BaseCountry
+import com.hh.data.repo.local_db.AppDatabase
 import netdesigntool.com.eunions.ui.country.CountryAct
 import javax.inject.Inject
 

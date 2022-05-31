@@ -19,12 +19,6 @@ android {
         multiDexEnabled true
         resConfigs 'en', 'ru'
 
-        // to generate json file with db schema for each db version
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments += ["room.schemaLocation": "$projectDir/schemas".toString()]
-            }
-        }
     }
 
     signingConfigs {
@@ -124,6 +118,8 @@ configurations.all {
 
 dependencies {
 
+    implementation project(path: ':data')
+
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'androidx.appcompat:appcompat:1.4.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
@@ -146,45 +142,17 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-common-java8:$lifeCycleVer"
 
 
-    //              wiki data
-    def wiki = 'org.wikidata.wdtk'
-    def wikiVer = '0.11.1'
-    implementation "$wiki:wdtk-wikibaseapi:$wikiVer"
-    implementation "$wiki:wdtk-datamodel:$wikiVer"
-    implementation 'org.slf4j:slf4j-log4j12:1.8.0-beta4'
-
-    //              Retrofit
-    def retrofit = 'com.squareup.retrofit2'
-    def retrofitVer = '2.9.0'
-    implementation "$retrofit:retrofit:$retrofitVer"
-    //implementation "$retrofit:converter-gson:$retrofitVer"
-    implementation "$retrofit:converter-moshi:$retrofitVer"
-    implementation "$retrofit:adapter-rxjava2:$retrofitVer"
-    implementation 'com.squareup.okhttp3:logging-interceptor:4.9.3'
-
     //              Kotlin coroutines
-    def coroutinesVer = '1.6.1'
+    def coroutinesVer = '1.6.2'
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVer"
 
 
     //              RxJava
-    implementation 'io.reactivex.rxjava2:rxjava:2.2.21'
+    //implementation 'io.reactivex.rxjava2:rxjava:2.2.21'
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
 
     //              AboutActivity
     implementation 'com.github.biagiopietro:AboutActivity:1.4'
-
-
-    //              Firebase
-    // Import the BoM for the Firebase platform
-    implementation platform('com.google.firebase:firebase-bom:29.0.2')
-
-    // Declare the dependencies for the desired Firebase products without specifying versions
-    // When using the BoM, you don't specify versions in Firebase library dependencies
-    implementation 'com.google.firebase:firebase-database-ktx'
-    implementation 'com.google.firebase:firebase-appcheck-safetynet:16.0.0'
-    // ===================================================================
-
 
     // MPAndroid charts
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
@@ -227,9 +195,9 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     testImplementation "android.arch.core:core-testing:1.1.1"
     //testImplementation 'androidx.test:core:1.4.0'
-    testImplementation 'org.mockito:mockito-inline:4.5.1'
+    testImplementation 'org.mockito:mockito-inline:4.6.0'
     testImplementation "org.mockito.kotlin:mockito-kotlin:4.0.0"
-    testImplementation 'org.robolectric:robolectric:4.8'
+    testImplementation 'org.robolectric:robolectric:4.8.1'
     testImplementation 'org.awaitility:awaitility:4.2.0'
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVer"
 

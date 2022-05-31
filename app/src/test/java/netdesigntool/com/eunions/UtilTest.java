@@ -38,14 +38,6 @@ public class UtilTest {
 
 
     @Test
-    public void test_getIntegerPart(){
-        assertEquals("123", Util.getIntegerPart("123.456"));
-        assertEquals("", Util.getIntegerPart(".123456"));
-        assertEquals("123", Util.getIntegerPart("123"));
-    }
-
-
-    @Test
     public void test_roundNumber(){
 
         char delim = DecimalFormatSymbols.getInstance().getDecimalSeparator();
@@ -58,8 +50,6 @@ public class UtilTest {
         assertEquals("123"+delim+"4", Util.roundNumber("123400", 2));
         assertEquals("12"+delim+"34", Util.roundNumber("12345",2));
     }
-
-
 
     @Test
     public void test_getPrefixForNumber(){

@@ -1,9 +1,8 @@
 package netdesigntool.com.eunions.ui.country;
 
+import static com.hh.data.repo.wiki.SPARQLquery.AREA_ID;
+import static com.hh.data.repo.wiki.SPARQLquery.POP_ID;
 import static netdesigntool.com.eunions.Util.LTAG;
-import static netdesigntool.com.eunions.Util.getIntegerPart;
-import static netdesigntool.com.eunions.repo.wiki.SPARQLquery.AREA_ID;
-import static netdesigntool.com.eunions.repo.wiki.SPARQLquery.POP_ID;
 
 import android.app.Application;
 import android.content.res.Resources;
@@ -15,6 +14,10 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.Observer;
 
+import com.hh.data.repo.wiki.HumanReadableNumber;
+import com.hh.data.repo.wiki.Parameter;
+import com.hh.data.repo.wiki.WikiRxDataProvider;
+
 import java.util.ArrayList;
 import java.util.ListIterator;
 
@@ -22,11 +25,8 @@ import dagger.hilt.EntryPoint;
 import dagger.hilt.EntryPoints;
 import dagger.hilt.InstallIn;
 import dagger.hilt.components.SingletonComponent;
-import netdesigntool.com.eunions.repo.wiki.Parameter;
 import netdesigntool.com.eunions.R;
 import netdesigntool.com.eunions.Util;
-import netdesigntool.com.eunions.repo.wiki.HumanReadableNumber;
-import netdesigntool.com.eunions.repo.wiki.WikiRxDataProvider;
 
 
 public class CountryActVM extends AndroidViewModel {
@@ -178,8 +178,11 @@ public class CountryActVM extends AndroidViewModel {
             int iPop, iArea;
             try {
                 iPop = Integer.parseInt(pop);
-                iArea = Integer.parseInt(getIntegerPart(area));
+                //iArea = Integer.parseInt(getIntegerPart(area)); old
+                iArea = Integer.parseInt(area);
             } catch (NumberFormatException e) {
+                Log.e(LTAG, getClass().getSimpleName()
+                        +" getDensity() Connot convert to Int", e);
                 return null;
             }
 

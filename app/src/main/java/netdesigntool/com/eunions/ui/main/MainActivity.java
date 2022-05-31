@@ -26,7 +26,7 @@ import javax.inject.Inject;
 import dagger.hilt.android.AndroidEntryPoint;
 import netdesigntool.com.eunions.R;
 import netdesigntool.com.eunions.databinding.ActMainBinding;
-import netdesigntool.com.eunions.model.Country;
+import com.hh.data.model.Country;
 import netdesigntool.com.eunions.ui.AboutAct;
 import netdesigntool.com.eunions.ui.othcountries.FrOtherCountryList;
 

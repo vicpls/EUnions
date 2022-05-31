@@ -25,10 +25,10 @@ import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
+import com.hh.data.model.BaseCountry
+import com.hh.data.model.Country
 import kotlinx.coroutines.flow.flowOf
 import netdesigntool.com.eunions.R
-import netdesigntool.com.eunions.model.BaseCountry
-import netdesigntool.com.eunions.model.Country
 
 
 @Composable
@@ -57,7 +57,7 @@ fun OthCountryLayout(items: LazyPagingItems<out BaseCountry>,
     }
 }
 
-private inline fun getFlagId(iso : String, context: Context) : Int =
+private fun getFlagId(iso : String, context: Context) : Int =
     context.resources.getIdentifier(
     "flg_$iso"
     , "drawable", context.packageName)

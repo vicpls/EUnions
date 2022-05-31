@@ -30,7 +30,7 @@ import dagger.hilt.android.AndroidEntryPoint;
 import netdesigntool.com.eunions.R;
 import netdesigntool.com.eunions.Util;
 import netdesigntool.com.eunions.databinding.ActCountryBinding;
-import netdesigntool.com.eunions.repo.wiki.Parameter;
+import com.hh.data.repo.wiki.Parameter;
 import netdesigntool.com.eunions.ui.chart.ChartFragment;
 import netdesigntool.com.eunions.ui.chart.ChartVM;
 

@@ -7,14 +7,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.hh.data.model.Country
+import com.hh.data.model.toCountry
+import com.hh.data.repo.local_db.AppDatabase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import netdesigntool.com.eunions.R
-import netdesigntool.com.eunions.model.Country
-import netdesigntool.com.eunions.model.toCountry
-import netdesigntool.com.eunions.repo.local_db.AppDatabase
 import netdesigntool.com.eunions.ui.country.CountryAct
 import java.util.concurrent.atomic.AtomicBoolean
 import javax.inject.Inject

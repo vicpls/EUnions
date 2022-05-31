@@ -17,20 +17,6 @@ public final class Util {
 
     final public static String LTAG = "EUnions";
 
-    /** Get only integer part of number in String.
-     *
-     * @param value String that can parsing to floating
-     * @return Integer part of value
-     */
-    public static String getIntegerPart(String value){
-
-        int delimiterPos = value.indexOf('.');
-        if (delimiterPos <0) return value;
-        if (delimiterPos ==0) return "";
-
-        return value.substring(0, delimiterPos);
-    }
-
     /**
      * Determines whether the Internet connection.
      * @param context Context
