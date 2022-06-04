@@ -3,7 +3,6 @@ package netdesigntool.com.eunions.ui.country;
 import static netdesigntool.com.eunions.Util.LTAG;
 import static netdesigntool.com.eunions.Util.formatValue;
 import static netdesigntool.com.eunions.Util.getOneKey;
-import static netdesigntool.com.eunions.Util.isConnected;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -21,6 +20,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.hh.data.repo.wiki.Parameter;
 
 import java.util.ArrayList;
 import java.util.ListIterator;
@@ -28,9 +28,7 @@ import java.util.Map;
 
 import dagger.hilt.android.AndroidEntryPoint;
 import netdesigntool.com.eunions.R;
-import netdesigntool.com.eunions.Util;
 import netdesigntool.com.eunions.databinding.ActCountryBinding;
-import com.hh.data.repo.wiki.Parameter;
 import netdesigntool.com.eunions.ui.chart.ChartFragment;
 import netdesigntool.com.eunions.ui.chart.ChartVM;
 
@@ -48,12 +46,12 @@ CountryAct extends AppCompatActivity {
 
     private ActCountryBinding binding;
 
+    private String iso;
+    private String countryName;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        binding = ActCountryBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
 
         if (getIntent().getExtras() ==null) {
             Log.w(LTAG, "Act closed. No ISO of country was provided for: "
@@ -61,24 +59,18 @@ CountryAct extends AppCompatActivity {
             return;
         }
 
-        String sISO = getIntent().getExtras().getString(COUNTRY_ISO);
-        String countryName = getIntent().getExtras().getString(COUNTRY_NAME);
+        iso = getIntent().getExtras().getString(COUNTRY_ISO);
+        countryName = getIntent().getExtras().getString(COUNTRY_NAME);
 
-        subscribeWiki(sISO);
+        binding = ActCountryBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-        subscribeFireBaseObservers(sISO);
+        new Subscriber().subscribe();;
 
-        initViews(sISO, countryName);
+        subscribeFireBaseObservers();
+
+        initViews();
     }
-
-    private void subscribeWiki(String sISO) {
-        if ( isConnected(this)){
-            subscribeWikiObservers(sISO);
-        } else {
-            userNotify(R.string.no_connection);
-        }
-    }
-
 
     private void userNotify(@StringRes int messageId) {
         Snackbar.make( findViewById(R.id.tvCountryName)
@@ -87,44 +79,26 @@ CountryAct extends AppCompatActivity {
                 .show();
     }
 
+    private void initViews() {
 
-    private void initViews(String sISO, String cName) {
-
-        int cNameIdRes = getResources().getIdentifier(sISO, "string", getPackageName());
+        int cNameIdRes = getResources().getIdentifier(iso, "string", getPackageName());
 
         if (cNameIdRes >0)
             binding.tvCountryName.setText(cNameIdRes);
         else
-            binding.tvCountryName.setText(cName);
+            binding.tvCountryName.setText(countryName);
 
         binding.ivFlag.setImageResource( getResources()
-                .getIdentifier("flg_"+ sISO, "drawable", getPackageName()));
+                .getIdentifier("flg_"+ iso, "drawable", getPackageName()));
 
-        binding.tvLinkToGuide.setText( Util.getTravelGuideUrl(this, sISO, cName));
         binding.tvLinkToGuide.setMovementMethod( LinkMovementMethod.getInstance());
     }
 
-    private void subscribeWikiObservers(String sISO) {
-
-        ViewModelProvider.AndroidViewModelFactory vmFactory =
-                new VModelFactory(sISO, getApplication());
-
-        //noinspection ConstantConditions
-        CountryActVM viewModel = new ViewModelProvider(this,
-                (ViewModelProvider.Factory) vmFactory).get(CountryActVM.class);
-
-        LiveData<ArrayList<Parameter>> ldCountryData = viewModel.getResultStr();
-        ldCountryData.observe(this, new myObserver());
-
-        LiveData<ArrayList<String>> ldMembers = viewModel.getMembership();
-        ldMembers.observe(this, new MembershipsObserver());
-    }
-
-    private void subscribeFireBaseObservers(String sISO) {
+    private void subscribeFireBaseObservers() {
 
         ChartVM fbVModel = new ViewModelProvider(this).get(ChartVM.class);
-        fbVModel.requestWHI(sISO, "whi");
-        fbVModel.requestRankWHI(sISO, "rank");
+        fbVModel.requestWHI(iso, "whi");
+        fbVModel.requestRankWHI(iso, "rank");
         fbVModel.getLdRankWHI().observe(this, new FbParameterObserver());
         fbVModel.getLdWHI().observe(this, new FbChartObserver());
     }
@@ -264,6 +238,49 @@ CountryAct extends AppCompatActivity {
 
     private void showInfo(@StringRes int name, Object value){
         showInfo(getResources().getString(name), value);
+    }
+
+
+    // Subscribe for Wiki, TravelGuideUrl data.
+    private class Subscriber
+    {
+        private final ViewModelProvider vmProvider =
+                new ViewModelProvider(
+                        CountryAct.this
+                        , new VModelFactory(CountryAct.this.iso, getApplication())
+                );
+
+        private final CountryActVM viewModel = vmProvider.get(CountryActVM.class);
+
+        private void subscribeWikiObservers()
+       {
+            LiveData<ArrayList<Parameter>> ldCountryData = viewModel.getResultStr();
+            ldCountryData.observe(CountryAct.this, new myObserver());
+
+            LiveData<ArrayList<String>> ldMembers = viewModel.getMembership();
+            ldMembers.observe(CountryAct.this, new MembershipsObserver());
+       }
+
+        private void subscribeTravelGuideUrl()
+       {
+            viewModel.getLdTravelGuide(CountryAct.this.countryName)
+                     .observe(CountryAct.this,
+                                binding.tvLinkToGuide::setText);
+       }
+
+       private void subscribeMessage()
+       {
+           viewModel.getLdMessage().observe(CountryAct.this,
+                   resStrInt-> userNotify(resStrInt)
+           );
+       }
+
+        void subscribe()
+        {
+            subscribeMessage();
+            subscribeTravelGuideUrl();
+            subscribeWikiObservers();
+        }
     }
 
 }

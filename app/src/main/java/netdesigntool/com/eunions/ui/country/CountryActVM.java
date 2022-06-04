@@ -3,15 +3,20 @@ package netdesigntool.com.eunions.ui.country;
 import static com.hh.data.repo.wiki.SPARQLquery.AREA_ID;
 import static com.hh.data.repo.wiki.SPARQLquery.POP_ID;
 import static netdesigntool.com.eunions.Util.LTAG;
+import static netdesigntool.com.eunions.Util.isConnected;
 
 import android.app.Application;
 import android.content.res.Resources;
+import android.os.Build;
+import android.text.Html;
+import android.text.Spanned;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 
 import com.hh.data.repo.wiki.HumanReadableNumber;
@@ -20,6 +25,7 @@ import com.hh.data.repo.wiki.WikiRxDataProvider;
 
 import java.util.ArrayList;
 import java.util.ListIterator;
+import java.util.Locale;
 
 import dagger.hilt.EntryPoint;
 import dagger.hilt.EntryPoints;
@@ -43,6 +49,8 @@ public class CountryActVM extends AndroidViewModel {
 
     private MediatorLiveData<ArrayList<Parameter>> resultStr;
 
+    private MutableLiveData<Spanned> _ldTravelGuide;
+    private MutableLiveData<Integer> _ldMessage;
 
     public CountryActVM(String iso, Application app) {
         super(app);
@@ -128,6 +136,45 @@ public class CountryActVM extends AndroidViewModel {
         return ldPopulation;
     }
 
+    LiveData<Spanned> getLdTravelGuide(String cName){
+        if (_ldTravelGuide ==null){
+            _ldTravelGuide = new MutableLiveData<Spanned> (getTravelGuideUrl(cName));
+        }
+        return _ldTravelGuide;
+    }
+
+    LiveData<Integer> getLdMessage(){
+         if (_ldMessage == null){
+             _ldMessage= new MutableLiveData<Integer>();
+             if (! isConnected(getApplication())) _ldMessage.setValue(R.string.no_connection);
+         }
+        return _ldMessage;
+    }
+
+    /* Create url to a travel guide for the country.
+     *   Assumed that name of country in particular language included in url. It may be not true.
+     */
+    Spanned getTravelGuideUrl(String cName){
+
+        Application app = getApplication();
+
+        int idForCountryName =
+                app.getResources().getIdentifier(iso, "string",  app.getPackageName());
+
+        String countryName = (idForCountryName >0) ?
+                app.getResources().getString(idForCountryName)
+                : cName;
+
+        String url = "http://wikitravel.org/"+ Locale.getDefault().getLanguage() +"/"+ countryName;
+
+        String html = " <a href=\""+ url +"\">" + app.getResources().getString(R.string.trv_guide);
+
+        if (Build.VERSION.SDK_INT >= 24)
+            return Html.fromHtml(html, Html.FROM_HTML_MODE_LEGACY);
+        else
+            //noinspection deprecation
+            return Html.fromHtml(html);
+    }
 
     /*
         Handler of Density of Population for a country.

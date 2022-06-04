@@ -6,11 +6,8 @@ import android.net.ConnectivityManager;
 import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
 import android.os.Build;
-import android.text.Html;
-import android.text.Spanned;
 
 import java.text.DecimalFormatSymbols;
-import java.util.Locale;
 import java.util.Map;
 
 public final class Util {
@@ -35,30 +32,6 @@ public final class Util {
         return netInfo !=null && netInfo.isConnected();
 
     }
-
-
-    /** Create url to a travel guide for the country.
-      *   Assumed that name of country in particular language included in url. It may be not true.
-      */
-    public static Spanned getTravelGuideUrl(Context context, String countryISO, String cName){
-
-        int idForCountryName = context.getResources().getIdentifier(countryISO, "string", context.getPackageName());
-
-        String countryName = (idForCountryName >0) ?
-                context.getResources().getString(idForCountryName)
-                : cName;
-
-        String url = "http://wikitravel.org/"+ Locale.getDefault().getLanguage() +"/"+ countryName;
-
-        String html = " <a href=\""+ url +"\">" + context.getResources().getString(R.string.trv_guide);
-
-        if (Build.VERSION.SDK_INT >= 24)
-            return Html.fromHtml(html, Html.FROM_HTML_MODE_LEGACY);
-        else
-            //noinspection deprecation
-            return Html.fromHtml(html);
-    }
-
 
 
     /** Trim number (as String) and place current system delimiter
