@@ -9,6 +9,7 @@ import java.util.List;
     POJO for parsing Wiki JSON-response by Moshi.
  */
 
+@SuppressWarnings("unused")
 @Keep
 public class WikiResponse {
 

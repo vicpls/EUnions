@@ -53,7 +53,7 @@ public class InstrumentedTest {
     }
 
     // Calling CountryActivity and getting Info from Internet.
-    // It depends on access to Internet.
+    // WARNING It depends on access to Internet.
     @Test
     public void callCountryAct(){
 

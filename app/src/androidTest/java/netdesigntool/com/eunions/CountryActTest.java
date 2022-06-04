@@ -19,15 +19,12 @@ import netdesigntool.com.eunions.ui.country.CountryAct;
 //@RunWith(AndroidJUnit4.class)
 public class CountryActTest {
 
-    static Intent intContAct;
-
-    {intContAct = new Intent(getApplicationContext(), CountryAct.class);
-        intContAct.putExtra(COUNTRY_ISO, "ee");
-    }
+    static Intent intContAct = new Intent(getApplicationContext(), CountryAct.class)
+        .putExtra(COUNTRY_ISO, "ee");
 
 
     @Rule
-    public ActivityScenarioRule<CountryAct> actRule = new ActivityScenarioRule<CountryAct>(intContAct);
+    public ActivityScenarioRule<CountryAct> actRule = new ActivityScenarioRule<>(intContAct);
 
     @Test
     public void testCountryActGet() {

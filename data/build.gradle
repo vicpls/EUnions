@@ -53,7 +53,7 @@ dependencies {
     implementation "com.google.dagger:hilt-android:$hilt_ver"
     kapt "com.google.dagger:hilt-compiler:$hilt_ver"
 
-    //              Retrofit
+    //          Retrofit
     def retrofit = 'com.squareup.retrofit2'
     def retrofitVer = '2.9.0'
     implementation "$retrofit:retrofit:$retrofitVer"
@@ -61,7 +61,7 @@ dependencies {
     implementation "$retrofit:adapter-rxjava2:$retrofitVer"
     implementation 'com.squareup.okhttp3:logging-interceptor:4.9.3'
 
-    //              RxJava
+    //          RxJava
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
 
     //          Room
@@ -71,7 +71,7 @@ dependencies {
     implementation "androidx.room:room-ktx:$room_version"
     implementation "androidx.room:room-paging:$room_version"
 
-    //              Firebase
+    //          Firebase
     // Import the BoM for the Firebase platform
     implementation platform('com.google.firebase:firebase-bom:30.1.0')
 

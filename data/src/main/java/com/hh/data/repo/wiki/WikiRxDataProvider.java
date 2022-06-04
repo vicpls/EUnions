@@ -17,7 +17,6 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.hh.data.BuildConfig;
-import com.hh.data.repo.Util;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -43,22 +42,17 @@ public class WikiRxDataProvider {
 
     WikiRxService wikiRxService;
 
-
     public LiveData<ArrayList<Parameter>> getMainInfo() {return ldConMainInfo;}
-
-    public LiveData<ArrayList<String>> getMemberships() { return ldMemberships; }
-
+    public LiveData<ArrayList<String>> getMemberships() {return ldMemberships;}
     public LiveData<ArrayList<Parameter>> getLdGDPperCapita() {return ldGDPperCapita;}
+    public LiveData<ArrayList<Parameter>> getLdHDI() {return ldHumDevInd;}
+    public LiveData<ArrayList<Parameter>> getLdPop() {return ldPopulation;}
 
-    public LiveData<ArrayList<Parameter>> getLdHDI() { return ldHumDevInd; }
-
-    public LiveData<ArrayList<Parameter>> getLdPop() { return ldPopulation; }
-
-    LiveData<ArrayList<Parameter>> ldConMainInfo;    // Осн. информация. Столица и т.п.
-    LiveData<ArrayList<String>> ldMemberships;       // Членство в союзах и межд.орг.
-    LiveData<ArrayList<Parameter>> ldGDPperCapita;   // ВВП подушевой
-    LiveData<ArrayList<Parameter>> ldHumDevInd;     // Индекс чел. развития
-    LiveData<ArrayList<Parameter>> ldPopulation;    // Численность населения
+    private MutableLiveData<ArrayList<Parameter>> ldConMainInfo;    // Осн. информация. Столица и т.п.
+    private MutableLiveData<ArrayList<String>> ldMemberships;       // Членство в союзах и межд.орг.
+    private MutableLiveData<ArrayList<Parameter>> ldGDPperCapita;   // ВВП подушевой
+    private MutableLiveData<ArrayList<Parameter>> ldHumDevInd;     // Индекс чел. развития
+    private MutableLiveData<ArrayList<Parameter>> ldPopulation;    // Численность населения
 
 
     @Inject
@@ -105,11 +99,11 @@ public class WikiRxDataProvider {
                     , getRespValue(response, "poptLabel")
                     , ""
                     , getRespValue(response, "lyear")
-                    , Util.INSTANCE.getIntegerPart(getRespValue(response,"last_pop"))
+                    , getIntegerPart(getRespValue(response,"last_pop"))
                     , true
                     ,""));
 
-            ((MutableLiveData) ldPopulation).setValue(result);
+            ldPopulation.setValue(result);
         });
     }
 
@@ -148,11 +142,11 @@ public class WikiRxDataProvider {
                                         , getRespValue(response, "PrAreaLabel")
                                         , ""
                                         , ""
-                                        , Util.INSTANCE.getIntegerPart(getRespValue(response, "Area"))
+                                        , getIntegerPart(getRespValue(response, "Area"))
                                         , true
                                         , getRespValue(response, "ArUnitSymbols")));
 
-            ((MutableLiveData)ldConMainInfo).setValue(result);
+           ldConMainInfo.setValue(result);
         });
     }
 
@@ -175,11 +169,11 @@ public class WikiRxDataProvider {
                     , getRespValue(response, "gdplLabel")
                     , ""
                     , getRespValue(response, "lyear")
-                    , Util.INSTANCE.getIntegerPart(getRespValue(response,"last_gdp"))
+                    , getIntegerPart(getRespValue(response,"last_gdp"))
                     , true
                     , getRespValue(response, "gdpUnitSymbols")));
 
-            ((MutableLiveData) ldGDPperCapita).setValue(result);
+            ldGDPperCapita.setValue(result);
 
         });
     }
@@ -196,7 +190,7 @@ public class WikiRxDataProvider {
                 result.add(getRespValue(i, "quaLabel"));
             }
 
-            ((MutableLiveData<ArrayList<String>>) ldMemberships).setValue(result);
+            ldMemberships.setValue(result);
         });
     }
 
@@ -225,8 +219,7 @@ public class WikiRxDataProvider {
                     ,"" ));
 
 
-            ((MutableLiveData)ldHumDevInd).setValue(result);
-
+            ldHumDevInd.setValue(result);
         });
     }
 
@@ -255,13 +248,13 @@ public class WikiRxDataProvider {
                             resp = Collections.EMPTY_LIST;
                         }
 
-                        Log.i(LTAG, "WikiData response was received. Qty= "+ qty);
+                        Log.d(LTAG, "WikiData response was received. Qty= "+ qty);
 
                         if (parser !=null) parser.onReceive(resp);
                     }
 
                     @Override
-                    public void onError(Throwable e) {
+                    public void onError(@NonNull Throwable e) {
                         Log.e(LTAG, "Can't get the info from site. "+ e.getMessage());
                     }
                 });
@@ -297,10 +290,19 @@ public class WikiRxDataProvider {
             //(LinkedHashTreeMap)
             return (((Map)(arMap.get(key))) .get("value")).toString();
         }catch(Exception e){
-            Log.e(LTAG, "Cannot parse the value for param="+ key);
+            Log.w(LTAG, "Cannot parse the value for param="+ key);
             return "";
         }
     }
 
-
+    /** Get only integer part of number in String.
+     *
+     * @param value String that can parsing to floating
+     * @return Integer part of value
+     */
+    static String getIntegerPart(String value){
+        int delimiterPos = value.indexOf('.');
+        if (delimiterPos < 0) return value;
+        return  (delimiterPos == 0) ? "" : value.substring(0, delimiterPos);
+    }
 }

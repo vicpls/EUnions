@@ -136,10 +136,14 @@ class FirebaseDataProvider @Inject constructor(
 
         if (answer !=null) {
 
-            when (answer) {
-                is Long   -> result[title] = answer.toFloat()
-                is Double -> result[title] = answer.toFloat()
-                is HashMap<*,*> -> result = answer as HashMap<String, Float>
+            try {
+                when (answer) {
+                    is Long -> result[title] = answer.toFloat()
+                    is Double -> result[title] = answer.toFloat()
+                    is HashMap<*, *> -> result = answer as HashMap<String, Float>
+                }
+            }catch (e: Exception){
+                Log.e(LTAG, "Class: ${this::class.simpleName}, Method: fbAnswerAdapter(answer, title) trow exception.", e)
             }
         }
 
