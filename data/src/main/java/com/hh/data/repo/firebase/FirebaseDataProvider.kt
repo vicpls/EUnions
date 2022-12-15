@@ -24,7 +24,7 @@ import javax.inject.Singleton
 class FirebaseDataProvider @Inject constructor(
     @ApplicationContext app: Context,
     private val fbAttrib: FirebaseAttribute
-) {
+) : IFirebaseDataProvider {
 
     private val cExpHandler = CoroutineExceptionHandler { _, throwable ->
         Log.e(LTAG, "${this::class.simpleName} CoroutineException throw $throwable")
@@ -42,7 +42,7 @@ class FirebaseDataProvider @Inject constructor(
      * @param title Title for result of requested
      * @param onResult Call on result. It can be called not on UI thread.
      */
-    fun requestWHI(isoCountryCode :String,
+    override fun requestWHI(isoCountryCode :String,
                    title: String,
                    onResult: (Map<String, Number>)->Unit)
     {
@@ -56,7 +56,7 @@ class FirebaseDataProvider @Inject constructor(
      *  @param title Title for result of requested
      *  @param onResult Call on result. It can be called not on UI thread.
      */
-    fun requestRankWHI(isoCountryCode :String,
+    override fun requestRankWHI(isoCountryCode :String,
                        title: String,
                        onResult: (Map<String, Number>)->Unit)
     {
@@ -82,7 +82,8 @@ class FirebaseDataProvider @Inject constructor(
 
         val firebaseAppCheck = FirebaseAppCheck.getInstance()
         firebaseAppCheck.installAppCheckProviderFactory(
-            SafetyNetAppCheckProviderFactory.getInstance()
+            SafetyNetAppCheckProviderFactory.getInstance()        /// - deprecated.
+            //PlayIntegrityAppCheckProviderFactory.getInstance()      /// - Replacement.
         )
     }
 

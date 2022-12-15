@@ -247,7 +247,7 @@ CountryAct extends AppCompatActivity {
         private final ViewModelProvider vmProvider =
                 new ViewModelProvider(
                         CountryAct.this
-                        , new VModelFactory(CountryAct.this.iso, getApplication())
+                        , (ViewModelProvider.Factory) new VModelFactory(CountryAct.this.iso, getApplication())
                 );
 
         private final CountryActVM viewModel = vmProvider.get(CountryActVM.class);

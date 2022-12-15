@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    compileSdk 32
+    compileSdk 33
 
     defaultConfig {
         minSdk 21
-        targetSdk 32
+        targetSdk 33
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -39,6 +39,7 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    namespace 'com.hh.data'
 
 
 }
@@ -46,10 +47,10 @@ android {
 
 dependencies {
 
-    implementation 'androidx.core:core-ktx:1.7.0'
+    implementation 'androidx.core:core-ktx:1.9.0'
 
     //          Hilt
-    def hilt_ver = '2.42'
+    def hilt_ver = '2.44.2'
     implementation "com.google.dagger:hilt-android:$hilt_ver"
     kapt "com.google.dagger:hilt-compiler:$hilt_ver"
 
@@ -65,7 +66,7 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
 
     //          Room
-    def room_version = "2.4.2"
+    def room_version = "2.4.3"
     implementation "androidx.room:room-runtime:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
     implementation "androidx.room:room-ktx:$room_version"
@@ -73,16 +74,15 @@ dependencies {
 
     //          Firebase
     // Import the BoM for the Firebase platform
-    implementation platform('com.google.firebase:firebase-bom:30.1.0')
-
-    // Declare the dependencies for the desired Firebase products without specifying versions
-    // When using the BoM, you don't specify versions in Firebase library dependencies
+    implementation platform('com.google.firebase:firebase-bom:31.1.0')
     implementation 'com.google.firebase:firebase-database-ktx'
-    implementation 'com.google.firebase:firebase-appcheck-safetynet:16.0.0'
+    implementation 'com.google.firebase:firebase-appcheck-safetynet'  //deprecated
+    // App Check library - replacement for safetynet
+    //implementation 'com.google.firebase:firebase-appcheck-playintegrity'
 
     testImplementation 'junit:junit:4.13.2'
-    testImplementation 'org.mockito:mockito-inline:4.6.0'
-    testImplementation "org.mockito.kotlin:mockito-kotlin:4.0.0"
+    testImplementation 'org.mockito:mockito-inline:4.9.0'
+    testImplementation 'org.mockito.kotlin:mockito-kotlin:4.1.0'
 
-    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.4'
 }

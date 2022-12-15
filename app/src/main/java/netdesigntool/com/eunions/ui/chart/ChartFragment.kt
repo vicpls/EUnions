@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.AxisBase
 import com.github.mikephil.charting.components.XAxis
@@ -15,6 +15,7 @@ import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.ValueFormatter
+import dagger.hilt.android.AndroidEntryPoint
 import netdesigntool.com.eunions.R
 import netdesigntool.com.eunions.Util.getColorAnyWay
 
@@ -22,11 +23,14 @@ import netdesigntool.com.eunions.Util.getColorAnyWay
  *   Draw a Chart.
  *   Require a [ChartVM].
  */
+@AndroidEntryPoint
 class ChartFragment : Fragment() {
 
-    var lChart : LineChart? = null
+    private var lChart : LineChart? = null
+    val vModel: ChartVM by viewModels()
+    //val vModel: ChartViewModel by viewModels()
 
-    override fun onCreateView(
+        override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -40,11 +44,10 @@ class ChartFragment : Fragment() {
 
         lChart = view.findViewById(R.id.lChart)
 
-        val vModel = ViewModelProvider(requireActivity())[ChartVM::class.java]
+        //val vModel = ViewModelProvider(requireActivity())[ChartVM::class.java]
 
         vModel.ldWHI.observe(viewLifecycleOwner, ::drawLine)
     }
-
 
     class MyXAxisFormatter : ValueFormatter() {
         override fun getAxisLabel(value: Float, axis: AxisBase?): String {
@@ -59,7 +62,7 @@ class ChartFragment : Fragment() {
         val lEntrs = mapToEntryConverter(rMap)
         val dataset = LineDataSet(lEntrs, "WHI")
 
-        // Создадим переменную данных для графика
+        // Данные для графика
         val data = LineData( styleDataSet(dataset) as LineDataSet)
         data.setDrawValues(false)
 
@@ -83,7 +86,7 @@ class ChartFragment : Fragment() {
         //xAxis.setDrawLabels(true)
         xAx.setDrawAxisLine(true)
         xAx.axisMinimum=2010f
-        xAx.axisMaximum=2020f
+        xAx.axisMaximum=2022f
         xAx.spaceMax = 2f
         xAx.spaceMin = 1f
         xAx.valueFormatter = MyXAxisFormatter()
@@ -128,3 +131,10 @@ class ChartFragment : Fragment() {
     }
 
 }
+
+/*abstract class ChartViewModel : ViewModel() {
+    abstract val ldWHI: LiveData<Map<String, Number>>
+    abstract val ldRankWHI: LiveData<Map<String, Number>>
+    abstract fun requestWHI(isoCountryCode: String, title: String ="WHI")
+    abstract fun requestRankWHI(isoCountryCode: String, title: String = "Rank of country in the WHI")
+}*/
