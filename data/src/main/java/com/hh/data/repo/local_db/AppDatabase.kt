@@ -9,7 +9,7 @@ import com.hh.data.repo.local_db.entities.ParticipialCountries
 
 @Database(entities = [Eunions::class],
     views = [ParticipialCountries::class, OtherCountry::class],
-    version = 4,
+    version = 5,
     )
 
 abstract class AppDatabase : RoomDatabase() {

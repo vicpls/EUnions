@@ -10,6 +10,7 @@
     <color name="schengenNoA">#FFFF00</color>
 
     <color name="others">#7800B8CC</color>
+    <color name="others2">#78D4DD</color>
 
     <color name="text">@android:color/tertiary_text_dark</color>
 

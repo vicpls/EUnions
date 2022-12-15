@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/flRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="8dp"
+        tools:ignore="UselessParent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="8dp">
+
+
+        <LinearLayout
+            android:id="@+id/flLeft"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/rounded_eu"
+            android:gravity="left"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="@id/flexboxMiddle"
+            app:layout_constraintEnd_toStartOf="@+id/glRight70"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/flexboxTop">
+
+            <TextView
+                android:id="@+id/tvLeftCap"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="12dp"
+                android:clickable="true"
+                android:onClick="onClick"
+                android:tag="@string/eu"
+                android:text="@string/eu"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"
+                android:textStyle="bold|italic"
+                app:drawableBottomCompat="@drawable/flg_eu"
+                tools:text="EU" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/flRight"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginRight="8dp"
+            android:background="@drawable/rounded_sch"
+            android:gravity="right"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="@+id/flexboxBottom"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/glLeft30"
+            app:layout_constraintTop_toTopOf="@+id/flexboxMiddle">
+
+            <TextView
+                android:id="@+id/tvRightCap"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:layout_marginRight="12dp"
+                android:clickable="true"
+                android:drawablePadding="10dp"
+                android:onClick="onClick"
+                android:tag="@string/schengen"
+                android:text="@string/schengen"
+                android:textColor="@android:color/black"
+                android:textStyle="bold|italic"
+                app:drawableBottomCompat="@drawable/flg_eu"
+                tools:text="Schengen" />
+
+        </LinearLayout>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/glLeft30"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.25"/>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/glRight70"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.75"/>
+
+        <com.google.android.flexbox.FlexboxLayout
+            android:id="@+id/flexboxTop"
+            android:layout_marginTop="8dp"
+            app:alignContent="stretch"
+            app:alignItems="stretch"
+            app:flexWrap="wrap"
+            app:layout_constraintEnd_toStartOf="@+id/glRight70"
+            app:layout_constraintStart_toStartOf="@+id/glLeft30"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_height="50dp"
+            style="@style/act_country_flexbox" />
+
+
+        <com.google.android.flexbox.FlexboxLayout
+            android:id="@+id/flexboxMiddle"
+            app:alignContent="stretch"
+            app:alignItems="stretch"
+            app:flexWrap="wrap"
+            app:layout_constraintEnd_toStartOf="@+id/glRight70"
+            app:layout_constraintStart_toStartOf="@+id/glLeft30"
+            app:layout_constraintTop_toBottomOf="@+id/flexboxTop"
+            tools:layout_height="75dp"
+            style="@style/act_country_flexbox" />
+
+
+
+        <com.google.android.flexbox.FlexboxLayout
+            android:id="@+id/flexboxBottom"
+            app:alignContent="stretch"
+            app:alignItems="stretch"
+            app:flexWrap="wrap"
+            app:layout_constraintEnd_toStartOf="@+id/glRight70"
+            app:layout_constraintStart_toStartOf="@+id/glLeft30"
+            app:layout_constraintTop_toBottomOf="@+id/flexboxMiddle"
+            tools:layout_height="50dp"
+            style="@style/act_country_flexbox" />
+
+
+        <LinearLayout
+            android:id="@+id/flOthers"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/rounded_oth"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:minHeight="40dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="@id/flRight"
+            app:layout_constraintStart_toStartOf="@id/flLeft"
+            app:layout_constraintTop_toBottomOf="@+id/flexboxBottom"
+            tools:ignore="TouchTargetSizeCheck">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/other_countries"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/lfDescPlace"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="80dp"
+            app:layout_constraintEnd_toEndOf="@id/glRight70"
+            app:layout_constraintStart_toStartOf="@+id/flLeft"
+            app:layout_constraintTop_toTopOf="@+id/flLeft" />
+
+        <FrameLayout
+            android:id="@+id/rtDescPlace"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="80dp"
+            app:layout_constraintEnd_toEndOf="@id/flRight"
+            app:layout_constraintStart_toStartOf="@id/glLeft30"
+            app:layout_constraintTop_toTopOf="@id/flRight" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
+</FrameLayout>

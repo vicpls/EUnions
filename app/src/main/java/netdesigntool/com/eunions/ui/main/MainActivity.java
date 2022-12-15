@@ -18,6 +18,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.flexbox.FlexboxLayout;
+import com.hh.data.model.Country;
 
 import java.util.List;
 
@@ -26,7 +27,6 @@ import javax.inject.Inject;
 import dagger.hilt.android.AndroidEntryPoint;
 import netdesigntool.com.eunions.R;
 import netdesigntool.com.eunions.databinding.ActMainBinding;
-import com.hh.data.model.Country;
 import netdesigntool.com.eunions.ui.AboutAct;
 import netdesigntool.com.eunions.ui.othcountries.FrOtherCountryList;
 
@@ -52,7 +52,14 @@ public class MainActivity extends AppCompatActivity
 
         observeViewModel(mainActVM);
 
-        binding.flOthers.setOnClickListener(new OnOtherCountryClickFr());
+        //binding.flOthers.setOnClickListener(new OnOtherCountryClickFr());
+        binding.fabOthers.setOnClickListener(new OnOtherCountryClickFr());
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        binding.fabOthers.setVisibility(View.VISIBLE);
     }
 
     private void observeViewModel(MainActVM vm){
@@ -135,16 +142,17 @@ public class MainActivity extends AppCompatActivity
         mainActVM.onCountryClick(country, this);
     }
 
-    class OnOtherCountryClickFr implements View.OnClickListener
-    {
+    class OnOtherCountryClickFr implements View.OnClickListener {
         @Override
         public void onClick(View v) {
 
-        FragmentManager fm = MainActivity.this.getSupportFragmentManager();
+            FragmentManager fm = MainActivity.this.getSupportFragmentManager();
             fm.beginTransaction()
-                .add(binding.flRoot.getId(), FrOtherCountryList.class, null)
-                .addToBackStack(null)
-                .commit();
+                    .add(binding.flRoot.getId(), FrOtherCountryList.class, null)
+                    .addToBackStack(null)
+                    .commit();
+
+            v.setVisibility(View.INVISIBLE);
         }
     }
 
