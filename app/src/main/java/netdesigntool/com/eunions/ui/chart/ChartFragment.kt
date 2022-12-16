@@ -28,9 +28,8 @@ class ChartFragment : Fragment() {
 
     private var lChart : LineChart? = null
     val vModel: ChartVM by viewModels()
-    //val vModel: ChartViewModel by viewModels()
 
-        override fun onCreateView(
+    override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -43,8 +42,6 @@ class ChartFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         lChart = view.findViewById(R.id.lChart)
-
-        //val vModel = ViewModelProvider(requireActivity())[ChartVM::class.java]
 
         vModel.ldWHI.observe(viewLifecycleOwner, ::drawLine)
     }
@@ -86,7 +83,7 @@ class ChartFragment : Fragment() {
         //xAxis.setDrawLabels(true)
         xAx.setDrawAxisLine(true)
         xAx.axisMinimum=2010f
-        xAx.axisMaximum=2022f
+        xAx.axisMaximum=2021f
         xAx.spaceMax = 2f
         xAx.spaceMin = 1f
         xAx.valueFormatter = MyXAxisFormatter()
@@ -131,10 +128,3 @@ class ChartFragment : Fragment() {
     }
 
 }
-
-/*abstract class ChartViewModel : ViewModel() {
-    abstract val ldWHI: LiveData<Map<String, Number>>
-    abstract val ldRankWHI: LiveData<Map<String, Number>>
-    abstract fun requestWHI(isoCountryCode: String, title: String ="WHI")
-    abstract fun requestRankWHI(isoCountryCode: String, title: String = "Rank of country in the WHI")
-}*/
