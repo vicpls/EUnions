@@ -1,0 +1,1073 @@
+[
+    {
+        "_id": 1,
+        "eu": 0,
+        "member": "at",
+        "name": "Austria",
+        "schengen": 0
+    },
+    {
+        "_id": 2,
+        "eu": 0,
+        "member": "be",
+        "name": "Belgium",
+        "schengen": 0
+    },
+    {
+        "_id": 3,
+        "eu": 0,
+        "member": "hu",
+        "name": "Hungary",
+        "schengen": 0
+    },
+    {
+        "_id": 4,
+        "eu": 0,
+        "member": "de",
+        "name": "Germany",
+        "schengen": 0
+    },
+    {
+        "_id": 5,
+        "eu": 0,
+        "member": "gr",
+        "name": "Greece",
+        "schengen": 0
+    },
+    {
+        "_id": 6,
+        "eu": 0,
+        "member": "dk",
+        "name": "Denmark",
+        "schengen": 0
+    },
+    {
+        "_id": 7,
+        "eu": 0,
+        "member": "es",
+        "name": "Spain",
+        "schengen": 0
+    },
+    {
+        "_id": 8,
+        "eu": 0,
+        "member": "it",
+        "name": "Italy",
+        "schengen": 0
+    },
+    {
+        "_id": 9,
+        "eu": 0,
+        "member": "lv",
+        "name": "Latvia",
+        "schengen": 0
+    },
+    {
+        "_id": 10,
+        "eu": 0,
+        "member": "lu",
+        "name": "Luxembourg",
+        "schengen": 0
+    },
+    {
+        "_id": 11,
+        "eu": 0,
+        "member": "mt",
+        "name": "Malta",
+        "schengen": 0
+    },
+    {
+        "_id": 12,
+        "eu": 0,
+        "member": "nl",
+        "name": "Netherlands",
+        "schengen": 0
+    },
+    {
+        "_id": 13,
+        "eu": 0,
+        "member": "pl",
+        "name": "Poland",
+        "schengen": 0
+    },
+    {
+        "_id": 14,
+        "eu": 0,
+        "member": "pt",
+        "name": "Portugal",
+        "schengen": 0
+    },
+    {
+        "_id": 15,
+        "eu": 0,
+        "member": "sk",
+        "name": "Slovakia",
+        "schengen": 0
+    },
+    {
+        "_id": 16,
+        "eu": 0,
+        "member": "fi",
+        "name": "Finland",
+        "schengen": 0
+    },
+    {
+        "_id": 17,
+        "eu": 0,
+        "member": "fr",
+        "name": "France",
+        "schengen": 0
+    },
+    {
+        "_id": 18,
+        "eu": 0,
+        "member": "cz",
+        "name": "Czech Republic",
+        "schengen": 0
+    },
+    {
+        "_id": 19,
+        "eu": 0,
+        "member": "se",
+        "name": "Sweden",
+        "schengen": 0
+    },
+    {
+        "_id": 20,
+        "eu": 0,
+        "member": "ee",
+        "name": "Estonia",
+        "schengen": 0
+    },
+    {
+        "_id": 22,
+        "eu": 0,
+        "member": "ie",
+        "name": "Ireland",
+        "schengen": 10
+    },
+    {
+        "_id": 23,
+        "eu": 0,
+        "member": "cy",
+        "name": "Cyprus",
+        "schengen": 5
+    },
+    {
+        "_id": 24,
+        "eu": 0,
+        "member": "bg",
+        "name": "Bulgaria",
+        "schengen": 5
+    },
+    {
+        "_id": 25,
+        "eu": 0,
+        "member": "hr",
+        "name": "Croatia",
+        "schengen": 5
+    },
+    {
+        "_id": 26,
+        "eu": 0,
+        "member": "ro",
+        "name": "Romania",
+        "schengen": 5
+    },
+    {
+        "_id": 27,
+        "eu": 10,
+        "member": "ch",
+        "name": "Switzerland",
+        "schengen": 0
+    },
+    {
+        "_id": 28,
+        "eu": 10,
+        "member": "no",
+        "name": "Norway",
+        "schengen": 0
+    },
+    {
+        "_id": 29,
+        "eu": 10,
+        "member": "li",
+        "name": "Liechtenstein",
+        "schengen": 0
+    },
+    {
+        "_id": 30,
+        "eu": 10,
+        "member": "is",
+        "name": "Iceland",
+        "schengen": 0
+    },
+    {
+        "_id": 31,
+        "eu": 0,
+        "member": "lt",
+        "name": "Lithuania",
+        "schengen": 0
+    },
+    {
+        "_id": 32,
+        "eu": 0,
+        "member": "si",
+        "name": "Slovenia",
+        "schengen": 0
+    },
+    {
+        "_id": 33,
+        "eu": 10,
+        "member": "af",
+        "name": "Afghanistan",
+        "schengen": 10
+    },
+    {
+        "_id": 34,
+        "eu": 10,
+        "member": "al",
+        "name": "Albania",
+        "schengen": 10
+    },
+    {
+        "_id": 35,
+        "eu": 10,
+        "member": "dz",
+        "name": "Algeria",
+        "schengen": 10
+    },
+    {
+        "_id": 36,
+        "eu": 10,
+        "member": "ao",
+        "name": "Angola",
+        "schengen": 10
+    },
+    {
+        "_id": 37,
+        "eu": 10,
+        "member": "ar",
+        "name": "Argentina",
+        "schengen": 10
+    },
+    {
+        "_id": 38,
+        "eu": 10,
+        "member": "am",
+        "name": "Armenia",
+        "schengen": 10
+    },
+    {
+        "_id": 39,
+        "eu": 10,
+        "member": "au",
+        "name": "Australia",
+        "schengen": 10
+    },
+    {
+        "_id": 40,
+        "eu": 10,
+        "member": "az",
+        "name": "Azerbaijan",
+        "schengen": 10
+    },
+    {
+        "_id": 41,
+        "eu": 10,
+        "member": "bh",
+        "name": "Bahrain",
+        "schengen": 10
+    },
+    {
+        "_id": 42,
+        "eu": 10,
+        "member": "bd",
+        "name": "Bangladesh",
+        "schengen": 10
+    },
+    {
+        "_id": 43,
+        "eu": 10,
+        "member": "by",
+        "name": "Belarus",
+        "schengen": 10
+    },
+    {
+        "_id": 44,
+        "eu": 10,
+        "member": "bz",
+        "name": "Belize",
+        "schengen": 10
+    },
+    {
+        "_id": 45,
+        "eu": 10,
+        "member": "bj",
+        "name": "Benin",
+        "schengen": 10
+    },
+    {
+        "_id": 46,
+        "eu": 10,
+        "member": "bt",
+        "name": "Bhutan",
+        "schengen": 10
+    },
+    {
+        "_id": 47,
+        "eu": 10,
+        "member": "ba",
+        "name": "Bosnia and Herzegovina",
+        "schengen": 10
+    },
+    {
+        "_id": 48,
+        "eu": 10,
+        "member": "bw",
+        "name": "Botswana",
+        "schengen": 10
+    },
+    {
+        "_id": 49,
+        "eu": 10,
+        "member": "br",
+        "name": "Brazil",
+        "schengen": 10
+    },
+    {
+        "_id": 50,
+        "eu": 10,
+        "member": "bf",
+        "name": "Burkina Faso",
+        "schengen": 10
+    },
+    {
+        "_id": 51,
+        "eu": 10,
+        "member": "bi",
+        "name": "Burundi",
+        "schengen": 10
+    },
+    {
+        "_id": 52,
+        "eu": 10,
+        "member": "kh",
+        "name": "Cambodia",
+        "schengen": 10
+    },
+    {
+        "_id": 53,
+        "eu": 10,
+        "member": "cm",
+        "name": "Cameroon",
+        "schengen": 10
+    },
+    {
+        "_id": 54,
+        "eu": 10,
+        "member": "ca",
+        "name": "Canada",
+        "schengen": 10
+    },
+    {
+        "_id": 55,
+        "eu": 10,
+        "member": "cf",
+        "name": "Central African Republic",
+        "schengen": 10
+    },
+    {
+        "_id": 56,
+        "eu": 10,
+        "member": "td",
+        "name": "Chad",
+        "schengen": 10
+    },
+    {
+        "_id": 57,
+        "eu": 10,
+        "member": "cl",
+        "name": "Chile",
+        "schengen": 10
+    },
+    {
+        "_id": 58,
+        "eu": 10,
+        "member": "cn",
+        "name": "China",
+        "schengen": 10
+    },
+    {
+        "_id": 59,
+        "eu": 10,
+        "member": "co",
+        "name": "Colombia",
+        "schengen": 10
+    },
+    {
+        "_id": 60,
+        "eu": 10,
+        "member": "km",
+        "name": "Comoros",
+        "schengen": 10
+    },
+    {
+        "_id": 61,
+        "eu": 10,
+        "member": "cr",
+        "name": "Costa Rica",
+        "schengen": 10
+    },
+    {
+        "_id": 62,
+        "eu": 10,
+        "member": "dj",
+        "name": "Djibouti",
+        "schengen": 10
+    },
+    {
+        "_id": 63,
+        "eu": 10,
+        "member": "do",
+        "name": "Dominican Republic",
+        "schengen": 10
+    },
+    {
+        "_id": 64,
+        "eu": 10,
+        "member": "ec",
+        "name": "Ecuador",
+        "schengen": 10
+    },
+    {
+        "_id": 65,
+        "eu": 10,
+        "member": "eg",
+        "name": "Egypt",
+        "schengen": 10
+    },
+    {
+        "_id": 66,
+        "eu": 10,
+        "member": "sv",
+        "name": "El Salvador",
+        "schengen": 10
+    },
+    {
+        "_id": 67,
+        "eu": 10,
+        "member": "et",
+        "name": "Ethiopia",
+        "schengen": 10
+    },
+    {
+        "_id": 68,
+        "eu": 10,
+        "member": "ga",
+        "name": "Gabon",
+        "schengen": 10
+    },
+    {
+        "_id": 69,
+        "eu": 10,
+        "member": "gm",
+        "name": "Gambia",
+        "schengen": 10
+    },
+    {
+        "_id": 70,
+        "eu": 10,
+        "member": "ge",
+        "name": "Georgia",
+        "schengen": 10
+    },
+    {
+        "_id": 71,
+        "eu": 10,
+        "member": "gh",
+        "name": "Ghana",
+        "schengen": 10
+    },
+    {
+        "_id": 72,
+        "eu": 10,
+        "member": "gt",
+        "name": "Guatemala",
+        "schengen": 10
+    },
+    {
+        "_id": 73,
+        "eu": 10,
+        "member": "gn",
+        "name": "Guinea",
+        "schengen": 10
+    },
+    {
+        "_id": 74,
+        "eu": 10,
+        "member": "ht",
+        "name": "Haiti",
+        "schengen": 10
+    },
+    {
+        "_id": 75,
+        "eu": 10,
+        "member": "hn",
+        "name": "Honduras",
+        "schengen": 10
+    },
+    {
+        "_id": 76,
+        "eu": 10,
+        "member": "hk",
+        "name": "Hong Kong S.A.R. of China",
+        "schengen": 10
+    },
+    {
+        "_id": 77,
+        "eu": 10,
+        "member": "in",
+        "name": "India",
+        "schengen": 10
+    },
+    {
+        "_id": 78,
+        "eu": 10,
+        "member": "id",
+        "name": "Indonesia",
+        "schengen": 10
+    },
+    {
+        "_id": 79,
+        "eu": 10,
+        "member": "ir",
+        "name": "Iran",
+        "schengen": 10
+    },
+    {
+        "_id": 80,
+        "eu": 10,
+        "member": "iq",
+        "name": "Iraq",
+        "schengen": 10
+    },
+    {
+        "_id": 81,
+        "eu": 10,
+        "member": "il",
+        "name": "Israel",
+        "schengen": 10
+    },
+    {
+        "_id": 82,
+        "eu": 10,
+        "member": "jm",
+        "name": "Jamaica",
+        "schengen": 10
+    },
+    {
+        "_id": 83,
+        "eu": 10,
+        "member": "jp",
+        "name": "Japan",
+        "schengen": 10
+    },
+    {
+        "_id": 84,
+        "eu": 10,
+        "member": "jo",
+        "name": "Jordan",
+        "schengen": 10
+    },
+    {
+        "_id": 85,
+        "eu": 10,
+        "member": "kz",
+        "name": "Kazakhstan",
+        "schengen": 10
+    },
+    {
+        "_id": 86,
+        "eu": 10,
+        "member": "ke",
+        "name": "Kenya",
+        "schengen": 10
+    },
+    {
+        "_id": 87,
+        "eu": 10,
+        "member": "kw",
+        "name": "Kuwait",
+        "schengen": 10
+    },
+    {
+        "_id": 88,
+        "eu": 10,
+        "member": "kg",
+        "name": "Kyrgyzstan",
+        "schengen": 10
+    },
+    {
+        "_id": 89,
+        "eu": 10,
+        "member": "lb",
+        "name": "Lebanon",
+        "schengen": 10
+    },
+    {
+        "_id": 90,
+        "eu": 10,
+        "member": "ls",
+        "name": "Lesotho",
+        "schengen": 10
+    },
+    {
+        "_id": 91,
+        "eu": 10,
+        "member": "lr",
+        "name": "Liberia",
+        "schengen": 10
+    },
+    {
+        "_id": 92,
+        "eu": 10,
+        "member": "mg",
+        "name": "Madagascar",
+        "schengen": 10
+    },
+    {
+        "_id": 93,
+        "eu": 10,
+        "member": "mw",
+        "name": "Malawi",
+        "schengen": 10
+    },
+    {
+        "_id": 94,
+        "eu": 10,
+        "member": "my",
+        "name": "Malaysia",
+        "schengen": 10
+    },
+    {
+        "_id": 95,
+        "eu": 10,
+        "member": "mv",
+        "name": "Maldives",
+        "schengen": 10
+    },
+    {
+        "_id": 96,
+        "eu": 10,
+        "member": "ml",
+        "name": "Mali",
+        "schengen": 10
+    },
+    {
+        "_id": 97,
+        "eu": 10,
+        "member": "mr",
+        "name": "Mauritania",
+        "schengen": 10
+    },
+    {
+        "_id": 98,
+        "eu": 10,
+        "member": "mu",
+        "name": "Mauritius",
+        "schengen": 10
+    },
+    {
+        "_id": 99,
+        "eu": 10,
+        "member": "mx",
+        "name": "Mexico",
+        "schengen": 10
+    },
+    {
+        "_id": 100,
+        "eu": 10,
+        "member": "md",
+        "name": "Moldova",
+        "schengen": 10
+    },
+    {
+        "_id": 101,
+        "eu": 10,
+        "member": "mn",
+        "name": "Mongolia",
+        "schengen": 10
+    },
+    {
+        "_id": 102,
+        "eu": 10,
+        "member": "me",
+        "name": "Montenegro",
+        "schengen": 10
+    },
+    {
+        "_id": 103,
+        "eu": 10,
+        "member": "ma",
+        "name": "Morocco",
+        "schengen": 10
+    },
+    {
+        "_id": 104,
+        "eu": 10,
+        "member": "mz",
+        "name": "Mozambique",
+        "schengen": 10
+    },
+    {
+        "_id": 105,
+        "eu": 10,
+        "member": "na",
+        "name": "Namibia",
+        "schengen": 10
+    },
+    {
+        "_id": 106,
+        "eu": 10,
+        "member": "np",
+        "name": "Nepal",
+        "schengen": 10
+    },
+    {
+        "_id": 107,
+        "eu": 10,
+        "member": "nz",
+        "name": "New Zealand",
+        "schengen": 10
+    },
+    {
+        "_id": 108,
+        "eu": 10,
+        "member": "ni",
+        "name": "Nicaragua",
+        "schengen": 10
+    },
+    {
+        "_id": 109,
+        "eu": 10,
+        "member": "ne",
+        "name": "Niger",
+        "schengen": 10
+    },
+    {
+        "_id": 110,
+        "eu": 10,
+        "member": "ng",
+        "name": "Nigeria",
+        "schengen": 10
+    },
+    {
+        "_id": 111,
+        "eu": 10,
+        "member": "mk",
+        "name": "North Macedonia",
+        "schengen": 10
+    },
+    {
+        "_id": 112,
+        "eu": 10,
+        "member": "om",
+        "name": "Oman",
+        "schengen": 10
+    },
+    {
+        "_id": 113,
+        "eu": 10,
+        "member": "pk",
+        "name": "Pakistan",
+        "schengen": 10
+    },
+    {
+        "_id": 114,
+        "eu": 10,
+        "member": "ps",
+        "name": "Palestinian Territories",
+        "schengen": 10
+    },
+    {
+        "_id": 115,
+        "eu": 10,
+        "member": "pa",
+        "name": "Panama",
+        "schengen": 10
+    },
+    {
+        "_id": 116,
+        "eu": 10,
+        "member": "py",
+        "name": "Paraguay",
+        "schengen": 10
+    },
+    {
+        "_id": 117,
+        "eu": 10,
+        "member": "pe",
+        "name": "Peru",
+        "schengen": 10
+    },
+    {
+        "_id": 118,
+        "eu": 10,
+        "member": "ph",
+        "name": "Philippines",
+        "schengen": 10
+    },
+    {
+        "_id": 119,
+        "eu": 10,
+        "member": "qa",
+        "name": "Qatar",
+        "schengen": 10
+    },
+    {
+        "_id": 120,
+        "eu": 10,
+        "member": "ru",
+        "name": "Russia",
+        "schengen": 10
+    },
+    {
+        "_id": 121,
+        "eu": 10,
+        "member": "rw",
+        "name": "Rwanda",
+        "schengen": 10
+    },
+    {
+        "_id": 122,
+        "eu": 10,
+        "member": "sa",
+        "name": "Saudi Arabia",
+        "schengen": 10
+    },
+    {
+        "_id": 123,
+        "eu": 10,
+        "member": "sn",
+        "name": "Senegal",
+        "schengen": 10
+    },
+    {
+        "_id": 124,
+        "eu": 10,
+        "member": "rs",
+        "name": "Serbia",
+        "schengen": 10
+    },
+    {
+        "_id": 125,
+        "eu": 10,
+        "member": "sl",
+        "name": "Sierra Leone",
+        "schengen": 10
+    },
+    {
+        "_id": 126,
+        "eu": 10,
+        "member": "sg",
+        "name": "Singapore",
+        "schengen": 10
+    },
+    {
+        "_id": 127,
+        "eu": 10,
+        "member": "so",
+        "name": "Somalia",
+        "schengen": 10
+    },
+    {
+        "_id": 128,
+        "eu": 10,
+        "member": "za",
+        "name": "South Africa",
+        "schengen": 10
+    },
+    {
+        "_id": 129,
+        "eu": 10,
+        "member": "kr",
+        "name": "South Korea",
+        "schengen": 10
+    },
+    {
+        "_id": 130,
+        "eu": 10,
+        "member": "ss",
+        "name": "South Sudan",
+        "schengen": 10
+    },
+    {
+        "_id": 131,
+        "eu": 10,
+        "member": "lk",
+        "name": "Sri Lanka",
+        "schengen": 10
+    },
+    {
+        "_id": 132,
+        "eu": 10,
+        "member": "sd",
+        "name": "Sudan",
+        "schengen": 10
+    },
+    {
+        "_id": 133,
+        "eu": 10,
+        "member": "sr",
+        "name": "Suriname",
+        "schengen": 10
+    },
+    {
+        "_id": 134,
+        "eu": 10,
+        "member": "tw",
+        "name": "Taiwan Province of China",
+        "schengen": 10
+    },
+    {
+        "_id": 135,
+        "eu": 10,
+        "member": "tj",
+        "name": "Tajikistan",
+        "schengen": 10
+    },
+    {
+        "_id": 136,
+        "eu": 10,
+        "member": "tz",
+        "name": "Tanzania",
+        "schengen": 10
+    },
+    {
+        "_id": 137,
+        "eu": 10,
+        "member": "th",
+        "name": "Thailand",
+        "schengen": 10
+    },
+    {
+        "_id": 138,
+        "eu": 10,
+        "member": "tg",
+        "name": "Togo",
+        "schengen": 10
+    },
+    {
+        "_id": 139,
+        "eu": 10,
+        "member": "tt",
+        "name": "Trinidad and Tobago",
+        "schengen": 10
+    },
+    {
+        "_id": 140,
+        "eu": 10,
+        "member": "tn",
+        "name": "Tunisia",
+        "schengen": 10
+    },
+    {
+        "_id": 141,
+        "eu": 10,
+        "member": "tr",
+        "name": "Turkey",
+        "schengen": 10
+    },
+    {
+        "_id": 142,
+        "eu": 10,
+        "member": "tm",
+        "name": "Turkmenistan",
+        "schengen": 10
+    },
+    {
+        "_id": 143,
+        "eu": 10,
+        "member": "ug",
+        "name": "Uganda",
+        "schengen": 10
+    },
+    {
+        "_id": 144,
+        "eu": 10,
+        "member": "ua",
+        "name": "Ukraine",
+        "schengen": 10
+    },
+    {
+        "_id": 145,
+        "eu": 10,
+        "member": "ae",
+        "name": "United Arab Emirates",
+        "schengen": 10
+    },
+    {
+        "_id": 146,
+        "eu": 10,
+        "member": "gb",
+        "name": "United Kingdom",
+        "schengen": 10
+    },
+    {
+        "_id": 147,
+        "eu": 10,
+        "member": "us",
+        "name": "United States",
+        "schengen": 10
+    },
+    {
+        "_id": 148,
+        "eu": 10,
+        "member": "uy",
+        "name": "Uruguay",
+        "schengen": 10
+    },
+    {
+        "_id": 149,
+        "eu": 10,
+        "member": "uz",
+        "name": "Uzbekistan",
+        "schengen": 10
+    },
+    {
+        "_id": 150,
+        "eu": 10,
+        "member": "ve",
+        "name": "Venezuela",
+        "schengen": 10
+    },
+    {
+        "_id": 151,
+        "eu": 10,
+        "member": "vn",
+        "name": "Vietnam",
+        "schengen": 10
+    },
+    {
+        "_id": 152,
+        "eu": 10,
+        "member": "ye",
+        "name": "Yemen",
+        "schengen": 10
+    },
+    {
+        "_id": 153,
+        "eu": 10,
+        "member": "zm",
+        "name": "Zambia",
+        "schengen": 10
+    },
+    {
+        "_id": 154,
+        "eu": 10,
+        "member": "zw",
+        "name": "Zimbabwe",
+        "schengen": 10
+    }
+]
