@@ -63,9 +63,10 @@ class ChartFragment : Fragment() {
         val data = LineData( styleDataSet(dataset) as LineDataSet)
         data.setDrawValues(false)
 
+        val ly = vModel.ldLastYear.value ?: 2022f   //last year on chart
 
         //data.setDrawValues(true)
-        lChart?.let { styleChart(it) }
+        lChart?.let { styleChart(it, ly) }
 
         // Передадим данные для графика в сам график
         lChart?.data = data
@@ -74,7 +75,7 @@ class ChartFragment : Fragment() {
         lChart?.invalidate()
     }
 
-    private fun styleChart (c: LineChart){
+    private fun styleChart (c: LineChart, xAxisMax: Float){
 
         val xAx: XAxis = c.xAxis
         xAx.position = XAxis.XAxisPosition.BOTTOM
@@ -82,8 +83,8 @@ class ChartFragment : Fragment() {
         xAx.textColor = getColorAnyWay(R.color.colorPrimaryDark, context, null)
         //xAxis.setDrawLabels(true)
         xAx.setDrawAxisLine(true)
-        xAx.axisMinimum=2010f
-        xAx.axisMaximum=2021f
+        xAx.axisMinimum = 2010f
+        xAx.axisMaximum = xAxisMax
         xAx.spaceMax = 2f
         xAx.spaceMin = 1f
         xAx.valueFormatter = MyXAxisFormatter()

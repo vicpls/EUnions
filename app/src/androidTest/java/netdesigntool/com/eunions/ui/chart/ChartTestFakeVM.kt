@@ -22,7 +22,6 @@ import org.mockito.Mockito.mock
 
 
 @RunWith(AndroidJUnit4::class)
-//@UninstallModules(DiFbProvider::class)
 @HiltAndroidTest
 @MediumTest
 class ChartTestFakeVM {
@@ -43,7 +42,8 @@ class ChartTestFakeVM {
         Pair("2022", 4.1)
     )
 
-    val ldWHIT: LiveData<Map<String, Number>> = MutableLiveData(whiData)
+    val ldWhiT: LiveData<Map<String, Number>> = MutableLiveData(whiData)
+    val ldLastYearT: LiveData<Float> = MutableLiveData(2022f)
 
     @BindValue
     @JvmField
@@ -51,8 +51,8 @@ class ChartTestFakeVM {
 
     @Before
     fun initMockChartVM(){
-        `when`(vModel.ldWHI).thenReturn(ldWHIT)
-        `when`(vModel.ldRankWHI).thenReturn(ldRankWHI)
+        `when`(vModel.ldWHI).thenReturn(ldWhiT)
+        `when`(vModel.ldLastYear).thenReturn(ldLastYearT)
     }
 
     //--------------------------------------------------------

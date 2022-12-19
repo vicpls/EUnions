@@ -19,6 +19,9 @@ class ChartVM @Inject constructor(
     val ldWHI: LiveData<Map<String, Number>> by this::_ldWHI
     private val _ldWHI : MutableLiveData<Map<String, Number>> = MutableLiveData(HashMap())
 
+    val ldLastYear: LiveData<Float> by this::_ldLY
+    private val _ldLY: MutableLiveData<Float> = MutableLiveData(2022f)
+
     /**
      * Rank of country in the list of World Happiness Index.
      * Map of <year, value> where year as String
@@ -27,12 +30,16 @@ class ChartVM @Inject constructor(
     private val _ldRankWHI : MutableLiveData<Map<String, Number>> = MutableLiveData(HashMap())
 
     fun requestWHI(isoCountryCode: String, title: String ="WHI"){
-    //override fun requestWHI(isoCountryCode: String, title: String){
-        fbProv.requestWHI(isoCountryCode, title){ whi->_ldWHI.postValue(whi) }
+        fbProv.requestWHI(isoCountryCode, title){ whi->
+                getLY(whi)?.let{ _ldLY.postValue(it) }
+                _ldWHI.postValue(whi) }
     }
 
     fun requestRankWHI(isoCountryCode: String, title: String = "Rank of country in the WHI"){
-    //override fun requestRankWHI(isoCountryCode: String, title: String){
         fbProv.requestRankWHI(isoCountryCode, title){ rankWhi -> _ldRankWHI.postValue(rankWhi) }
     }
+
+    private fun getLY(whi: Map<String, Number>): Float? =
+        whi.maxOf { it.key }.toFloatOrNull()
+
 }
