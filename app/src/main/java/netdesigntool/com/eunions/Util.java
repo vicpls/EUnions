@@ -121,13 +121,19 @@ public final class Util {
      * @return One of the keys of Map
      */
     public static <T> String getOneKey(Map<String, T> mMap){
-        String result="";
+        int result=0;
 
         for (String k : mMap.keySet()) {
-            result = k;
+
+            int key;
+            try{
+                key = Integer.parseUnsignedInt(k);
+            } catch (NumberFormatException nfex){ key = 0;}
+
+            result = Math.max(key, result);
         }
 
-        return result;
+        return Integer.toString(result);
     }
 
     /** Return color for given id regardless of the API version

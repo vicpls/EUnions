@@ -3,8 +3,6 @@ package com.hh.data.repo.firebase
 import android.content.Context
 import android.util.Log
 import com.google.firebase.FirebaseApp
-import com.google.firebase.appcheck.FirebaseAppCheck
-import com.google.firebase.appcheck.safetynet.SafetyNetAppCheckProviderFactory
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseException
 import com.google.firebase.database.DatabaseReference
@@ -80,11 +78,17 @@ class FirebaseDataProvider @Inject constructor(
         }
 
 
-        val firebaseAppCheck = FirebaseAppCheck.getInstance()
-        firebaseAppCheck.installAppCheckProviderFactory(
-            SafetyNetAppCheckProviderFactory.getInstance()        /// - deprecated.
+        //val firebaseAppCheck = FirebaseAppCheck.getInstance()
+
+        /*val appf = //if (BuildConfig.DEBUG)
+            DebugAppCheckProviderFactory.getInstance()*/
+        /*else
+            PlayIntegrityAppCheckProviderFactory.getInstance()*/
+
+        /*firebaseAppCheck.installAppCheckProviderFactory( appf
+            //SafetyNetAppCheckProviderFactory.getInstance()        /// - deprecated.
             //PlayIntegrityAppCheckProviderFactory.getInstance()      /// - Replacement.
-        )
+        )*/
     }
 
 

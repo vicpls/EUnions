@@ -32,7 +32,8 @@ class ChartVM @Inject constructor(
     fun requestWHI(isoCountryCode: String, title: String ="WHI"){
         fbProv.requestWHI(isoCountryCode, title){ whi->
                 getLY(whi)?.let{ _ldLY.postValue(it) }
-                _ldWHI.postValue(whi) }
+                _ldWHI.postValue(whi)
+        }
     }
 
     fun requestRankWHI(isoCountryCode: String, title: String = "Rank of country in the WHI"){

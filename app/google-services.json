@@ -1,100 +1,42 @@
 {
   "project_info": {
-    "project_number": "1012002562842",
-    "firebase_url": "https://fir-a0980.firebaseio.com",
-    "project_id": "fir-a0980",
-    "storage_bucket": "fir-a0980.appspot.com"
+    "project_number": "71668061549",
+    "firebase_url": "https://hh-traveler-1522778926221.firebaseio.com",
+    "project_id": "hh-traveler-1522778926221",
+    "storage_bucket": "hh-traveler-1522778926221.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1012002562842:android:a5d1d02de8c528a9d182a3",
-        "android_client_info": {
-          "package_name": "com.example.eunif"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "1012002562842-l6u1ehuv2g9psach78ndnljnge6k2mdl.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyDpD0VpOBon_zOE_jrbupbx8EQ0x407Wt8"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "1012002562842-l6u1ehuv2g9psach78ndnljnge6k2mdl.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:1012002562842:android:4660bde533dceb0cd182a3",
+        "mobilesdk_app_id": "1:71668061549:android:3b3673561431cc80c4f664",
         "android_client_info": {
           "package_name": "netdesigntool.com.eunions"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1012002562842-d3gut0r8p86anpbsc6hb7i23ons16etn.apps.googleusercontent.com",
+          "client_id": "71668061549-00ahiqn634li6jph3i6ojll374ml95ui.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "netdesigntool.com.eunions",
-            "certificate_hash": "95258347858756cd1b6aa782eca3c9887cbdb85d"
+            "certificate_hash": "e13353216140bbbcf136e1a1e4ea75063bd6bb29"
           }
         },
         {
-          "client_id": "1012002562842-l6u1ehuv2g9psach78ndnljnge6k2mdl.apps.googleusercontent.com",
+          "client_id": "71668061549-jkrip77jjsfshjhgcumg6ssm9m0p9h97.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDpD0VpOBon_zOE_jrbupbx8EQ0x407Wt8"
+          "current_key": "AIzaSyCMhR4_MdZ-1PYUviMcAUO1g-Ne9iIG36g"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1012002562842-l6u1ehuv2g9psach78ndnljnge6k2mdl.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:1012002562842:android:b9c6971467603affd182a3",
-        "android_client_info": {
-          "package_name": "netdesigntool.com.eunions.debug"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "1012002562842-l6u1ehuv2g9psach78ndnljnge6k2mdl.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyDpD0VpOBon_zOE_jrbupbx8EQ0x407Wt8"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "1012002562842-l6u1ehuv2g9psach78ndnljnge6k2mdl.apps.googleusercontent.com",
+              "client_id": "71668061549-jkrip77jjsfshjhgcumg6ssm9m0p9h97.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

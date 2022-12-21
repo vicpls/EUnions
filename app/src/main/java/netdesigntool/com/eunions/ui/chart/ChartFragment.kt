@@ -27,7 +27,7 @@ import netdesigntool.com.eunions.Util.getColorAnyWay
 class ChartFragment : Fragment() {
 
     private var lChart : LineChart? = null
-    val vModel: ChartVM by viewModels()
+    val vModel: ChartVM by viewModels({requireActivity()})
 
     override fun onCreateView(
         inflater: LayoutInflater,

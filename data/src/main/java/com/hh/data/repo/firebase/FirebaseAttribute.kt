@@ -10,7 +10,7 @@ import javax.inject.Singleton
 @Singleton
 class FirebaseAttribute @Inject constructor() {
 
-    val URL_REF = "https://fir-a0980.firebaseio.com/"  // URL of firebase
+    val URL_REF = "https://hh-traveler-1522778926221.firebaseio.com"
     val BASE_NAME = "Country"
 
 }

@@ -47,8 +47,7 @@ android {
             signingConfig signingConfigs.release
         }
 
-        debug {
-            //useProguard false
+        /*debug {
             def suffix
 
             if ("Linux" == System.getProperty("os.name")) {
@@ -58,7 +57,7 @@ android {
             }
             applicationIdSuffix suffix
             println("added sufix: "+ suffix)
-        }
+        }*/
 
         buildFeatures {
             viewBinding true
@@ -121,11 +120,6 @@ configurations.all {
         substitute module('org.hamcrest:hamcrest-library') using module('org.hamcrest:hamcrest:2.1')
     }
 }
-
-// For JUnit5 only
-//tasks.withType(Test) {
-//    useJUnitPlatform()
-//}
 
 
 dependencies {
@@ -229,9 +223,6 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.4'
     androidTestImplementation "org.mockito:mockito-core:+"
     androidTestImplementation "com.linkedin.dexmaker:dexmaker-mockito-inline:+"
-    //androidTestImplementation "org.mockito:mockito-android:+"
-    //androidTestImplementation "org.mockito:mockito-inline:+"
-    //androidTestImplementation "org.mockito.kotlin:mockito-kotlin:+"
     androidTestImplementation 'androidx.test.espresso:espresso-intents:3.5.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
     androidTestImplementation 'org.awaitility:awaitility:4.2.0'
