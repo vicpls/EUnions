@@ -3,13 +3,13 @@ package netdesigntool.com.eunions
 import android.app.Application
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.LiveData
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.runTest
 import com.hh.data.model.Country
 import com.hh.data.model.toCountry
 import com.hh.data.repo.local_db.AppDatabase
 import com.hh.data.repo.local_db.CountriesDao
 import com.hh.data.repo.local_db.entities.ParticipialCountries
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.runTest
 import netdesigntool.com.eunions.ui.main.MainActVM
 import org.awaitility.Awaitility
 import org.junit.*
@@ -19,7 +19,6 @@ import org.mockito.Mockito.`when`
 import org.mockito.junit.MockitoJUnitRunner
 import java.util.concurrent.TimeUnit
 
-@OptIn(ExperimentalCoroutinesApi::class)
 @RunWith(MockitoJUnitRunner::class)
 class MainActVmTest {
 

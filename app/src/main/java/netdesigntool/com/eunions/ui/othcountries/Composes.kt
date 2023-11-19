@@ -5,7 +5,13 @@ import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
@@ -24,7 +30,6 @@ import androidx.compose.ui.unit.sp
 import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import androidx.paging.compose.items
 import com.hh.data.model.BaseCountry
 import com.hh.data.model.Country
 import kotlinx.coroutines.flow.flowOf
@@ -73,8 +78,9 @@ fun CountryList(items: LazyPagingItems<out BaseCountry>,
             .padding(start = 60.dp, top =12.dp
                 , end = 5.dp, bottom = 12.dp )
     ){
-        items(items) { country ->
-            CountryItem(country, onCountryClick, getFlagId(country!!.iso, LocalContext.current))
+        items(items.itemCount) {index ->
+            val country = items[index]
+            CountryItem(country, getFlagId(country!!.iso, LocalContext.current), onCountryClick)
         }
     }
 }
@@ -82,8 +88,8 @@ fun CountryList(items: LazyPagingItems<out BaseCountry>,
 @Composable
 private fun CountryItem(
     country: BaseCountry?,
-    onCountryClick: (String, String) -> Unit,
-    @DrawableRes imgFlagId: Int
+    @DrawableRes imgFlagId: Int,
+    onCountryClick: (String, String) -> Unit
 ) {
     Row(Modifier.clickable { onCountryClick(country!!.iso, country.name) })
     {
