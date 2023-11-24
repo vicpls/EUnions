@@ -11,7 +11,6 @@ android {
 
     defaultConfig {
         minSdk = 21
-        //targetSdk = 34
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -46,9 +45,9 @@ dependencies {
     implementation ("androidx.core:core-ktx:1.12.0")
 
     //          Hilt
-    val hilt_ver = "2.48.1"
-    implementation ("com.google.dagger:hilt-android:$hilt_ver")
-    kapt ("com.google.dagger:hilt-compiler:$hilt_ver")
+    val hiltVer = "2.48.1"
+    implementation ("com.google.dagger:hilt-android:$hiltVer")
+    kapt ("com.google.dagger:hilt-compiler:$hiltVer")
 
     //          Retrofit
     val retrofit = "com.squareup.retrofit2"
@@ -62,11 +61,11 @@ dependencies {
     implementation ("io.reactivex.rxjava2:rxandroid:2.1.1")
 
     //          Room
-    val room_version = "2.6.0"
-    implementation ("androidx.room:room-runtime:$room_version")
-    kapt ("androidx.room:room-compiler:$room_version")
-    implementation ("androidx.room:room-ktx:$room_version")
-    implementation ("androidx.room:room-paging:$room_version")
+    val roomVer = "2.6.0"
+    implementation ("androidx.room:room-runtime:$roomVer")
+    kapt ("androidx.room:room-compiler:$roomVer")
+    implementation ("androidx.room:room-ktx:$roomVer")
+    implementation ("androidx.room:room-paging:$roomVer")
 
     //          Firebase
     // Import the BoM for the Firebase platform
@@ -80,6 +79,4 @@ dependencies {
     testImplementation ("junit:junit:4.13.2")
     testImplementation ("org.mockito:mockito-inline:4.10.0")
     testImplementation ("org.mockito.kotlin:mockito-kotlin:4.1.0")
-
-    androidTestImplementation ("androidx.test.ext:junit:1.1.5")
 }

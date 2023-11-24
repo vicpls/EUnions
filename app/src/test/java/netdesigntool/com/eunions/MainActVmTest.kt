@@ -8,7 +8,6 @@ import com.hh.data.model.toCountry
 import com.hh.data.repo.local_db.AppDatabase
 import com.hh.data.repo.local_db.CountriesDao
 import com.hh.data.repo.local_db.entities.ParticipialCountries
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import netdesigntool.com.eunions.ui.main.MainActVM
 import org.awaitility.Awaitility
@@ -42,13 +41,10 @@ class MainActVmTest {
     private var lstCountry: List<Country>? = null
 
 
-    @OptIn(ExperimentalCoroutinesApi::class)
     @Before
     fun testInit() {
 
         _model = MainActVM(dataRep, app)
-
-        //TODO("намокать обращение к ресурсам")
 
         `when`(dataRep.countriesDao()).thenReturn(cntDAO)
 
@@ -96,7 +92,7 @@ class MainActVmTest {
     }
 
     @Test
-    fun eu_Test(){
+    fun getEu_Test(){
         ld = _model?.ldEu
         ldSubscribeAndFetch()
         assertLdValue("Only one EU-member must be in array.", eu.toCountry())

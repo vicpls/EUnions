@@ -2,7 +2,7 @@ package netdesigntool.com.eunions.ui.chart
 
 import com.hh.data.repo.firebase.IFirebaseDataProvider
 
-class FakeFirebaseDataProvider: IFirebaseDataProvider {
+class MockFirebaseDataProvider: IFirebaseDataProvider {
 
     private val whiData = hashMapOf<String, Number>(
         Pair("2010", 5),

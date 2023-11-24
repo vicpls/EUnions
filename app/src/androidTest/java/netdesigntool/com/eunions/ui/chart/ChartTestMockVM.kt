@@ -17,33 +17,33 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.Mockito.`when`
 import org.mockito.Mockito.mock
+import org.mockito.Mockito.`when`
 
 
 @RunWith(AndroidJUnit4::class)
 @HiltAndroidTest
 @MediumTest
-class ChartTestFakeVM {
+class ChartTestMockVM {
 
-    val whiData = hashMapOf<String, Number>(
-        Pair("2010", 5),
+    private val whiDataSaw = hashMapOf<String, Number>(
+        Pair("2010", 3),
         Pair("2011", 5.5),
-        Pair("2012", 6),
-        Pair("2013", 6.3),
-        Pair("2014", 6.4),
-        Pair("2015", 6.5),
-        Pair("2016", 6.2),
-        Pair("2017", 5.9),
-        Pair("2018", 5.5),
-        Pair("2019", 5),
-        Pair("2020", 4.5),
-        Pair("2021", 4.3),
-        Pair("2022", 4.1)
+        Pair("2012", 3),
+        Pair("2013", 5.4),
+        Pair("2014", 3),
+        Pair("2015", 5.3),
+        Pair("2016", 3),
+        Pair("2017", 5.2),
+        Pair("2018", 3),
+        Pair("2019", 5.1),
+        Pair("2020", 3),
+        Pair("2021", 5),
+        Pair("2022", 3)
     )
 
-    val ldWhiT: LiveData<Map<String, Number>> = MutableLiveData(whiData)
-    val ldLastYearT: LiveData<Float> = MutableLiveData(2022f)
+    private val ldWhiT: LiveData<Map<String, Number>> = MutableLiveData(whiDataSaw)
+    private val ldLastYearT: LiveData<Float> = MutableLiveData(2022f)
 
     @BindValue
     @JvmField

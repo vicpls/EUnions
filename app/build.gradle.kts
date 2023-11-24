@@ -23,7 +23,7 @@ android {
         //testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         testInstrumentationRunner = "netdesigntool.com.eunions.CustomTestRunner"
         multiDexEnabled = true
-        resourceConfigurations += setOf("en", "ru")
+//        resourceConfigurations += setOf("en", "ru")
     }
 
     signingConfigs {
@@ -42,6 +42,9 @@ android {
         }
     }
 
+    androidResources {
+        generateLocaleConfig = true
+    }
 
     buildTypes {
         release {
@@ -52,10 +55,11 @@ android {
             signingConfig = signingConfigs.getByName("release")
         }
 
-        buildFeatures {
-            viewBinding = true
-            compose = true
-        }
+    }
+
+    buildFeatures {
+        viewBinding = true
+        compose = true
     }
 
     compileOptions {
@@ -107,7 +111,7 @@ dependencies {
     implementation ("androidx.lifecycle:lifecycle-common-java8:$lifeCycleVer")
     implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifeCycleVer")
 
-    implementation ("androidx.activity:activity-ktx:1.8.0")
+    implementation ("androidx.activity:activity-ktx:1.8.1")
     implementation ("androidx.fragment:fragment-ktx:1.6.2")
 
 
@@ -127,18 +131,18 @@ dependencies {
     implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
 
     //   =============== Jetpack Compose ====================
-    val compose_version = "1.5.4"
-    implementation ("androidx.compose.ui:ui:$compose_version")
-    implementation ("androidx.compose.ui:ui-tooling-preview:$compose_version")
-    implementation ("androidx.compose.compiler:compiler:$compose_version")
+    val composeVer = "1.5.4"
+    implementation ("androidx.compose.ui:ui:$composeVer")
+    implementation ("androidx.compose.ui:ui-tooling-preview:$composeVer")
+    implementation ("androidx.compose.compiler:compiler:$composeVer")
     // Compose Material Design
-    implementation ("androidx.compose.material:material:$compose_version")
+    implementation ("androidx.compose.material:material:$composeVer")
     // Integration with activities
-    implementation ("androidx.activity:activity-compose:1.8.0")
+    implementation ("androidx.activity:activity-compose:1.8.1")
     // Animations
     //implementation 'androidx.compose.animation:animation:1.0.5'
     // Tooling support (Previews, etc.)
-    implementation ("androidx.compose.ui:ui-tooling:$compose_version")
+    implementation ("androidx.compose.ui:ui-tooling:$composeVer")
 
     // Integration with ViewModels
     implementation ("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.2")
@@ -151,25 +155,26 @@ dependencies {
     implementation ("androidx.paging:paging-compose:3.3.0-alpha02")
 
     //          Hilt
-    val hilt_ver = "2.48.1"
-    implementation ("com.google.dagger:hilt-android:$hilt_ver")
-    kapt ("com.google.dagger:hilt-compiler:$hilt_ver")
+    val hiltVer = "2.48.1"
+    implementation ("com.google.dagger:hilt-android:$hiltVer")
+    kapt ("com.google.dagger:hilt-compiler:$hiltVer")
 
     //          Room
-    val room_version = "2.6.0"
-    implementation ("androidx.room:room-runtime:$room_version")
-    kapt ("androidx.room:room-compiler:$room_version")
-    implementation ("androidx.room:room-ktx:$room_version")
-    implementation ("androidx.room:room-paging:$room_version")
+    val roomVer = "2.6.0"
+    implementation ("androidx.room:room-runtime:$roomVer")
+    kapt ("androidx.room:room-compiler:$roomVer")
+    implementation ("androidx.room:room-ktx:$roomVer")
+    implementation ("androidx.room:room-paging:$roomVer")
 
 
     //   Test
+    val mockitoCoreVer = "5.7.0"
     val mockitoInlVer = "4.10.0"
     val mockitoKotlinVer = "4.1.0"
     testImplementation ("junit:junit:4.13.2")
     testImplementation ("android.arch.core:core-testing:1.1.1")
     testImplementation ("androidx.test:core:1.5.0")
-    testImplementation ("org.mockito:mockito-core:+")
+    testImplementation ("org.mockito:mockito-core:$mockitoCoreVer")
     testImplementation ("org.mockito:mockito-inline:$mockitoInlVer")
     testImplementation ("org.mockito.kotlin:mockito-kotlin:$mockitoKotlinVer")
     testImplementation ("org.robolectric:robolectric:4.9")
@@ -184,21 +189,28 @@ dependencies {
     androidTestImplementation ("androidx.test:runner:1.5.2")
     androidTestImplementation ("androidx.test:rules:1.5.0")
     androidTestImplementation ("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation ("org.mockito:mockito-core:+")
-    androidTestImplementation ("com.linkedin.dexmaker:dexmaker-mockito-inline:+")
+    androidTestImplementation ("org.mockito:mockito-core:$mockitoCoreVer")
+    androidTestImplementation ("com.linkedin.dexmaker:dexmaker-mockito-inline:2.28.3")
     androidTestImplementation ("androidx.test.espresso:espresso-intents:3.5.1")
     androidTestImplementation ("androidx.test.espresso:espresso-core:3.5.1")
     androidTestImplementation ("org.awaitility:awaitility:4.2.0")
-    androidTestImplementation ("androidx.compose.ui:ui-test-junit4:1.5.4")
-
+    // Test rules and transitive dependencies:
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4:$composeVer")
+    // Needed for createAndroidComposeRule, but not createComposeRule:
+    debugImplementation("androidx.compose.ui:ui-test-manifest:$composeVer")
 
     debugImplementation ("androidx.fragment:fragment-testing:1.7.0-alpha06")
 
     // *** Hilt ***
     // For instrumentation tests
-    androidTestImplementation  ("com.google.dagger:hilt-android-testing:$hilt_ver")
-    kaptAndroidTest ("com.google.dagger:hilt-android-compiler:$hilt_ver")
-    androidTestAnnotationProcessor ("com.google.dagger:hilt-compiler:$hilt_ver")
+    androidTestImplementation  ("com.google.dagger:hilt-android-testing:$hiltVer")
+    kaptAndroidTest ("com.google.dagger:hilt-android-compiler:$hiltVer")
+    androidTestAnnotationProcessor ("com.google.dagger:hilt-compiler:$hiltVer")
+
+    val kaspressoVer = "1.5.3"
+    androidTestImplementation("com.kaspersky.android-components:kaspresso:$kaspressoVer")
+    androidTestImplementation("com.kaspersky.android-components:kaspresso-compose-support:$kaspressoVer")
+    androidTestUtil("androidx.test:orchestrator:1.4.2")
 
 }
 

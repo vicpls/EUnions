@@ -9,10 +9,10 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object DiFakeFbProvider {
+object DiMockFbProvider {
 
     @Singleton
     @Provides
     fun getFbProvider() : IFirebaseDataProvider =
-        FakeFirebaseDataProvider()
+        MockFirebaseDataProvider()
 }

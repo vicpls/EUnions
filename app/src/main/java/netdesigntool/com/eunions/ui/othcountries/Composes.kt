@@ -22,6 +22,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -35,6 +36,7 @@ import com.hh.data.model.Country
 import kotlinx.coroutines.flow.flowOf
 import netdesigntool.com.eunions.R
 
+const val ComposeTestTag_CountryList = "CountryList"
 
 @Composable
 fun ShowContent(items: LazyPagingItems<out BaseCountry>,
@@ -74,9 +76,11 @@ fun CountryList(items: LazyPagingItems<out BaseCountry>,
     ) {
 
     LazyColumn (verticalArrangement = Arrangement.spacedBy(6.dp)
-        , modifier = Modifier.background(colorResource(R.color.others), RoundedCornerShape(15.dp))
+        , modifier = Modifier
+            .background(colorResource(R.color.others), RoundedCornerShape(15.dp))
             .padding(start = 60.dp, top =12.dp
                 , end = 5.dp, bottom = 12.dp )
+            .testTag(ComposeTestTag_CountryList)
     ){
         items(items.itemCount) {index ->
             val country = items[index]
