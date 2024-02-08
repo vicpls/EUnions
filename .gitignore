@@ -8,8 +8,9 @@ Key_store/
 
 *.iml
 
-.hg*
 *.jks
+*.log
+.hg*
 local.properties
 keystore.properties
 gradlew*
