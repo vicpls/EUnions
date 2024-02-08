@@ -3,7 +3,6 @@ package netdesigntool.com.eunions;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
-
 import static netdesigntool.com.eunions.Util.getOneKey;
 
 import android.content.Context;
@@ -82,9 +81,9 @@ public class UtilTest {
     public void test_getOneKey(){
 
         Map<String, Integer> mMap = new HashMap<>(3);
-        mMap.put("One", 1);
-        mMap.put("Two",2);
-        mMap.put("Three", 3);
+        mMap.put("1", 1);
+        mMap.put("2", 2);
+        mMap.put("3", 3);
 
         assertTrue(mMap.containsKey(getOneKey(mMap)));
     }
