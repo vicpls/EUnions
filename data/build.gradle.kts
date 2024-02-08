@@ -64,7 +64,7 @@ dependencies {
     implementation ("io.reactivex.rxjava2:rxandroid:2.1.1")
 
     //          Room
-    val roomVer = "2.6.0"
+    val roomVer = "2.6.1"
     implementation ("androidx.room:room-runtime:$roomVer")
     kapt ("androidx.room:room-compiler:$roomVer")
     implementation ("androidx.room:room-ktx:$roomVer")

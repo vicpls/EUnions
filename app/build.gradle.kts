@@ -100,19 +100,19 @@ dependencies {
     implementation ("androidx.constraintlayout:constraintlayout:2.1.4")
     //
     implementation ("androidx.recyclerview:recyclerview:1.3.2")
-    implementation ("com.google.android.material:material:1.10.0")
-    implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
+    implementation ("com.google.android.material:material:1.11.0")
     implementation ("com.google.android.flexbox:flexbox:3.0.0")
 
-    implementation ("androidx.annotation:annotation-experimental:1.3.1")
+    implementation ("androidx.annotation:annotation-experimental:1.4.0")
 
-    val lifeCycleVer = "2.6.2"
+    val lifeCycleVer = "2.7.0"
     //noinspection KtxExtensionAvailable
     implementation ("androidx.lifecycle:lifecycle-viewmodel:$lifeCycleVer")
+    implementation ("androidx.lifecycle:lifecycle-runtime-ktx:$lifeCycleVer")
     implementation ("androidx.lifecycle:lifecycle-common-java8:$lifeCycleVer")
     implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifeCycleVer")
 
-    implementation ("androidx.activity:activity-ktx:1.8.1")
+    implementation ("androidx.activity:activity-ktx:1.8.2")
     implementation ("androidx.fragment:fragment-ktx:1.6.2")
 
 
@@ -122,7 +122,6 @@ dependencies {
 
 
     //              RxJava
-    //implementation 'io.reactivex.rxjava2:rxjava:2.2.21'
     implementation ("io.reactivex.rxjava2:rxandroid:2.1.1")
 
     //              AboutActivity
@@ -132,21 +131,21 @@ dependencies {
     implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
 
     //   =============== Jetpack Compose ====================
-    val composeVer = "1.5.4"
+    val composeVer = "1.6.1"
     implementation ("androidx.compose.ui:ui:$composeVer")
     implementation ("androidx.compose.ui:ui-tooling-preview:$composeVer")
-    implementation ("androidx.compose.compiler:compiler:$composeVer")
+    implementation ("androidx.compose.compiler:compiler:1.5.9")
     // Compose Material Design
     implementation ("androidx.compose.material:material:$composeVer")
     // Integration with activities
-    implementation ("androidx.activity:activity-compose:1.8.1")
+    implementation ("androidx.activity:activity-compose:1.8.2")
     // Animations
     //implementation 'androidx.compose.animation:animation:1.0.5'
     // Tooling support (Previews, etc.)
     implementation ("androidx.compose.ui:ui-tooling:$composeVer")
 
     // Integration with ViewModels
-    implementation ("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.2")
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
     implementation ("com.google.accompanist:accompanist-appcompat-theme:0.16.0")
 
 
@@ -161,7 +160,7 @@ dependencies {
     kapt ("com.google.dagger:hilt-compiler:$hiltVer")
 
     //          Room
-    val roomVer = "2.6.0"
+    val roomVer = "2.6.1"
     implementation ("androidx.room:room-runtime:$roomVer")
     kapt ("androidx.room:room-compiler:$roomVer")
     implementation ("androidx.room:room-ktx:$roomVer")
@@ -200,7 +199,7 @@ dependencies {
     // Needed for createAndroidComposeRule, but not createComposeRule:
     debugImplementation("androidx.compose.ui:ui-test-manifest:$composeVer")
 
-    debugImplementation ("androidx.fragment:fragment-testing:1.7.0-alpha06")
+    debugImplementation ("androidx.fragment:fragment-testing:1.7.0-alpha09")
 
     // *** Hilt ***
     // For instrumentation tests
