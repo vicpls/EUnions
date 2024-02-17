@@ -96,121 +96,101 @@ dependencies {
     implementation (project(path = ":data"))
 
     implementation (fileTree(mapOf("include" to listOf("*.jar"), "dir" to "libs")))
-    implementation ("androidx.appcompat:appcompat:1.6.1")
-    implementation ("androidx.constraintlayout:constraintlayout:2.1.4")
+
+    implementation (libs.androidx.appcompat)
+    implementation (libs.androidx.constraintlayout)
     //
-    implementation ("androidx.recyclerview:recyclerview:1.3.2")
-    implementation ("com.google.android.material:material:1.11.0")
-    implementation ("com.google.android.flexbox:flexbox:3.0.0")
+    implementation (libs.androidx.recyclerview)
+    implementation (libs.material)
+    implementation (libs.flexbox)
 
-    implementation ("androidx.annotation:annotation-experimental:1.4.0")
+    implementation (libs.androidx.annotation.experimental)
 
-    val lifeCycleVer = "2.7.0"
-    //noinspection KtxExtensionAvailable
-    implementation ("androidx.lifecycle:lifecycle-viewmodel:$lifeCycleVer")
-    implementation ("androidx.lifecycle:lifecycle-runtime-ktx:$lifeCycleVer")
-    implementation ("androidx.lifecycle:lifecycle-common-java8:$lifeCycleVer")
-    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifeCycleVer")
+    implementation (libs.bundles.lifecycle)
 
-    implementation ("androidx.activity:activity-ktx:1.8.2")
-    implementation ("androidx.fragment:fragment-ktx:1.6.2")
+    implementation (libs.androidx.activity.ktx)
+    implementation (libs.androidx.fragment.ktx)
 
 
     //              Kotlin coroutines
     val coroutinesVer = "1.7.3"
-    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVer")
+    implementation (libs.kotlinx.coroutines.android)
 
 
     //              RxJava
-    implementation ("io.reactivex.rxjava2:rxandroid:2.1.1")
+    implementation (libs.rxjava2)
 
     //              AboutActivity
-    implementation ("com.github.biagiopietro:AboutActivity:1.4")
+    implementation (libs.aboutActivity)
 
     //              MPAndroid charts
     implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
 
     //   =============== Jetpack Compose ====================
     val composeVer = "1.6.1"
-    implementation ("androidx.compose.ui:ui:$composeVer")
-    implementation ("androidx.compose.ui:ui-tooling-preview:$composeVer")
-    implementation ("androidx.compose.compiler:compiler:1.5.9")
-    // Compose Material Design
-    implementation ("androidx.compose.material:material:$composeVer")
-    // Integration with activities
-    implementation ("androidx.activity:activity-compose:1.8.2")
+    implementation (libs.bundles.compose)
     // Animations
     //implementation 'androidx.compose.animation:animation:1.0.5'
-    // Tooling support (Previews, etc.)
-    implementation ("androidx.compose.ui:ui-tooling:$composeVer")
 
     // Integration with ViewModels
-    implementation ("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
-    implementation ("com.google.accompanist:accompanist-appcompat-theme:0.16.0")
+    implementation (libs.androidx.lifecycle.viewmodel.compose)
+    implementation (libs.accompanist.appcompat.theme)
 
 
 
     //          Paging
-    implementation ("androidx.paging:paging-runtime-ktx:3.2.1")
-    implementation ("androidx.paging:paging-compose:3.3.0-alpha02")
+    implementation (libs.androidx.paging.runtime.ktx)
+    implementation (libs.androidx.paging.compose)
 
     //          Hilt
-    val hiltVer = "2.48.1"
-    implementation ("com.google.dagger:hilt-android:$hiltVer")
-    kapt ("com.google.dagger:hilt-compiler:$hiltVer")
+    implementation (libs.hilt.android)
+    kapt (libs.hilt.compiler)
 
     //          Room
-    val roomVer = "2.6.1"
-    implementation ("androidx.room:room-runtime:$roomVer")
-    kapt ("androidx.room:room-compiler:$roomVer")
-    implementation ("androidx.room:room-ktx:$roomVer")
-    implementation ("androidx.room:room-paging:$roomVer")
+    implementation (libs.bundles.room)
+    kapt (libs.androidx.room.compiler)
 
 
     //   Test
-    val mockitoCoreVer = "5.7.0"
-    val mockitoInlVer = "4.10.0"
-    val mockitoKotlinVer = "4.1.0"
-    testImplementation ("junit:junit:4.13.2")
-    testImplementation ("android.arch.core:core-testing:1.1.1")
-    testImplementation ("androidx.test:core:1.5.0")
-    testImplementation ("org.mockito:mockito-core:$mockitoCoreVer")
-    testImplementation ("org.mockito:mockito-inline:$mockitoInlVer")
-    testImplementation ("org.mockito.kotlin:mockito-kotlin:$mockitoKotlinVer")
-    testImplementation ("org.robolectric:robolectric:4.9")
-    testImplementation ("org.awaitility:awaitility:4.2.0")
-    testImplementation ("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVer")
+    testImplementation (libs.junit)
+    testImplementation (libs.core.testing)
+    testImplementation (libs.androidx.core)
+    testImplementation (libs.mockito.core)
+    testImplementation (libs.mockito.inline)
+    testImplementation (libs.mockito.kotlin)
+    testImplementation (libs.robolectric)
+    testImplementation (libs.awaitility)
+    testImplementation (libs.kotlinx.coroutines.test)
 
 
     
     //    AndroidTest
     androidTestImplementation (project(path= ":app"))
 
-    androidTestImplementation ("androidx.test:runner:1.5.2")
-    androidTestImplementation ("androidx.test:rules:1.5.0")
-    androidTestImplementation ("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation ("org.mockito:mockito-core:$mockitoCoreVer")
-    androidTestImplementation ("com.linkedin.dexmaker:dexmaker-mockito-inline:2.28.3")
-    androidTestImplementation ("androidx.test.espresso:espresso-intents:3.5.1")
-    androidTestImplementation ("androidx.test.espresso:espresso-core:3.5.1")
-    androidTestImplementation ("org.awaitility:awaitility:4.2.0")
+    androidTestImplementation (libs.androidx.runner)
+    androidTestImplementation (libs.androidx.rules)
+    androidTestImplementation (libs.androidx.junit)
+    androidTestImplementation (libs.mockito.core)
+    androidTestImplementation (libs.dexmaker.mockito.inline)
+    androidTestImplementation (libs.androidx.espresso.intents)
+    androidTestImplementation (libs.androidx.espresso.core)
+    androidTestImplementation (libs.awaitility)
     // Test rules and transitive dependencies:
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4:$composeVer")
+    androidTestImplementation(libs.androidx.ui.test.junit4)
     // Needed for createAndroidComposeRule, but not createComposeRule:
-    debugImplementation("androidx.compose.ui:ui-test-manifest:$composeVer")
+    debugImplementation(libs.androidx.ui.test.manifest)
 
-    debugImplementation ("androidx.fragment:fragment-testing:1.7.0-alpha09")
+    debugImplementation (libs.androidx.fragment.testing)
 
     // *** Hilt ***
     // For instrumentation tests
-    androidTestImplementation  ("com.google.dagger:hilt-android-testing:$hiltVer")
-    kaptAndroidTest ("com.google.dagger:hilt-android-compiler:$hiltVer")
-    androidTestAnnotationProcessor ("com.google.dagger:hilt-compiler:$hiltVer")
+    androidTestImplementation  (libs.hilt.android.testing)
+    kaptAndroidTest (libs.hilt.android.kapt.test)
+    androidTestAnnotationProcessor (libs.hilt.compiler)
 
-    val kaspressoVer = "1.5.3"
-    androidTestImplementation("com.kaspersky.android-components:kaspresso:$kaspressoVer")
-    androidTestImplementation("com.kaspersky.android-components:kaspresso-compose-support:$kaspressoVer")
-    androidTestUtil("androidx.test:orchestrator:1.4.2")
+    androidTestImplementation(libs.kaspresso)
+    androidTestImplementation(libs.kaspresso.compose.support)
+    androidTestUtil(libs.androidx.orchestrator)
 
 }
 

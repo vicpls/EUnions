@@ -45,30 +45,21 @@ android {
 
 dependencies {
 
-    implementation ("androidx.core:core-ktx:1.12.0")
+    implementation (libs.androidx.core.ktx)
 
     //          Hilt
-    val hiltVer = "2.48.1"
-    implementation ("com.google.dagger:hilt-android:$hiltVer")
-    kapt ("com.google.dagger:hilt-compiler:$hiltVer")
+    implementation (libs.hilt.android)
+    kapt (libs.hilt.compiler)
 
     //          Retrofit
-    val retrofit = "com.squareup.retrofit2"
-    val retrofitVer = "2.9.0"
-    implementation ("$retrofit:retrofit:$retrofitVer")
-    implementation ("$retrofit:converter-moshi:$retrofitVer")
-    implementation ("$retrofit:adapter-rxjava2:$retrofitVer")
-    implementation ("com.squareup.okhttp3:logging-interceptor:4.11.0")
+    implementation (libs.bundles.retrofit)
 
     //          RxJava
-    implementation ("io.reactivex.rxjava2:rxandroid:2.1.1")
+    implementation (libs.rxjava2)
 
     //          Room
-    val roomVer = "2.6.1"
-    implementation ("androidx.room:room-runtime:$roomVer")
-    kapt ("androidx.room:room-compiler:$roomVer")
-    implementation ("androidx.room:room-ktx:$roomVer")
-    implementation ("androidx.room:room-paging:$roomVer")
+    implementation (libs.bundles.room)
+    kapt (libs.androidx.room.compiler)
 
     //          Firebase
     // Import the BoM for the Firebase platform
@@ -79,7 +70,7 @@ dependencies {
     //implementation 'com.google.firebase:firebase-appcheck-playintegrity'
     //implementation 'com.google.firebase:firebase-appcheck-debug:16.1.0'
 
-    testImplementation ("junit:junit:4.13.2")
-    testImplementation ("org.mockito:mockito-inline:4.10.0")
-    testImplementation ("org.mockito.kotlin:mockito-kotlin:4.1.0")
+    testImplementation (libs.junit)
+    testImplementation (libs.mockito.inline)
+    testImplementation (libs.mockito.kotlin)
 }
