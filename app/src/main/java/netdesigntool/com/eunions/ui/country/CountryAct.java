@@ -271,7 +271,7 @@ CountryAct extends AppCompatActivity {
        private void subscribeMessage()
        {
            viewModel.getLdMessage().observe(CountryAct.this,
-                   resStrInt-> userNotify(resStrInt)
+                   CountryAct.this::userNotify
            );
        }
 
