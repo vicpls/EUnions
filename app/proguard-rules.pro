@@ -14,7 +14,7 @@
 
 # Uncomment this to preserve the line number information for
 # debugging stack traces.
-#-keepattributes SourceFile,LineNumberTable
+-keepattributes SourceFile,LineNumberTable
 
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
@@ -54,8 +54,8 @@
 
 # With R8 full mode, it sees no subtypes of Retrofit interfaces since they are created with a Proxy
 # and replaces all potential values with null. Explicitly keeping the interfaces prevents this.
-#-if interface * { @retrofit2.http.* <methods>; }
-#-keep,allowobfuscation interface <1>
+-if interface * { @retrofit2.http.* <methods>; }
+-keep,allowobfuscation interface <1>
 
 # Delete Log.d()
 -assumenosideeffects class android.util.Log {
@@ -63,4 +63,16 @@ public static int d(...);
 }
 
 ## For debuging only
-#-dontobfuscate
+-dontobfuscate
+
+#-keep class netdesigntool.com.eunions.R$string {
+#    public static *;
+#}
+
+# Moshi
+-keep class com.squareup.moshi.** { *; }
+-dontwarn com.squareup.moshi.**
+
+# Удержание сгенерированных Moshi адаптеров
+-keep class *JsonAdapter { *; }
+

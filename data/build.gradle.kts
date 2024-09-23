@@ -23,7 +23,8 @@ android {
 
         buildTypes {
             release {
-                isMinifyEnabled = true
+                isMinifyEnabled = false
+//                isMinifyEnabled = true    // не сохраняются сериализованные классы
                 proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
             }
         }

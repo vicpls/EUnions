@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
 
-              android:orientation="horizontal"
-              android:paddingLeft="8dp"
-              android:paddingRight="8dp">
+    android:orientation="horizontal"
+    android:paddingLeft="8dp"
+    android:paddingRight="8dp">
 
 
     <ImageView
@@ -18,8 +17,8 @@
         android:layout_weight="20"
         tools:layout_height="22dp"
         tools:layout_width="15dp"
-        tools:src="@mipmap/at"
-        tools:srcCompat="@mipmap/at" />
+        tools:src="@drawable/flg_at"
+        tools:srcCompat="@drawable/flg_at" />
 
     <TextView
         android:id="@+id/tvCountry"

@@ -50,7 +50,8 @@ android {
         release {
             isMinifyEnabled = true
             isDebuggable = false
-            isShrinkResources = true
+            //isDebuggable = true
+            //isShrinkResources = true  // теряет строки
             proguardFiles (getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
             signingConfig = signingConfigs.getByName("release")
         }
@@ -75,7 +76,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.4"
+        kotlinCompilerExtensionVersion = "1.5.15"
     }
 
     kotlinOptions {
@@ -96,6 +97,8 @@ dependencies {
     implementation (project(path = ":data"))
 
     implementation (fileTree(mapOf("include" to listOf("*.jar"), "dir" to "libs")))
+
+    coreLibraryDesugaring(libs.desugar.jdk.libs)
 
     implementation (libs.androidx.appcompat)
     implementation (libs.androidx.constraintlayout)
