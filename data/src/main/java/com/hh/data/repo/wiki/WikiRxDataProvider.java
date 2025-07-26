@@ -226,6 +226,7 @@ public class WikiRxDataProvider {
 
 
 
+    @SuppressWarnings("unchecked")
     // Common parametrized request.
     void startWdRequest(String sparqlRequest, WikiParser parser){
         Single<WikiResponse> wikiResp = wikiRxService.wikiRxQuery(sparqlRequest);
@@ -241,7 +242,7 @@ public class WikiRxDataProvider {
 
                         int qty=0;
                         try {
-                            resp = wikiResponses.results.bindings;
+                            resp = (List<Map>) wikiResponses.results.bindings;
                             qty = resp.size();
                         }catch (Exception e){
                             Log.e(LTAG, "WikiData response is empty or incorrect. \n"+ e.getMessage());

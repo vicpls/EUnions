@@ -10,7 +10,11 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.hh.data.repo.LTAG
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -142,6 +146,7 @@ class FirebaseDataProvider @Inject constructor(
         if (answer !=null) {
 
             try {
+                @Suppress("UNCHECKED_CAST")
                 when (answer) {
                     is Long -> result[title] = answer.toFloat()
                     is Double -> result[title] = answer.toFloat()

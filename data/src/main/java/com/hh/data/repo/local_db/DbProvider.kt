@@ -19,12 +19,12 @@ object DbProvider {
     @Singleton
     fun getDB(@ApplicationContext context: Context) : AppDatabase{
         return Room.databaseBuilder(
-                        context,
-                        AppDatabase::class.java,
-                        DB_FILE_NAME)
-                    .createFromAsset(DB_FILE_NAME)
-                    .fallbackToDestructiveMigration()
-                    .build()
+            context,
+            AppDatabase::class.java,
+            DB_FILE_NAME)
+            .createFromAsset(DB_FILE_NAME)
+            .fallbackToDestructiveMigration(false)
+            .build()
 
     }
 }

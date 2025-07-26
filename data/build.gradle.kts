@@ -1,12 +1,12 @@
 plugins {
     id ("com.android.library")
     id ("org.jetbrains.kotlin.android")
-    id ("org.jetbrains.kotlin.kapt")
-    id ("dagger.hilt.android.plugin")
+    id("com.google.devtools.ksp")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
-    compileSdk = 34
+    compileSdk = 35
     namespace = "com.hh.data"
 
     defaultConfig {
@@ -16,9 +16,9 @@ android {
         consumerProguardFiles("consumer-rules.pro")
 
         // to generate json file with db schema for each db version
-        kapt {
+        /*kapt {
             arguments { arg("room.schemaLocation", "$projectDir/schemas") }
-        }
+        }*/
 
 
         buildTypes {
@@ -50,7 +50,7 @@ dependencies {
 
     //          Hilt
     implementation (libs.hilt.android)
-    kapt (libs.hilt.compiler)
+    ksp(libs.hilt.android.compiler)
 
     //          Retrofit
     implementation (libs.bundles.retrofit)
@@ -60,7 +60,7 @@ dependencies {
 
     //          Room
     implementation (libs.bundles.room)
-    kapt (libs.androidx.room.compiler)
+    ksp (libs.androidx.room.compiler)
 
     //          Firebase
     // Import the BoM for the Firebase platform

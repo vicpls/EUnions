@@ -2,6 +2,7 @@ package netdesigntool.com.eunions.ui.main;
 
 import static netdesigntool.com.eunions.Util.LTAG;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,6 +30,7 @@ import dagger.hilt.android.AndroidEntryPoint;
 import netdesigntool.com.eunions.R;
 import netdesigntool.com.eunions.databinding.ActMainBinding;
 import netdesigntool.com.eunions.ui.AboutAct;
+import netdesigntool.com.eunions.ui.InsetsListener;
 import netdesigntool.com.eunions.ui.othcountries.FrOtherCountryList;
 
 @AndroidEntryPoint
@@ -52,14 +55,20 @@ public class MainActivity extends AppCompatActivity
 
         observeViewModel(mainActVM);
 
-        //binding.flOthers.setOnClickListener(new OnOtherCountryClickFr());
         binding.fabOthers.setOnClickListener(new OnOtherCountryClickFr());
-    }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        binding.fabOthers.setVisibility(View.VISIBLE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            binding.flRoot.setOnApplyWindowInsetsListener(new InsetsListener());
+        }
+
+        OnBackPressedCallback backCB = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                binding.fabOthers.setVisibility(View.VISIBLE);
+            }
+        };
+
+        getOnBackPressedDispatcher().addCallback(backCB);
     }
 
     private void observeViewModel(MainActVM vm){

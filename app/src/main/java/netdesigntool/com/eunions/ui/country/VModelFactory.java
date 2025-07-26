@@ -27,6 +27,7 @@ class VModelFactory extends ViewModelProvider.AndroidViewModelFactory{
         return create(modelClass);
     }
 
+    @SuppressWarnings("unchecked")
     @NonNull
     @Override
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {

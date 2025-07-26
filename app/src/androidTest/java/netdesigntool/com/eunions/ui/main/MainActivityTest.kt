@@ -29,10 +29,10 @@ class MainActivityTest: TestCase() {
     var hiltRule = HiltAndroidRule(this)
 
     @get:Rule
-    val activityRule = ActivityScenarioRule(MainActivity::class.java)
+    val composeTestRule = createEmptyComposeRule()
 
     @get:Rule
-    val composeTestRule = createEmptyComposeRule()
+    val activityRule = ActivityScenarioRule(MainActivity::class.java)
 
     @Test
     fun test() = run {

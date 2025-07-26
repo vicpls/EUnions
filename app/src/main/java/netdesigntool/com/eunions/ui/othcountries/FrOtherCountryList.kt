@@ -10,12 +10,11 @@ import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
-import androidx.paging.PagingSource
 import androidx.paging.compose.collectAsLazyPagingItems
-import dagger.hilt.android.AndroidEntryPoint
-import netdesigntool.com.eunions.R
 import com.hh.data.model.BaseCountry
 import com.hh.data.repo.local_db.AppDatabase
+import dagger.hilt.android.AndroidEntryPoint
+import netdesigntool.com.eunions.R
 import netdesigntool.com.eunions.ui.country.CountryAct
 import javax.inject.Inject
 
@@ -29,11 +28,11 @@ class FrOtherCountryList : Fragment(){
     @Inject
     lateinit var appDB: AppDatabase
 
-    private val pager: Pager<Int, BaseCountry> by lazy(LazyThreadSafetyMode.NONE) {
+    private val pager: Pager<Int, out BaseCountry> by lazy(LazyThreadSafetyMode.NONE) {
         val pConfig = PagingConfig(20, 3, false)
 
         Pager(pConfig, null) {
-            appDB.countriesDao().getOtherCountries() as PagingSource<Int, BaseCountry>
+            appDB.countriesDao().getOtherCountries()
         }
     }
 

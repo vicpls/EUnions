@@ -5,19 +5,20 @@ plugins {
     id ("com.android.application")
     id ("com.google.gms.google-services")
     id ("org.jetbrains.kotlin.android")
-    id ("org.jetbrains.kotlin.kapt")
-    id ("dagger.hilt.android.plugin")
+    id("com.google.devtools.ksp")
+    id("com.google.dagger.hilt.android")
+    id("org.jetbrains.kotlin.plugin.compose")
 }
 
 
 android {
-    compileSdk = 34
+    compileSdk = 35
     namespace = "netdesigntool.com.eunions"
 
     defaultConfig {
         applicationId = "netdesigntool.com.eunions"
         minSdk = 21
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 14
         versionName ="1.7"
         //testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -75,10 +76,6 @@ android {
         }
     }
 
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.15"
-    }
-
     kotlinOptions {
         jvmTarget = "21"
     }
@@ -91,6 +88,15 @@ android {
 
 }
 
+ksp {
+    arg("room.schemaLocation", "$projectDir/schemas")
+}
+
+composeCompiler {
+    reportsDestination = layout.buildDirectory.dir("compose_compiler")
+    /*stabilityConfigurationFile =
+        rootProject.layout.projectDirectory.file("stability_config.conf")*/
+}
 
 dependencies {
 
@@ -116,7 +122,6 @@ dependencies {
 
 
     //              Kotlin coroutines
-    val coroutinesVer = "1.7.3"
     implementation (libs.kotlinx.coroutines.android)
 
 
@@ -127,10 +132,10 @@ dependencies {
     implementation (libs.aboutActivity)
 
     //              MPAndroid charts
+    //noinspection UseTomlInstead
     implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
 
     //   =============== Jetpack Compose ====================
-    val composeVer = "1.6.1"
     implementation (libs.bundles.compose)
     // Animations
     //implementation 'androidx.compose.animation:animation:1.0.5'
@@ -147,11 +152,11 @@ dependencies {
 
     //          Hilt
     implementation (libs.hilt.android)
-    kapt (libs.hilt.compiler)
+    ksp(libs.hilt.android.compiler)
 
     //          Room
     implementation (libs.bundles.room)
-    kapt (libs.androidx.room.compiler)
+    ksp (libs.androidx.room.compiler)
 
 
     //   Test
@@ -185,19 +190,14 @@ dependencies {
 
     debugImplementation (libs.androidx.fragment.testing)
 
+    debugImplementation ("androidx.test:monitor:1.7.2")
+
     // *** Hilt ***
     // For instrumentation tests
     androidTestImplementation  (libs.hilt.android.testing)
-    kaptAndroidTest (libs.hilt.android.kapt.test)
-    androidTestAnnotationProcessor (libs.hilt.compiler)
 
     androidTestImplementation(libs.kaspresso)
     androidTestImplementation(libs.kaspresso.compose.support)
     androidTestUtil(libs.androidx.orchestrator)
 
-}
-
-//  For Hilt with Kotlin
-kapt {
-    correctErrorTypes = true
 }

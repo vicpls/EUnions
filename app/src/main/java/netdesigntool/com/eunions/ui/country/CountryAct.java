@@ -5,6 +5,7 @@ import static netdesigntool.com.eunions.Util.formatValue;
 import static netdesigntool.com.eunions.Util.getOneKey;
 
 import android.annotation.SuppressLint;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
@@ -29,6 +30,7 @@ import java.util.Map;
 import dagger.hilt.android.AndroidEntryPoint;
 import netdesigntool.com.eunions.R;
 import netdesigntool.com.eunions.databinding.ActCountryBinding;
+import netdesigntool.com.eunions.ui.InsetsListener;
 import netdesigntool.com.eunions.ui.chart.ChartFragment;
 import netdesigntool.com.eunions.ui.chart.ChartVM;
 
@@ -65,9 +67,13 @@ CountryAct extends AppCompatActivity {
         binding = ActCountryBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        new Subscriber().subscribe();;
+        new Subscriber().subscribe();
 
         subscribeFireBaseObservers();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            binding.getRoot().setOnApplyWindowInsetsListener(new InsetsListener());
+        }
 
         initViews();
     }
