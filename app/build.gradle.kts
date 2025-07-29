@@ -1,6 +1,3 @@
-import java.io.FileInputStream
-import java.util.Properties
-
 plugins {
     id ("com.android.application")
     id ("com.google.gms.google-services")
@@ -19,15 +16,15 @@ android {
         applicationId = "netdesigntool.com.eunions"
         minSdk = 21
         targetSdk = 35
-        versionCode = 14
-        versionName ="1.7"
+        versionCode = 15
+        versionName ="1.8"
         //testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         testInstrumentationRunner = "netdesigntool.com.eunions.CustomTestRunner"
         multiDexEnabled = true
 //        resourceConfigurations += setOf("en", "ru")
     }
 
-    signingConfigs {
+    /*signingConfigs {
         create("release") {
             val keyStoreFile = rootProject.file("keystore_add.properties")
             if ( ! keyStoreFile.exists())
@@ -41,7 +38,7 @@ android {
                 keyPassword = properties["keyPassword"] as String
             }
         }
-    }
+    }*/
 
     androidResources {
         generateLocaleConfig = true
@@ -54,7 +51,7 @@ android {
             //isDebuggable = true
             //isShrinkResources = true  // теряет строки
             proguardFiles (getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
-            signingConfig = signingConfigs.getByName("release")
+            //signingConfig = signingConfigs.getByName("release")
         }
 
     }
