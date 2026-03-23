@@ -18,6 +18,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.hh.data.BuildConfig;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -30,7 +31,10 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -61,10 +65,8 @@ public class WikiRxDataProvider {
         Retrofit.Builder retrofitBuilder = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(MoshiConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create());
-
-        // Include Logger for debug config.
-        if (BuildConfig.DEBUG) retrofitBuilder.client(getHttpClient());
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .client(getHttpClient());
 
         wikiRxService = retrofitBuilder.build().create(WikiRxService.class);
     }
@@ -275,7 +277,28 @@ public class WikiRxDataProvider {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel( HttpLoggingInterceptor.Level.BODY);
 
-        return new OkHttpClient.Builder().addInterceptor(interceptor).build();
+        Interceptor headerInclude = Interceptor.Companion.invoke(chain -> {
+            Request original = chain.request();
+            Request request = original.newBuilder()
+                    .header("User-Agent", "EUnions/Android-app")
+                    .method(original.method(), original.body())
+                    .build();
+            Response result;
+            try {
+                result = chain.proceed(request);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            return result;
+        });
+
+        OkHttpClient.Builder builder = new OkHttpClient.Builder();
+        builder.addInterceptor(headerInclude);
+
+        if (BuildConfig.DEBUG)
+            builder.addInterceptor(interceptor);
+
+        return builder.build();
     }
 
 

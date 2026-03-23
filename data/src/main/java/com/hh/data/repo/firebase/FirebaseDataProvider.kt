@@ -103,7 +103,7 @@ class FirebaseDataProvider @Inject constructor(
             .child(part)
 
 
-    // Start the parametrised request to Firebase. Fetch result.
+    // Start the parametrized request to Firebase. Fetch result.
     private fun launchRequest(
         dbRef: DatabaseReference,
         title: String,
